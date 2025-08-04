@@ -7,7 +7,7 @@ namespace CarBook_OnionArch.Persistence.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=(localdb)\\MSSQLLocalDB; database=DapperDb; integrated security=true; trustServerCertificate=true");
+            optionsBuilder.UseSqlServer("server=(localdb)\\MSSQLLocalDB; database=CarBookOnionArchDb; integrated security=true; trustServerCertificate=true");
         }
 
         public DbSet<About> Abouts { get; set; }
