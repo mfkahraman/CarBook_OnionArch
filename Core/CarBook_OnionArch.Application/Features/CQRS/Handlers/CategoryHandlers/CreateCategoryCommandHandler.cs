@@ -11,17 +11,17 @@ namespace CarBook_OnionArch.Application.Features.CQRS.Handlers.CategoryHandlers
                                             IUnitOfWork unitOfWork)
     {
         public async Task<GetCategoryByIdQueryResult> Handle(CreateCategoryCommand command)
-    {
-        var entity = mapper.Map<Category>(command);
-        repository.Create(entity);
-        var result = await unitOfWork.CommitAsync();
-
-        if (!result)
         {
-            throw new Exception("Dbye kayıt işlemi sırasında bir hata oluştu");
-        }
+            var entity = mapper.Map<Category>(command);
+            repository.Create(entity);
+            var result = await unitOfWork.CommitAsync();
 
-        return mapper.Map<GetCategoryByIdQueryResult>(entity);
+            if (!result)
+            {
+                throw new Exception("Dbye kayıt işlemi sırasında bir hata oluştu");
+            }
+
+            return mapper.Map<GetCategoryByIdQueryResult>(entity);
+        }
     }
-}
 }
