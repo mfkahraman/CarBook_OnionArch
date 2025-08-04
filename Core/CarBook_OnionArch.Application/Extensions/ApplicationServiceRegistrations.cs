@@ -2,6 +2,7 @@
 using CarBook_OnionArch.Application.Features.CQRS.Handlers.BannerHandlers;
 using CarBook_OnionArch.Application.Features.CQRS.Handlers.BrandHandlers;
 using CarBook_OnionArch.Application.Features.CQRS.Handlers.CarHandlers;
+using CarBook_OnionArch.Application.Features.CQRS.Handlers.CategoryHandlers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CarBook_OnionArch.Application.Extensions
@@ -12,21 +13,21 @@ namespace CarBook_OnionArch.Application.Extensions
         {
             services.AddAutoMapper(cfg=> { }, typeof(ApplicationServiceRegistrations).Assembly);
 
-            //AboutHandlers
+            //About Handlers
             services.AddScoped<CreateAboutCommandHandler>();
             services.AddScoped<UpdateAboutCommandHandler>();
             services.AddScoped<RemoveAboutCommandHandler>();
             services.AddScoped<GetAboutByIdQueryHandler>();
             services.AddScoped<GetAboutQueryHandler>();
 
-            //BannerHandlers
+            //Banner Handlers
             services.AddScoped<CreateBannerCommandHandler>();
             services.AddScoped<UpdateBannerCommandHandler>();
             services.AddScoped<RemoveBannerCommandHandler>();
             services.AddScoped<GetBannerByIdQueryHandler>();
             services.AddScoped<GetBannerQueryHandler>();
 
-            //BrandHandlers
+            //Brand Handlers
             services.AddScoped<CreateBrandCommandHandler>();
             services.AddScoped<UpdateBrandCommandHandler>();
             services.AddScoped<RemoveBrandCommandHandler>();
@@ -40,6 +41,13 @@ namespace CarBook_OnionArch.Application.Extensions
             services.AddScoped<GetCarByIdQueryHandler>();
             services.AddScoped<GetCarQueryHandler>();
             services.AddScoped<GetCarWithBrandQueryHandler>();
+
+            //Category Handlers
+            services.AddScoped<CreateCategoryCommandHandler>();
+            services.AddScoped<UpdateCategoryCommandHandler>();
+            services.AddScoped<RemoveCategoryCommandHandler>();
+            services.AddScoped<GetCategoryByIdQueryHandler>();
+            services.AddScoped<GetCategoryQueryHandler>();
 
             return services;
         }
