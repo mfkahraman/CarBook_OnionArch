@@ -4,13 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarBook_OnionArch.Persistence.Repositories
 {
-    public class Repository<T>(CarBookContext context) 
+    public class Repository<T>(CarBookContext context)
         : IRepository<T> where T : class
     {
-        public async Task CreateAsync(T entity)
+        public bool Create(T entity)
         {
-            context.Set<T>().Add(entity);
-            await context.SaveChangesAsync();
+            try
+            {
+                context.Set<T>().Add(entity);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         public async Task<List<T>> GetAllAsync()
@@ -24,18 +31,35 @@ namespace CarBook_OnionArch.Persistence.Repositories
                 ?? throw new Exception("Girilen id ile kayıt bulunamadı");
         }
 
-        public async Task RemoveAsync(int id)
+        public async Task<bool> RemoveAsync(int id)
         {
-            var record = await context.Set<T>().FindAsync(id)
-               ?? throw new Exception("Girilen id ile kayıt bulunamadı");
-            context.Set<T>().Remove(record);
-            await context.SaveChangesAsync();
+            try
+            {
+                var record = await context.Set<T>().FindAsync(id)
+                    ?? throw new Exception("Girilen id ile kayıt bulunamadı");
+
+                context.Set<T>().Remove(record);
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public async Task UpdateAsync(T entity)
+        public bool Update(T entity)
         {
-            context.Set<T>().Update(entity);
-            await context.SaveChangesAsync();
+            try
+            {
+                context.Set<T>().Update(entity);
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

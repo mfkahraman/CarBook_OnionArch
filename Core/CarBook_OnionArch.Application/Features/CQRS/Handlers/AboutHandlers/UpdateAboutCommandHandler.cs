@@ -6,12 +6,14 @@ using CarBook_OnionArch.Domain.Entities;
 namespace CarBook_OnionArch.Application.Features.CQRS.Handlers.AboutHandlers
 {
     public class UpdateAboutCommandHandler(IRepository<About> repository,
-                                           IMapper mapper)
+                                           IMapper mapper,
+                                           IUnitOfWork unitOfWork)
     {
-        public async Task Handle(UpdateAboutCommand command)
+        public async Task<bool> Handle(UpdateAboutCommand command)
         {
             var about = mapper.Map<About>(command);
-            await repository.UpdateAsync(about);
+            repository.Update(about);
+            return await unitOfWork.CommitAsync();
         }
     }
 }

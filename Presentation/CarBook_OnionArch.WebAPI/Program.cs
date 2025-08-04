@@ -1,8 +1,18 @@
+using CarBook_OnionArch.Application.Extensions;
+using CarBook_OnionArch.Persistence.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//Application layer services extension
+builder.Services.AddApplicationServices();
+
+//Persistence layer services extension
+builder.Services.AddPersistenceServices(builder.Configuration);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

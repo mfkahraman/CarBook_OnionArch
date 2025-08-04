@@ -11,7 +11,7 @@ namespace CarBook_OnionArch.Application.Features.CQRS.Handlers.AboutHandlers
     {
         public async Task<GetAboutByIdQueryResult> Handle(GetAboutByIdQuery query)
         {
-            var about = await repository.GetByIdAsync(query.id);
+            var about = await repository.GetByIdAsync(query.Id);
             return mapper.Map<GetAboutByIdQueryResult>(about);
         }
     }

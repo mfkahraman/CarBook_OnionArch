@@ -4,8 +4,8 @@
     {
         Task<List<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
-        Task CreateAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task RemoveAsync(int id);
+        bool Create(T entity);
+        bool Update(T entity);
+        Task<bool> RemoveAsync(int id);
     }
 }
