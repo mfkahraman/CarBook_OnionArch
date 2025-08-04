@@ -17,6 +17,7 @@ namespace CarBook_OnionArch.Persistence.Extensions
 
             // Generic Repository injection
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

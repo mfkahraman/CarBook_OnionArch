@@ -1,17 +1,17 @@
-﻿using CarBook_OnionArch.Application.Features.CQRS.Commands.AboutCommands;
-using CarBook_OnionArch.Application.Features.CQRS.Handlers.AboutHandlers;
-using CarBook_OnionArch.Application.Features.CQRS.Queries.AboutQueries;
+﻿using CarBook_OnionArch.Application.Features.CQRS.Commands.BannerCommands;
+using CarBook_OnionArch.Application.Features.CQRS.Handlers.BannerHandlers;
+using CarBook_OnionArch.Application.Features.CQRS.Queries.BannerQueries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook_OnionArch.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AboutsController(CreateAboutCommandHandler createHandler,
-                                  UpdateAboutCommandHandler updateHandler,
-                                  RemoveAboutCommandHandler removeHandler,
-                                  GetAboutByIdQueryHandler getByIdHandler,
-                                  GetAboutQueryHandler getAllQueryHandler) : ControllerBase
+    public class BannersController(CreateBannerCommandHandler createHandler,
+                                  UpdateBannerCommandHandler updateHandler,
+                                  RemoveBannerCommandHandler removeHandler,
+                                  GetBannerByIdQueryHandler getByIdHandler,
+                                  GetBannerQueryHandler getAllQueryHandler) : ControllerBase
     {
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll()
@@ -29,7 +29,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var value = await getByIdHandler.Handle(new GetAboutByIdQuery(id));
+            var value = await getByIdHandler.Handle(new GetBannerByIdQuery(id));
 
             if (value == null)
             {
@@ -40,18 +40,18 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(CreateAboutCommand command)
+        public async Task<IActionResult> Create(CreateBannerCommand command)
         {
             try
             {
                 var result = await createHandler.Handle(command);
 
-                if(result == null)
+                if (result == null)
                 {
                     return BadRequest("Oluşturma işlemi sırasında bir sorun oluştu");
                 }
 
-                return CreatedAtAction(nameof(GetById), new { id = result.AboutID }, result);
+                return CreatedAtAction(nameof(GetById), new { id = result.BannerId }, result);
 
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(UpdateAboutCommand command)
+        public async Task<IActionResult> Update(UpdateBannerCommand command)
         {
             try
             {
@@ -84,14 +84,14 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         {
             try
             {
-                var result = await removeHandler.Handle(new RemoveAboutCommand(id));
+                var result = await removeHandler.Handle(new RemoveBannerCommand(id));
 
                 if (!result)
                 {
                     return BadRequest($"{id} Id nolu kayıt silinirken bir hata oluştu.");
                 }
 
-                return Ok($"{id} ID nolu kayıt başarıyla silindi.");
+                return Ok($"{id} Id nolu kayıt başarıyla silindi.");
             }
 
             catch (Exception ex)
