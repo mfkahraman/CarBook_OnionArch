@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\CarBook_OnionArch.Application\CarBook_OnionArch.Application.csproj" />
     <ProjectReference Include="..\..\Core\CarBook_OnionArch.Domain\CarBook_OnionArch.Domain.csproj" />
   </ItemGroup>
 
