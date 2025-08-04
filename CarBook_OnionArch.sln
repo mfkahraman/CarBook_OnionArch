@@ -7,6 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02EA681E-C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.Domain", "Core\CarBook_OnionArch.Domain\CarBook_OnionArch.Domain.csproj", "{B08ED1D1-D992-4194-8FEC-EA46DB9992A6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B63C6ED0-9FB7-4ED1-B52D-592080D08890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.Persistence", "Infrastructure\CarBook_OnionArch.Persistence\CarBook_OnionArch.Persistence.csproj", "{37A5CCF5-CF3F-4042-BCA1-3EB68E3C37CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A25904D9-1523-4644-8F70-B3976B9CC061}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.WebAPI", "Presentation\CarBook_OnionArch.WebAPI\CarBook_OnionArch.WebAPI.csproj", "{186D88AB-F9E5-4B80-B466-CE42FD006850}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +25,22 @@ Global
 		{B08ED1D1-D992-4194-8FEC-EA46DB9992A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B08ED1D1-D992-4194-8FEC-EA46DB9992A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B08ED1D1-D992-4194-8FEC-EA46DB9992A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37A5CCF5-CF3F-4042-BCA1-3EB68E3C37CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A5CCF5-CF3F-4042-BCA1-3EB68E3C37CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37A5CCF5-CF3F-4042-BCA1-3EB68E3C37CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37A5CCF5-CF3F-4042-BCA1-3EB68E3C37CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{186D88AB-F9E5-4B80-B466-CE42FD006850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{186D88AB-F9E5-4B80-B466-CE42FD006850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{186D88AB-F9E5-4B80-B466-CE42FD006850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{186D88AB-F9E5-4B80-B466-CE42FD006850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B08ED1D1-D992-4194-8FEC-EA46DB9992A6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{37A5CCF5-CF3F-4042-BCA1-3EB68E3C37CD} = {B63C6ED0-9FB7-4ED1-B52D-592080D08890}
+		{186D88AB-F9E5-4B80-B466-CE42FD006850} = {A25904D9-1523-4644-8F70-B3976B9CC061}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDBFCA2C-9E14-4655-BC8A-EBFE065BE210}
