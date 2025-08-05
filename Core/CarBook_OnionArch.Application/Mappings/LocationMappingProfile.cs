@@ -5,7 +5,7 @@ using CarBook_OnionArch.Domain.Entities;
 
 namespace CarBook_OnionArch.Application.Mappings
 {
-    internal class LocationMappingProfile : Profile
+    public class LocationMappingProfile : Profile
     {
         public LocationMappingProfile()
         {
