@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36301.6 d17.14
+VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.WebAPI", "Presentation\CarBook_OnionArch.WebAPI\CarBook_OnionArch.WebAPI.csproj", "{186D88AB-F9E5-4B80-B466-CE42FD006850}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.Application", "Core\CarBook_OnionArch.Application\CarBook_OnionArch.Application.csproj", "{654C2052-50D7-4211-8B4B-D9F13FDC4AB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontends", "Frontends", "{31CF97F3-2D38-4B7C-B503-EF6EA42AA119}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.WebUI", "Frontends\CarBook_OnionArch.WebUI\CarBook_OnionArch.WebUI.csproj", "{07BEED44-CA1A-4371-B26B-DC188D2015C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,10 @@ Global
 		{654C2052-50D7-4211-8B4B-D9F13FDC4AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654C2052-50D7-4211-8B4B-D9F13FDC4AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654C2052-50D7-4211-8B4B-D9F13FDC4AB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07BEED44-CA1A-4371-B26B-DC188D2015C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07BEED44-CA1A-4371-B26B-DC188D2015C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07BEED44-CA1A-4371-B26B-DC188D2015C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07BEED44-CA1A-4371-B26B-DC188D2015C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 		{37A5CCF5-CF3F-4042-BCA1-3EB68E3C37CD} = {B63C6ED0-9FB7-4ED1-B52D-592080D08890}
 		{186D88AB-F9E5-4B80-B466-CE42FD006850} = {A25904D9-1523-4644-8F70-B3976B9CC061}
 		{654C2052-50D7-4211-8B4B-D9F13FDC4AB9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{07BEED44-CA1A-4371-B26B-DC188D2015C0} = {31CF97F3-2D38-4B7C-B503-EF6EA42AA119}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDBFCA2C-9E14-4655-BC8A-EBFE065BE210}
