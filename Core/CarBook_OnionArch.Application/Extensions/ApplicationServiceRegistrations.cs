@@ -12,7 +12,14 @@ namespace CarBook_OnionArch.Application.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            //AutoMapper Registration
             services.AddAutoMapper(cfg=> { }, typeof(ApplicationServiceRegistrations).Assembly);
+
+            //MediatR Registration
+            services.AddMediatR(cfg => 
+            {
+                cfg.RegisterServicesFromAssembly(typeof(ApplicationServiceRegistrations).Assembly);
+            });
 
             //About Handlers
             services.AddScoped<CreateAboutCommandHandler>();
