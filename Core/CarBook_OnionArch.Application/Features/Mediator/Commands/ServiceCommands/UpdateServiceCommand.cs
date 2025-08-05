@@ -1,0 +1,12 @@
+﻿using MediatR;
+
+namespace CarBook_OnionArch.Application.Features.Mediator.Commands.ServiceCommands
+{
+    public record UpdateServiceCommand : IRequest<bool>
+    {
+        public int ServiceId { get; init; }
+        public required string Title { get; init; }
+        public string? Description { get; init; }
+        public string? IconUrl { get; init; }
+    }
+}
