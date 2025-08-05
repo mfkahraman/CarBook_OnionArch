@@ -14,8 +14,8 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.FooterAddress
     {
         public async Task<GetFooterAddressByIdQueryResult> Handle(CreateFooterAddressCommand request, CancellationToken cancellationToken)
         {
-            var feature = mapper.Map<FooterAddress>(request);
-            repository.Create(feature);
+            var entity = mapper.Map<FooterAddress>(request);
+            repository.Create(entity);
             var result = await unitOfWork.CommitAsync();
 
             if (!result)
@@ -23,7 +23,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.FooterAddress
                 throw new Exception("Db'ye kayıt işlemi sırasında bir sorun oluştu.");
             }
 
-            return mapper.Map<GetFooterAddressByIdQueryResult>(feature);
+            return mapper.Map<GetFooterAddressByIdQueryResult>(entity);
         }
     }
 }
