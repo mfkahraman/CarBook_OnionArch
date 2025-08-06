@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CarBook_OnionArch.Dto.TestimonialDtos;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace CarBook_OnionArch.WebUI.ViewComponents.TestimonialViewComponents
 {
@@ -10,13 +10,15 @@ namespace CarBook_OnionArch.WebUI.ViewComponents.TestimonialViewComponents
         {
             var client = httpClient.CreateClient("TestimonialClient");
             var responseMessage = await client.GetAsync("https://localhost:7020/api/Testimonials");
+
             if (!responseMessage.IsSuccessStatusCode)
             {
                 return Content("Error fetching testimonials");
             }
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            return View();
+            var values = JsonSerializer.Deserialize<List<ResultTestimonialDto>>(jsonData);
+            return View(values);
         }
     }
 }
