@@ -13,6 +13,7 @@ namespace CarBook_OnionArch.Application.Mappings
             CreateMap<Car,UpdateCarCommand>().ReverseMap();
             CreateMap<Car, GetCarQueryResult>();
             CreateMap<Car, GetCarByIdQueryResult>();
+            CreateMap<Car, GetCarWithAllQueryResult>();
             CreateMap<Car, GetCarWithBrandQueryResult>()
                 .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name));
         }

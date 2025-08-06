@@ -6,15 +6,15 @@ namespace CarBook_OnionArch.WebUI.Controllers
 {
     public class ServiceController(IHttpClientFactory httpClient) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var client = httpClient.CreateClient("ServicesClient");
-            var response = client.GetAsync("https://localhost:7020/api/Services");
-            if (!response.Result.IsSuccessStatusCode)
+            var response = await client.GetAsync("https://localhost:7020/api/Services");
+            if (!response.IsSuccessStatusCode)
             {
                 return Content("Error fetching services");
             }
-            var jsonData = response.Result.Content.ReadAsStringAsync().Result;
+            var jsonData = response.Content.ReadAsStringAsync().Result;
             var values = JsonSerializer.Deserialize<List<ResultServiceDto>>(jsonData);
             return View(values);
         }

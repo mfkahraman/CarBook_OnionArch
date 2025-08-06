@@ -49,6 +49,7 @@ namespace CarBook_OnionArch.Application.Extensions
             services.AddScoped<GetCarByIdQueryHandler>();
             services.AddScoped<GetCarQueryHandler>();
             services.AddScoped<GetCarWithBrandQueryHandler>();
+            services.AddScoped<GetCarWithAllQueryHandler>();
 
             //Category Handlers
             services.AddScoped<CreateCategoryCommandHandler>();
