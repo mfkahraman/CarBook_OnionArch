@@ -2,17 +2,52 @@
 {
     public class ResultCarWithBrandDto
     {
+
         public int carId { get; set; }
-        public string? model { get; set; }
+        public string model { get; set; }
         public int mileage { get; set; }
-        public string? transmission { get; set; }
+        public string transmission { get; set; }
         public int seat { get; set; }
         public int luggage { get; set; }
-        public string? fuel { get; set; }
-        public string? coverImageUrl { get; set; }
-        public string? bigImageUrl { get; set; }
+        public string fuel { get; set; }
+        public string coverImageUrl { get; set; }
+        public string bigImageUrl { get; set; }
         public int brandId { get; set; }
-        public string? brandName { get; set; }
-
+        public Brand brand { get; set; }
+        public Carfeature[] carFeatures { get; set; }
+        public Cardescription[] carDescriptions { get; set; }
+        public Carpricing[] carPricings { get; set; }
     }
+
+    public class Brand
+    {
+        public int brandId { get; set; }
+        public string name { get; set; }
+    }
+
+    public class Carfeature
+    {
+        public int carFeatureId { get; set; }
+        public int carId { get; set; }
+        public int featureId { get; set; }
+        public object feature { get; set; }
+        public bool isAvailable { get; set; }
+    }
+
+    public class Cardescription
+    {
+        public int carDescriptionId { get; set; }
+        public string detail { get; set; }
+        public int carId { get; set; }
+    }
+
+    public class Carpricing
+    {
+        public int carPricingId { get; set; }
+        public int carId { get; set; }
+        public int pricingId { get; set; }
+        public object pricing { get; set; }
+        public decimal amount { get; set; }
+    }
+
 }
