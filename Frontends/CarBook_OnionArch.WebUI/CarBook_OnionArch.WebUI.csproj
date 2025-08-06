@@ -25,4 +25,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarBook_OnionArch.Dto\CarBook_OnionArch.Dto.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontends", "Frontends", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.WebUI", "Frontends\CarBook_OnionArch.WebUI\CarBook_OnionArch.WebUI.csproj", "{07BEED44-CA1A-4371-B26B-DC188D2015C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook_OnionArch.Dto", "Frontends\CarBook_OnionArch.Dto\CarBook_OnionArch.Dto.csproj", "{408C3FCC-D013-494D-9983-C1041D8CFEF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{07BEED44-CA1A-4371-B26B-DC188D2015C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07BEED44-CA1A-4371-B26B-DC188D2015C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07BEED44-CA1A-4371-B26B-DC188D2015C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{408C3FCC-D013-494D-9983-C1041D8CFEF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{408C3FCC-D013-494D-9983-C1041D8CFEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{408C3FCC-D013-494D-9983-C1041D8CFEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{408C3FCC-D013-494D-9983-C1041D8CFEF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{186D88AB-F9E5-4B80-B466-CE42FD006850} = {A25904D9-1523-4644-8F70-B3976B9CC061}
 		{654C2052-50D7-4211-8B4B-D9F13FDC4AB9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{07BEED44-CA1A-4371-B26B-DC188D2015C0} = {31CF97F3-2D38-4B7C-B503-EF6EA42AA119}
+		{408C3FCC-D013-494D-9983-C1041D8CFEF6} = {31CF97F3-2D38-4B7C-B503-EF6EA42AA119}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDBFCA2C-9E14-4655-BC8A-EBFE065BE210}
