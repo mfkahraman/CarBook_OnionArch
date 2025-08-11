@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarBook_OnionArch.Persistence.Repositories
 {
-    public class Repository<T>(CarBookContext context)
+    public class Repository<T>(AppDbContext context)
         : IRepository<T> where T : class
     {
         public bool Create(T entity)

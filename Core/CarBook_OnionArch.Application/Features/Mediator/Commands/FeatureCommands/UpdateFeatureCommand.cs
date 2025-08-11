@@ -4,7 +4,9 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.FeatureComman
 {
     public record UpdateFeatureCommand : IRequest<bool>
     {
-        public int FeatureId { get; init; }
+        public int Id { get; init; }
         public required string Name { get; init; }
+        public bool IsDeleted { get; init; } = false;
+
     }
 }

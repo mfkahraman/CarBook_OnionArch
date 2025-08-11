@@ -1,8 +1,9 @@
 ﻿namespace CarBook_OnionArch.Domain.Entities
 {
-    public class Location
+    public class Location : IEntity
     {
-        public int LocationId { get; set; }
+        public int Id { get; set; }
         public required string Name { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

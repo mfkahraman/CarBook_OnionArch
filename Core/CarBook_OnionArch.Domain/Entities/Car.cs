@@ -1,8 +1,8 @@
 ﻿namespace CarBook_OnionArch.Domain.Entities
 {
-    public class Car
+    public class Car : IEntity
     {
-        public int CarId { get; set; }
+        public int Id { get; set; }
         public string? Model { get; set; }
         public int Mileage { get; set; }
         public string? Transmission { get; set; }
@@ -16,6 +16,7 @@
         public List<CarFeature>? CarFeatures { get; set; }
         public List<CarDescription>? CarDescriptions { get; set; }
         public List<CarPricing>? CarPricings { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
     }
 }

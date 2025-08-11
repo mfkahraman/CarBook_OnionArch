@@ -2,7 +2,7 @@
 {
     public class GetCarWithBrandQueryResult
     {
-        public int CarId { get; set; }
+        public int Id { get; set; }
         public string? Model { get; set; }
         public int Mileage { get; set; }
         public string? Transmission { get; set; }
@@ -13,5 +13,7 @@
         public string? BigImageUrl { get; set; }
         public int BrandId { get; set; }
         public string? BrandName { get; set; }
+        public bool IsDeleted { get; set; }
+
     }
 }

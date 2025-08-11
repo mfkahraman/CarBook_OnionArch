@@ -11,5 +11,7 @@
         public string? CoverImageUrl { get; init; }
         public string? BigImageUrl { get; init; }
         public int BrandId { get; init; }
+        public bool IsDeleted { get; init; } = false;
+
     }
 }

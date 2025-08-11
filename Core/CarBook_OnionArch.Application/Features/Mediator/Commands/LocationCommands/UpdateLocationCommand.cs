@@ -4,7 +4,9 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.LocationComma
 {
     public record UpdateLocationCommand : IRequest<bool>
     {
-        public int LocationId { get; init; }
+        public int Id { get; init; }
         public required string Name { get; init; }
+        public bool IsDeleted { get; init; } = false;
+
     }
 }

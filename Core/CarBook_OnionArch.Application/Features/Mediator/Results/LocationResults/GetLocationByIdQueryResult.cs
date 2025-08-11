@@ -2,7 +2,9 @@
 {
     public class GetLocationByIdQueryResult
     {
-        public int LocationId { get; set; }
+        public int Id { get; set; }
         public required string Name { get; set; }
+        public bool IsDeleted { get; set; }
+
     }
 }

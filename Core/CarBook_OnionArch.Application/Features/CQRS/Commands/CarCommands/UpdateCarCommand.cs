@@ -2,7 +2,7 @@
 {
     public record UpdateCarCommand
     {
-        public int CarId { get; init; }
+        public int Id { get; init; }
         public string? Model { get; init; }
         public int Mileage { get; init; }
         public string? Transmission { get; init; }
@@ -12,5 +12,7 @@
         public string? CoverImageUrl { get; init; }
         public string? BigImageUrl { get; init; }
         public int BrandId { get; init; }
+        public bool IsDeleted { get; init; } = false;
+
     }
 }

@@ -4,6 +4,7 @@ using CarBook_OnionArch.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CarBook_OnionArch.Persistence.Extensions
 {
@@ -12,8 +13,10 @@ namespace CarBook_OnionArch.Persistence.Extensions
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             // DbContext yapılandırması
-            services.AddDbContext<CarBookContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("SqlConnection")));
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("SqlConnection"));
+            });
 
             // Generic Repository injection
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

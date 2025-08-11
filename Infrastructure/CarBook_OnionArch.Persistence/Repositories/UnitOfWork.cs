@@ -3,7 +3,7 @@ using CarBook_OnionArch.Persistence.Context;
 
 namespace CarBook_OnionArch.Persistence.Repositories
 {
-    public class UnitOfWork(CarBookContext context) : IUnitOfWork
+    public class UnitOfWork(AppDbContext context) : IUnitOfWork
     {
         public async Task<bool> CommitAsync()
         {

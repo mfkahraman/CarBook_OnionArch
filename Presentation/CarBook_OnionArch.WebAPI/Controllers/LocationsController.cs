@@ -48,7 +48,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
                     return BadRequest("Oluşturma işlemi sırasında bir sorun oluştu");
                 }
 
-                return CreatedAtAction(nameof(GetById), new { id = result.LocationId }, result);
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
 
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, UpdateLocationCommand command)
         {
-            if (id != command.LocationId)
+            if (id != command.Id)
                 return BadRequest("URL'deki id ile gövdedeki id uyuşmuyor.");
 
             try

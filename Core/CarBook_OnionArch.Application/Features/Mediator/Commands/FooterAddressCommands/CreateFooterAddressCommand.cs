@@ -9,5 +9,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.FooterAddress
         public required string Address { get; init; }
         public string? Phone { get; init; }
         public string? Email { get; init; }
+        public bool IsDeleted { get; init; } = false;
+
     }
 }

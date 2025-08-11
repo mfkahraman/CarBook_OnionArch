@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarBook_OnionArch.Persistence.Repositories
 {
-    public class CarRepository(CarBookContext context) : ICarRepository
+    public class CarRepository(AppDbContext context) : ICarRepository
     {
         public Task<List<Car>> GetCarsWithAllAsync()
         {
@@ -33,7 +33,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
                 .Include(x => x.CarFeatures)
                 .Include(x => x.CarDescriptions)
                 .Include(x => x.CarPricings)
-                .OrderByDescending(x => x.CarId)
+                .OrderByDescending(x => x.Id)
                 .Take(5)
                 .AsNoTracking()
                 .ToListAsync();

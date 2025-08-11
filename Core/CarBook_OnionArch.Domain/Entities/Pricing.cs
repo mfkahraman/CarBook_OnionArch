@@ -1,9 +1,10 @@
 ﻿namespace CarBook_OnionArch.Domain.Entities
 {
-    public class Pricing
+    public class Pricing : IEntity
     {
-        public int PricingId { get; set; }
+        public int Id { get; set; }
         public required string Name { get; set; }
         public List<CarPricing>? CarPricings { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

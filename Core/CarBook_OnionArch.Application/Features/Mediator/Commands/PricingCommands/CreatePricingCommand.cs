@@ -6,5 +6,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.PricingComman
     public record CreatePricingCommand : IRequest<GetPricingByIdQueryResult>
     {
         public required string Name { get; init; }
+        public bool IsDeleted { get; init; } = false;
+
     }
 }
