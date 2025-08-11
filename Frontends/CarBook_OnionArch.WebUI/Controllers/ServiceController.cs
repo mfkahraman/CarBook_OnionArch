@@ -8,6 +8,8 @@ namespace CarBook_OnionArch.WebUI.Controllers
     {
         public async Task<IActionResult> Index()
         {
+            ViewBag.Title = "Hizmetler";
+            ViewBag.Subtitle = "Hizmetlerimiz";
             var client = httpClient.CreateClient("ServicesClient");
             var response = await client.GetAsync("https://localhost:7020/api/Services");
             if (!response.IsSuccessStatusCode)

@@ -6,6 +6,8 @@ namespace CarBook_OnionArch.WebUI.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Title = "Hakkımızda";
+            ViewBag.Subtitle = "Hakkımızda Daha Fazla Bilgi";
             return View();
         }
     }
