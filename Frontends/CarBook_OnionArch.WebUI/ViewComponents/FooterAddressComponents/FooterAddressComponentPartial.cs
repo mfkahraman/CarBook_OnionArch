@@ -1,7 +1,5 @@
 ﻿using CarBook_OnionArch.Dto.FooterAddressDtos;
-using CarBook_OnionArch.Dto.TestimonialDtos;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace CarBook_OnionArch.WebUI.ViewComponents.FooterAddressComponents

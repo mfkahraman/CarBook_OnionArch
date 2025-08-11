@@ -13,7 +13,8 @@ namespace CarBook_OnionArch.WebAPI.Controllers
                                   GetCarByIdQueryHandler getByIdHandler,
                                   GetCarQueryHandler getAllQueryHandler,
                                   GetCarWithBrandQueryHandler withBrandQueryHandler,
-                                  GetCarWithAllQueryHandler carWithAllHandler) : ControllerBase
+                                  GetCarWithAllQueryHandler carWithAllHandler,
+                                  GetLast5CarsQueryHandler getLast5CarsQueryHandler) : ControllerBase
     {
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll()
@@ -45,6 +46,19 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         public async Task<IActionResult> GetCarsWithAll()
         {
             var values = await carWithAllHandler.Handle();
+
+            if (values == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+
+            return Ok(values);
+        }
+
+        [HttpGet("get-last-5-cars")]
+        public async Task<IActionResult> GetLast5CarsAsync()
+        {
+            var values = await getLast5CarsQueryHandler.Handle();
 
             if (values == null)
             {

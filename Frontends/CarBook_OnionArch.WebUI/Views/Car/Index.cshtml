@@ -1,5 +1,5 @@
 ﻿@using CarBook_OnionArch.Dto.CarDtos
-@model List<ResultCarWithBrandDto>
+@model List<ResultCarWithRelationsDto>
 
 @{
     ViewData["Title"] = "Araç Listesi";
@@ -21,9 +21,9 @@
                                 <a href="#">@car.model</a>
                             </h2>
                             <div class="d-flex mb-3">
-                                <span class="cat">@car.brand.name</span>
+                                <span class="cat">@car.brand?.name</span>
                                 <p class="price ml-auto">
-                                    ₺@car.carPricings.FirstOrDefault()?.amount <span>/gün</span>
+                                    ₺@car.carPricings?.FirstOrDefault()?.amount <span>/gün</span>
                                 </p>
                             </div>
                             <p class="d-flex mb-0 d-block">

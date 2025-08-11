@@ -6,5 +6,6 @@ namespace CarBook_OnionArch.Application.Interfaces
     {
         Task<List<Car>> GetCarsWithBrandsAsync();
         Task<List<Car>> GetCarsWithAllAsync();
+        Task<List<Car>> GetLast5CarsAsync();
     }
 }

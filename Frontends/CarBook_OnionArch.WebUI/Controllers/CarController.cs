@@ -15,7 +15,7 @@ namespace CarBook_OnionArch.WebUI.Controllers
                 return View("Error");
             }
             var jsonData = await response.Content.ReadAsStringAsync();
-            var values = JsonSerializer.Deserialize<List<ResultCarWithBrandDto>>(jsonData);
+            var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
             return View(values);
         }
     }

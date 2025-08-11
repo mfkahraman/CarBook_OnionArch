@@ -13,7 +13,8 @@ namespace CarBook_OnionArch.Persistence.Repositories
                 .Include(x => x.Brand)
                 .Include(x => x.CarFeatures)
                 .Include(x => x.CarDescriptions)
-                .Include(x => x.CarPricings)
+                .Include(x => x.CarPricings!)
+                    .ThenInclude(x => x.Pricing)
                 .AsNoTracking()
                 .ToListAsync();
             return values;
@@ -22,6 +23,20 @@ namespace CarBook_OnionArch.Persistence.Repositories
         public async Task<List<Car>> GetCarsWithBrandsAsync()
         {
             var values = await context.Cars.Include(x => x.Brand).AsNoTracking().ToListAsync();
+            return values;
+        }
+
+        public Task<List<Car>> GetLast5CarsAsync()
+        {
+            var values = context.Cars
+                .Include(x => x.Brand)
+                .Include(x => x.CarFeatures)
+                .Include(x => x.CarDescriptions)
+                .Include(x => x.CarPricings)
+                .OrderByDescending(x => x.CarId)
+                .Take(5)
+                .AsNoTracking()
+                .ToListAsync();
             return values;
         }
     }
