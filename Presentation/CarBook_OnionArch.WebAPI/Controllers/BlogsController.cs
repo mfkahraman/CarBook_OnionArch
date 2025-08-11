@@ -6,12 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook_OnionArch.WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BlogsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<List<GetBlogsQueryResult>>> GetAll()
         {
             var values = await mediator.Send(new GetBlogsQuery());
+
+            if (values == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+
+            return Ok(values);
+        }
+
+        [HttpGet("get-blogs-with-details")]
+        public async Task<ActionResult<List<GetBlogsWithDetailsQueryResult>>> GetBlogsWithDetails()
+        {
+            var values = await mediator.Send(new GetBlogsWithDetailsQuery());
 
             if (values == null)
             {

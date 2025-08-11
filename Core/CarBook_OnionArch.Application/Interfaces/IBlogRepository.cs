@@ -4,6 +4,6 @@ namespace CarBook_OnionArch.Application.Interfaces
 {
     public interface IBlogRepository
     {
-        List<Blog> GetBlogsWithRelations();
+        Task<List<Blog>> GetBlogsWithDetailsAsync();
     }
 }
