@@ -26,18 +26,5 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return values;
         }
 
-        public Task<List<Car>> GetLast5CarsAsync()
-        {
-            var values = context.Cars
-                .Include(x => x.Brand)
-                .Include(x => x.CarFeatures)
-                .Include(x => x.CarDescriptions)
-                .Include(x => x.CarPricings)
-                .OrderByDescending(x => x.Id)
-                .Take(5)
-                .AsNoTracking()
-                .ToListAsync();
-            return values;
-        }
     }
 }

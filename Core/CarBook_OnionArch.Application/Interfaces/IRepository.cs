@@ -1,11 +1,11 @@
 ﻿namespace CarBook_OnionArch.Application.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<IEntity>
     {
-        Task<List<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
-        bool Create(T entity);
-        bool Update(T entity);
+        Task<List<IEntity>> GetAllAsync();
+        Task<IEntity> GetByIdAsync(int id);
+        bool Create(IEntity entity);
+        bool Update(IEntity entity);
         Task<bool> RemoveAsync(int id);
     }
 }

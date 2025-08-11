@@ -1,11 +1,12 @@
 ﻿using CarBook_OnionArch.Application.Interfaces;
+using CarBook_OnionArch.Domain.Entities;
 using CarBook_OnionArch.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarBook_OnionArch.Persistence.Repositories
 {
     public class Repository<T>(AppDbContext context)
-        : IRepository<T> where T : class
+        : IRepository<T> where T : class, IEntity
     {
         public bool Create(T entity)
         {
@@ -22,12 +23,18 @@ namespace CarBook_OnionArch.Persistence.Repositories
 
         public async Task<List<T>> GetAllAsync()
         {
-            return await context.Set<T>().AsNoTracking().ToListAsync();
+            return await context.Set<T>()
+                .Where(x=> !x.IsDeleted)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await context.Set<T>().FindAsync(id)
+            return await context.Set<T>()
+                .Where(x => x.Id == id && !x.IsDeleted)
+                .AsNoTracking()
+                .FirstOrDefaultAsync()
                 ?? throw new Exception("Girilen id ile kayıt bulunamadı");
         }
 
@@ -35,10 +42,12 @@ namespace CarBook_OnionArch.Persistence.Repositories
         {
             try
             {
-                var record = await context.Set<T>().FindAsync(id)
+                var record = await context.Set<T>()
+                    .Where(x => x.Id == id && !x.IsDeleted)
+                    .FirstOrDefaultAsync()
                     ?? throw new Exception("Girilen id ile kayıt bulunamadı");
-
-                context.Set<T>().Remove(record);
+                record.IsDeleted = true;
+                context.Set<T>().Update(record);
 
             }
             catch (Exception)
