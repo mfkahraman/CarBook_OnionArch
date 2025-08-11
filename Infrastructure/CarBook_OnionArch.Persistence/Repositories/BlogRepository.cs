@@ -10,9 +10,10 @@ namespace CarBook_OnionArch.Persistence.Repositories
         public async Task<List<Blog>> GetBlogsWithDetailsAsync()
         {
             var values = await context.Blogs
-                .Include(x=> x.Author)
+                .Where(b => !b.IsDeleted && !b.Author!.IsDeleted && !b.Category!.IsDeleted)
+                .Include(x => x.Author)
                 .Include(x => x.Category)
-                .Include(x => x.Comments)
+                .Include(x => x.Comments!.Where(x => !x.IsDeleted))
                 .AsNoTracking()
                 .ToListAsync();
             return values;

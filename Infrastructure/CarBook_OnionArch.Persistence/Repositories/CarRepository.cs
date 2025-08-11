@@ -7,17 +7,17 @@ namespace CarBook_OnionArch.Persistence.Repositories
 {
     public class CarRepository(AppDbContext context) : ICarRepository
     {
-        public Task<List<Car>> GetCarsWithAllAsync()
+        public async Task<List<Car>> GetCarsWithAllAsync()
         {
-            var values = context.Cars
+            return await context.Cars
+                .Where(x => !x.IsDeleted && !x.Brand.IsDeleted)
                 .Include(x => x.Brand)
-                .Include(x => x.CarFeatures)
-                .Include(x => x.CarDescriptions)
-                .Include(x => x.CarPricings!)
-                    .ThenInclude(x => x.Pricing)
+                .Include(x => x.CarFeatures!.Where(cf => !cf.IsDeleted))
+                .Include(x => x.CarDescriptions!.Where(cd => !cd.IsDeleted))
+                .Include(x => x.CarPricings!.Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted))
+                    .ThenInclude(cp => cp.Pricing)
                 .AsNoTracking()
                 .ToListAsync();
-            return values;
         }
 
         public async Task<List<Car>> GetCarsWithBrandsAsync()
