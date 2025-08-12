@@ -8,6 +8,7 @@
         public string? ImageUrl { get; set; }
         public List<Blog>? Blogs { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public List<Comment>? Comments { get; set; }
 
     }
 }

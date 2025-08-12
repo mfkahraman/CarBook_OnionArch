@@ -9,7 +9,9 @@ namespace CarBook_OnionArch.Application.Mappings
         public CommentMappingProfile()
         {
             CreateMap<Comment, GetCommentByIdQueryResult>();
-            CreateMap<Comment, GetCommentsQueryResult>();
+            CreateMap<Comment, GetCommentsQueryResult>()
+                .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => src.Author!.FullName))
+                .ForMember(dest => dest.AuthorImageUrl, opt => opt.MapFrom(src => src.Author!.ImageUrl));
         }
     }
 }

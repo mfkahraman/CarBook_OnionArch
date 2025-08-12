@@ -26,5 +26,20 @@ namespace CarBook_OnionArch.WebUI.Controllers
 
             return View(pagedList);
         }
+
+        public async Task<IActionResult> BlogDetails(int id)
+        {
+            ViewBag.Title = "Blog";
+            ViewBag.Subtitle = "Blog İçeriği";
+            var client = httpClient.CreateClient();
+            var response = await client.GetAsync($"https://localhost:7020/api/Blogs/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return Content("Error fetching blog details");
+            }
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var values = JsonSerializer.Deserialize<ResultBlogWithDetailsDto>(jsonData);
+            return View(values);
+        }
     }
 }

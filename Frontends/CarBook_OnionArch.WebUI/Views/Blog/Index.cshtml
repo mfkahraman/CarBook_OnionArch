@@ -22,7 +22,7 @@
             {
                 <div class="col-md-12 text-center d-flex ftco-animate">
                     <div class="blog-entry justify-content-end mb-md-5">
-                        <a asp-page="/Blog/BlogDetail" asp-route-id="@item.id" class="block-20 img" style="background-image: url('@item.coverImageUrl');">
+                        <a asp-page="/Blog/BlogDetails" asp-route-id="@item.id" class="block-20 img" style="background-image: url('@item.coverImageUrl');">
                         </a>
                         <div class="text px-md-5 pt-4">
                             <div class="meta mb-3">
@@ -32,7 +32,7 @@
                             </div>
                             <h3 class="heading mt-2"><a href="#">@item.title</a></h3>
                             <p>@(item.content?.Length > 50 ? item.content.Substring(0, 150) + "..." : item.content)</p>
-                            <p><a asp-page="/Blog/BlogDetail" asp-route-id="@item.id" class="btn btn-primary">Devam et <span class="icon-long-arrow-right"></span></a></p>
+                            <p><a asp-page="/Blog/BlogDetails" asp-route-id="@item.id" class="btn btn-primary">Devam et <span class="icon-long-arrow-right"></span></a></p>
                         </div>
                     </div>
                 </div>
