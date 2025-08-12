@@ -1,16 +1,21 @@
-﻿
+﻿@using CarBook_OnionArch.Dto.CategoriesDtos
+@model List<ResultCategoryDto>
+
 @*
     BlogCategoriesComponentPartial
 *@
 
 <div class="sidebar-box ftco-animate">
     <div class="categories">
-        <h3>Categories</h3>
-        <li><a href="#">Ferrari <span>(12)</span></a></li>
-        <li><a href="#">Cheverolet <span>(22)</span></a></li>
-        <li><a href="#">Ford <span>(37)</span></a></li>
-        <li><a href="#">Subaru <span>(42)</span></a></li>
-        <li><a href="#">Toyota <span>(14)</span></a></li>
-        <li><a href="#">Mistsubishi <span>(140)</span></a></li>
+        <h3>Kategoriler</h3>
+        <ul>
+            @foreach (var item in Model)
+            {
+                var count = (item.id * 3) + 5;
+                <li>
+                    <a href="#">@item.name <span>(@count)</span></a>
+                </li>
+            }
+        </ul>
     </div>
 </div>
