@@ -32,7 +32,7 @@
                             </div>
                             <h3 class="heading mt-2"><a href="#">@item.title</a></h3>
                             <p>@(item.content?.Length > 50 ? item.content.Substring(0, 150) + "..." : item.content)</p>
-                            <p><a asp-page="/Blog/BlogDetails" asp-route-id="@item.id" class="btn btn-primary">Devam et <span class="icon-long-arrow-right"></span></a></p>
+                            <p><a href="/Blog/BlogDetails/@item.id" class="btn btn-primary">Devam et <span class="icon-long-arrow-right"></span></a></p>
                         </div>
                     </div>
                 </div>

@@ -38,7 +38,7 @@ namespace CarBook_OnionArch.WebUI.Controllers
                 return Content("Error fetching blog details");
             }
             var jsonData = await response.Content.ReadAsStringAsync();
-            var values = JsonSerializer.Deserialize<ResultBlogWithDetailsDto>(jsonData);
+            var values = JsonSerializer.Deserialize<ResultBlogByIdWithDetailsDto>(jsonData);
             return View(values);
         }
     }
