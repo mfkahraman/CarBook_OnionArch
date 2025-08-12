@@ -20,7 +20,7 @@ namespace CarBook_OnionArch.WebUI.Controllers
             var jsonData = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<List<ResultBlogWithDetailsDto>>(jsonData);
 
-            int pageSize = 5;
+            int pageSize = 2;
             int pageNumber = page ?? 1;
             var pagedList = values?.ToPagedList(pageNumber, pageSize);
 
