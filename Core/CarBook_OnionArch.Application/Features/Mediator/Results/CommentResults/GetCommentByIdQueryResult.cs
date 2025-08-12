@@ -12,6 +12,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Results.CommentResults
         public GetBlogByIdQueryResult? Blog { get; set; }
         public int AuthorId { get; set; }
         public GetAuthorByIdQueryResult? Author { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

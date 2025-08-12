@@ -52,8 +52,7 @@
                         }
                     </ul>
                     <!-- END comment-list -->
-
-                    @await Component.InvokeAsync("CreateCommentComponentPartial")
+                    @await Component.InvokeAsync("CreateCommentComponentPartial", Model.id)
                 </div>
 
             </div> <!-- .col-md-8 -->
