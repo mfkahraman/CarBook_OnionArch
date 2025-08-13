@@ -8,6 +8,12 @@
     int count = 0;
 }
 
+<style>
+    a, button {
+        color: #fff !important;
+    }
+</style>
+
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
@@ -27,6 +33,7 @@
                                 <th>Yakıt</th>
                                 <th>Kilometre</th>
                                 <th>Görsel</th>
+                                <th>İşlemler</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,11 +50,21 @@
                                     <td>
                                         <img src="@item?.coverImageUrl" alt="@item?.model" style="width: 100px; height: auto;" />
                                     </td>
+                                    <td>
+                                        <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminCar" asp-action="Edit" asp-route-id="@item?.carId">Düzenle</a>
+                                        <a class="btn btn-danger"
+                                           asp-area="Admin"
+                                           asp-controller="AdminCar"
+                                           asp-action="Delete"
+                                           asp-route-id="@item?.carId"
+                                           onclick="return confirm('Silmek istediğinizden emin misiniz?');">Sil</a>
+                                    </td>
                                 </tr>
                             }
 
                         </tbody>
                     </table>
+                    <a class="btn btn-success mt-3" asp-area="Admin" asp-controller="AdminCar" asp-action="Create">Yeni Araba Ekle</a>
                 </div>
 
             </div>
