@@ -8,8 +8,6 @@ namespace CarBook_OnionArch.WebUI.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            ViewBag.Title = "Araçlar";
-            ViewBag.Subtitle = "Araç Listesi";
             var client = httpClientFactory.CreateClient();
             var response = await client.GetAsync("https://localhost:7020/api/Cars/get-cars-with-all");
             if (!response.IsSuccessStatusCode)

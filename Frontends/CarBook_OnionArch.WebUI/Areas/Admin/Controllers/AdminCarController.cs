@@ -1,13 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CarBook_OnionArch.Dto.CarDtos;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminCarController : Controller
+    public class AdminCarController(IHttpClientFactory httpClientFactory) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var client = httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Cars/get-cars-with-all");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return View("Error");
+            }
+
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
+            return View(values);
         }
+
     }
 }

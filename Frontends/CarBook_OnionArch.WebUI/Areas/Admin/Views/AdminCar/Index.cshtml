@@ -1,50 +1,51 @@
-﻿
+﻿@using CarBook_OnionArch.Dto.CarDtos
+@model List<ResultCarWithRelationsDto>
+
 @{
     ViewData["Title"] = "Araba Listesi";
     ViewData["SubTitle"] = "Admin Araba Yönetimi Sayfası";
     Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+    int count = 0;
 }
-
-<h1 class="text-center">@ViewData["SubTitle"]</h1>
 
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-@*                 <h4 class="card-title">@ViewData["Title"]</h4>
-                <p class="card-subtitle mb-4">
+                <h1 class="card-title text-center" style="font-size: 2.5rem; color:chocolate">@ViewData["Title"]</h1>
+                @*                 <p class="card-subtitle mb-4">
                     <h4 class="card-title">@ViewData["SubTitle"]</h4>
-
                 </p> *@
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th>Marka</th>
+                                <th>Model</th>
+                                <th>Vites</th>
+                                <th>Yakıt</th>
+                                <th>Kilometre</th>
+                                <th>Görsel</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>twitter</td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td>@item?.brand!.name</td>
+                                    <td>@item?.model</td>
+                                    <td>@item?.transmission</td>
+                                    <td>@item?.fuel</td>
+                                    <td>@item?.mileage</td>
+                                    <td>
+                                        <img src="@item?.coverImageUrl" alt="@item?.model" style="width: 100px; height: auto;" />
+                                    </td>
+                                </tr>
+                            }
+
                         </tbody>
                     </table>
                 </div>
