@@ -1,6 +1,8 @@
 ﻿using CarBook_OnionArch.Application.Features.CQRS.Commands.CarCommands;
 using CarBook_OnionArch.Application.Features.CQRS.Handlers.CarHandlers;
 using CarBook_OnionArch.Application.Features.CQRS.Queries.CarQueries;
+using CarBook_OnionArch.Application.Interfaces;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook_OnionArch.WebAPI.Controllers
@@ -13,7 +15,8 @@ namespace CarBook_OnionArch.WebAPI.Controllers
                                   GetCarByIdQueryHandler getByIdHandler,
                                   GetCarQueryHandler getAllQueryHandler,
                                   GetCarWithBrandQueryHandler withBrandQueryHandler,
-                                  GetCarWithAllQueryHandler carWithAllHandler) : ControllerBase
+                                  GetCarWithAllQueryHandler carWithAllHandler,
+                                  IImageService imageService) : ControllerBase
     {
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll()
@@ -70,6 +73,13 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreateCarCommand command)
         {
+            if (command.ImageFile != null)
+            {
+                var imagePath = await imageService.SaveImageAsync(command.ImageFile, "cars");
+                command.BigImageUrl = imagePath;
+                command.CoverImageUrl = imagePath;
+            }
+
             try
             {
                 var result = await createHandler.Handle(command);
@@ -92,6 +102,17 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> Update(UpdateCarCommand command)
         {
+            if (command.ImageFile != null)
+            {
+                //Delete old image if exists
+                if (!string.IsNullOrEmpty(command.CoverImageUrl))
+                    await imageService.DeleteImageAsync(command.CoverImageUrl);
+
+                var imagePath = await imageService.SaveImageAsync(command.ImageFile, "cars");
+                command.CoverImageUrl = imagePath;
+                command.BigImageUrl = imagePath;
+            }
+
             try
             {
                 var result = await updateHandler.Handle(command);
