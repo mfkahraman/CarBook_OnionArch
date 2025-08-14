@@ -1,5 +1,6 @@
 ﻿using CarBook_OnionArch.Dto.BrandDtos;
 using CarBook_OnionArch.Dto.CarDtos;
+using CarBook_OnionArch.Dto.FeaturesDtos;
 using CarBook_OnionArch.WebUI.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -30,6 +31,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             ViewBag.Transmissions = EnumHelper.ToSelectList<TransmissionType>();
             ViewBag.Fuels = EnumHelper.ToSelectList<FuelType>();
             ViewBag.Brands = await FetchBrandsAsync();
+            ViewBag.Features = await FetchFeaturesAsync();
             return View();
         }
 
@@ -41,6 +43,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 ViewBag.Transmissions = EnumHelper.ToSelectList<TransmissionType>();
                 ViewBag.Fuels = EnumHelper.ToSelectList<FuelType>();
                 ViewBag.Brands = await FetchBrandsAsync();
+                ViewBag.Features = await FetchFeaturesAsync();
                 return View(createCarDto);
             }
 
@@ -82,6 +85,20 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var response = await client.GetAsync("https://localhost:7020/api/Brands/get-all");
             var jsonData = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<List<ResultBrandDto>>(jsonData);
+            List<SelectListItem> brandList = values!
+                .Select(x => new SelectListItem
+                {
+                    Text = x.name,
+                    Value = x.id.ToString()
+                }).ToList();
+            return brandList;
+        }
+        public async Task<List<SelectListItem>> FetchFeaturesAsync()
+        {
+            var client = httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Features");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var values = JsonSerializer.Deserialize<List<ResultFeatureDto>>(jsonData);
             List<SelectListItem> brandList = values!
                 .Select(x => new SelectListItem
                 {
