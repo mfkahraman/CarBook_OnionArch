@@ -1,5 +1,4 @@
 ﻿using CarBook_OnionArch.Application.Features.Mediator.Results.FeatureResults;
-using CarBook_OnionArch.Domain.Entities;
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Results.CarFeatureResults
 {
@@ -11,6 +10,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Results.CarFeatureResu
         public required GetFeatureQueryResult Feature { get; set; }
         public bool IsAvailable { get; set; }
         public bool IsDeleted { get; set; }
-
     }
 }
