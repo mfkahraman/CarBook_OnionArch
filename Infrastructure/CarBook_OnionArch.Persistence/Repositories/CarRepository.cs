@@ -12,10 +12,13 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return await context.Cars
                 .Where(x => !x.IsDeleted && !x.Brand.IsDeleted)
                 .Include(x => x.Brand)
-                .Include(x => x.CarFeatures!.Where(cf => !cf.IsDeleted))
+                .Include(x => x.CarFeatures!
+                    .Where(cf => !cf.IsDeleted && !cf.Feature.IsDeleted))
+                        .ThenInclude(cf => cf.Feature)
                 .Include(x => x.CarDescriptions!.Where(cd => !cd.IsDeleted))
-                .Include(x => x.CarPricings!.Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted))
-                    .ThenInclude(cp => cp.Pricing)
+                .Include(x => x.CarPricings!
+                    .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted))
+                        .ThenInclude(cp => cp.Pricing)
                 .AsNoTracking()
                 .ToListAsync();
         }

@@ -2,7 +2,6 @@
 using CarBook_OnionArch.Application.Features.CQRS.Handlers.CarHandlers;
 using CarBook_OnionArch.Application.Features.CQRS.Queries.CarQueries;
 using CarBook_OnionArch.Application.Interfaces;
-using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook_OnionArch.WebAPI.Controllers

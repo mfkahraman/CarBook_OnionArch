@@ -25,6 +25,7 @@ namespace CarBook_OnionArch.Persistence.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IBlogRepository, BlogRepository>();
+            services.AddScoped<IImageService, ImageService>();
 
             return services;
         }
