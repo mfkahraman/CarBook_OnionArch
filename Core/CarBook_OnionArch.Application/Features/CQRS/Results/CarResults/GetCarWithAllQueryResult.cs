@@ -21,7 +21,5 @@ namespace CarBook_OnionArch.Application.Features.CQRS.Results.CarResults
         public List<GetCarFeatureQueryResult>? CarFeatures { get; set; }
         public List<GetCarDescriptionQueryResult>? CarDescriptions { get; set; }
         public List<GetCarPricingQueryResult>? CarPricings { get; set; }
-        public bool IsDeleted { get; set; }
-
     }
 }

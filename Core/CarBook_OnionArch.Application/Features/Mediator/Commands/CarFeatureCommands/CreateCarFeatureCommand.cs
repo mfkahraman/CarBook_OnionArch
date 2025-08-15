@@ -8,6 +8,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.CarFeatureCom
         public int CarId { get; set; }
         public int FeatureId { get; set; }
         public bool IsAvailable { get; set; }
-        public bool IsDeleted { get; set; } = false;
     }
 }

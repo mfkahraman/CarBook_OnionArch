@@ -51,12 +51,12 @@
                                         <img src="@item?.coverImageUrl" alt="@item?.model" style="width: 100px; height: auto;" />
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminCar" asp-action="Edit" asp-route-id="@item?.carId">Düzenle</a>
+                                        <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminCar" asp-action="Edit" asp-route-id="@item?.id">Düzenle</a>
                                         <a class="btn btn-danger"
                                            asp-area="Admin"
                                            asp-controller="AdminCar"
                                            asp-action="Delete"
-                                           asp-route-id="@item?.carId"
+                                           asp-route-id="@item?.id"
                                            onclick="return confirm('Silmek istediğinizden emin misiniz?');">Sil</a>
                                     </td>
                                 </tr>

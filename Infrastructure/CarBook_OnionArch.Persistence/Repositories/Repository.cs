@@ -12,6 +12,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
         {
             try
             {
+                entity.IsDeleted = false;
                 context.Set<T>().Add(entity);
             }
             catch (Exception)
@@ -33,7 +34,6 @@ namespace CarBook_OnionArch.Persistence.Repositories
         {
             return await context.Set<T>()
                 .Where(x => x.Id == id && !x.IsDeleted)
-                .AsNoTracking()
                 .FirstOrDefaultAsync()
                 ?? throw new Exception("Girilen id ile kayıt bulunamadı");
         }
@@ -61,6 +61,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
         {
             try
             {
+                entity.IsDeleted = false;
                 context.Set<T>().Update(entity);
             }
 

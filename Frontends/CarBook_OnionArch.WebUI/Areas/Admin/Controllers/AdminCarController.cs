@@ -1,7 +1,9 @@
 ﻿using CarBook_OnionArch.Dto.BrandDtos;
 using CarBook_OnionArch.Dto.CarDtos;
+using CarBook_OnionArch.Dto.CarFeatureDtos;
 using CarBook_OnionArch.Dto.FeaturesDtos;
 using CarBook_OnionArch.WebUI.Extensions;
+using CarBook_OnionArch.WebUI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
@@ -9,7 +11,8 @@ using System.Text.Json;
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminCarController(IHttpClientFactory httpClientFactory) : Controller
+    public class AdminCarController(IHttpClientFactory httpClientFactory,
+                                    IImageService imageService) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -38,6 +41,14 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCarDto createCarDto)
         {
+            if (createCarDto.ImageFile != null)
+            {
+                var imagePath = await imageService.SaveImageAsync(createCarDto.ImageFile, "cars");
+                createCarDto.CoverImageUrl = imagePath;
+                createCarDto.BigImageUrl = imagePath;
+                ModelState.Remove("ImageUrl");
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Transmissions = EnumHelper.ToSelectList<TransmissionType>();
@@ -47,31 +58,46 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 return View(createCarDto);
             }
 
+            var jsonData = JsonSerializer.Serialize(createCarDto);
+            var formData = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
             var client = httpClientFactory.CreateClient();
-
-            using var formData = new MultipartFormDataContent();
-
-            // Diğer alanlar
-            formData.Add(new StringContent(createCarDto.BrandId.ToString()), "BrandId");
-            formData.Add(new StringContent(createCarDto.Model ?? ""), "Model");
-            formData.Add(new StringContent(createCarDto.Mileage.ToString()), "Mileage");
-            formData.Add(new StringContent(createCarDto.Transmission ?? ""), "Transmission");
-            formData.Add(new StringContent(createCarDto.Seat.ToString()), "Seat");
-            formData.Add(new StringContent(createCarDto.Luggage.ToString()), "Luggage");
-            formData.Add(new StringContent(createCarDto.Fuel ?? ""), "Fuel");
-
-            // Resim dosyası
-            if (createCarDto.ImageFile != null && createCarDto.ImageFile.Length > 0)
-            {
-                var streamContent = new StreamContent(createCarDto.ImageFile.OpenReadStream());
-                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(createCarDto.ImageFile.ContentType);
-                formData.Add(streamContent, "ImageFile", createCarDto.ImageFile.FileName);
-            }
-
             var response = await client.PostAsync("https://localhost:7020/api/Cars/create", formData);
 
             if (response.IsSuccessStatusCode)
             {
+                // Get new car ID (assume API returns it)
+                var carJson = await response.Content.ReadAsStringAsync();
+                var createdCar = JsonSerializer.Deserialize<ResultGetCarByIdDto>(carJson);
+                int carId = createdCar!.id;
+
+                // Get all features
+                var allFeatures = await FetchFeaturesAsync();
+
+                // Get selected features from form
+                var selectedFeatureIds = Request.Form["SelectedFeatureIds"].ToList();
+
+                // Post each feature
+                foreach (var feature in allFeatures)
+                {
+                    var dto = new CreateCarFeatureDto
+                    {
+                        CarId = carId,
+                        FeatureId = int.Parse(feature.Value),
+                        IsAvailable = selectedFeatureIds.Contains(feature.Value)
+                    };
+
+                    var json = JsonSerializer.Serialize(dto);
+                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    var responseFeature = await client.PostAsync("https://localhost:7020/api/CarFeatures", content);
+
+                    if (!responseFeature.IsSuccessStatusCode)
+                    {
+                        // Handle error if needed
+                        ModelState.AddModelError("", "Failed to add car feature.");
+                        return View(createCarDto);
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 

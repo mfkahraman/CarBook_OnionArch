@@ -14,8 +14,5 @@ namespace CarBook_OnionArch.Application.Features.CQRS.Commands.CarCommands
         public string? CoverImageUrl { get; set; }
         public string? BigImageUrl { get; set; }
         public int BrandId { get; init; }
-        public bool IsDeleted { get; init; } = false;
-        public IFormFile? ImageFile { get; set; }
-
     }
 }

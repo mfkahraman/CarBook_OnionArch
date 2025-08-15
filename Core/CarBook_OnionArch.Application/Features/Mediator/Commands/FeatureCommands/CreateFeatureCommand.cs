@@ -6,8 +6,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.FeatureComman
     public record CreateFeatureCommand : IRequest<GetFeatureByIdQueryResult>
     {
         public required string Name { get; init; }
-        public bool IsDeleted { get; init; } = false;
-
-
     }
 }

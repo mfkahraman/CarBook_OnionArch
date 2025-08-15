@@ -1,7 +1,11 @@
+using CarBook_OnionArch.WebUI.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IImageService, ImageService>();
 
 //HttpClient Registration
 builder.Services.AddHttpClient();

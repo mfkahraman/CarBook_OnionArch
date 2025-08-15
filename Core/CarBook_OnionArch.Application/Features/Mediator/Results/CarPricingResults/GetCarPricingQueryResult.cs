@@ -9,7 +9,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Results.CarPricingResu
         public int PricingId { get; set; }
         public required GetPricingQueryResult Pricing { get; set; }
         public decimal Amount { get; set; }
-        public bool IsDeleted { get; set; }
-
     }
 }

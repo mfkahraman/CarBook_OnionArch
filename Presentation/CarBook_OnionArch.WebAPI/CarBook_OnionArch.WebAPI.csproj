@@ -19,4 +19,8 @@
     <ProjectReference Include="..\..\Infrastructure\CarBook_OnionArch.Persistence\CarBook_OnionArch.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

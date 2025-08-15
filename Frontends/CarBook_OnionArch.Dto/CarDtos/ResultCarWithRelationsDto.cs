@@ -3,7 +3,7 @@
     public class ResultCarWithRelationsDto
     {
 
-        public int carId { get; set; }
+        public int id { get; set; }
         public string? model { get; set; }
         public int mileage { get; set; }
         public string? transmission { get; set; }
@@ -21,13 +21,13 @@
 
     public class Brand
     {
-        public int brandId { get; set; }
+        public int id { get; set; }
         public string? name { get; set; }
     }
 
     public class Carfeature
     {
-        public int carFeatureId { get; set; }
+        public int id { get; set; }
         public int carId { get; set; }
         public int featureId { get; set; }
         public object? feature { get; set; }
@@ -36,14 +36,14 @@
 
     public class Cardescription
     {
-        public int carDescriptionId { get; set; }
+        public int id { get; set; }
         public string? detail { get; set; }
         public int carId { get; set; }
     }
 
     public class Carpricing
     {
-        public int carPricingId { get; set; }
+        public int id { get; set; }
         public int carId { get; set; }
         public int pricingId { get; set; }
         public Pricing? pricing { get; set; }
@@ -52,7 +52,7 @@
 
     public class Pricing
     {
-        public int pricingId { get; set; }
+        public int id { get; set; }
         public string? name { get; set; }
     }
 

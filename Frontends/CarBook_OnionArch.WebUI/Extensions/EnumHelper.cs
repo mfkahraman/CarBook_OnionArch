@@ -10,7 +10,7 @@ namespace CarBook_OnionArch.WebUI.Extensions
                 .Cast<T>()
                 .Select(e => new SelectListItem
                 {
-                    Value = Convert.ToInt32(e).ToString(),
+                    Value = e.ToString(),
                     Text = e.ToString()
                 })
                 .ToList();

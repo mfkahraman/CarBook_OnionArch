@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace CarBook_OnionArch.Application.Interfaces
+﻿namespace CarBook_OnionArch.WebUI.Repositories
 {
     public interface IImageService
     {

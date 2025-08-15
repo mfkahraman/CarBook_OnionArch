@@ -18,7 +18,7 @@ namespace CarBook_OnionArch.WebUI.ViewComponents.DefaultViewComponents
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
-            var last5Cars = values?.OrderByDescending(x=> x.carId).Take(5).ToList();
+            var last5Cars = values?.OrderByDescending(x=> x.id).Take(5).ToList();
             return View(last5Cars);
         }
     }

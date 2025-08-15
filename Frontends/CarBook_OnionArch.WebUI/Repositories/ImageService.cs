@@ -1,8 +1,4 @@
-﻿using CarBook_OnionArch.Application.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
-
-namespace CarBook_OnionArch.Persistence.Repositories
+﻿namespace CarBook_OnionArch.WebUI.Repositories
 {
     public class ImageService(IHostEnvironment _env) : IImageService
     {
@@ -46,4 +42,5 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return false;
         }
     }
+
 }

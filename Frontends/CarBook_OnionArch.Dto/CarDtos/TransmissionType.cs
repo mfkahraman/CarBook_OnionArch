@@ -2,9 +2,9 @@
 {
     public enum TransmissionType
     {
-        Manuel = 1,
-        Otomatik = 2,
-        YarıOtomatik = 3,
-        Triptronik = 4
+        Manuel,
+        Otomatik,
+        YarıOtomatik,
+        Triptronik
     }
 }
