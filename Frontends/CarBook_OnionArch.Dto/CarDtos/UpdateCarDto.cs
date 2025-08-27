@@ -1,21 +1,69 @@
-﻿using CarBook_OnionArch.Dto.CarFeatureDtos;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace CarBook_OnionArch.Dto.CarDtos
 {
     public class UpdateCarDto
     {
-        public int Id { get; set; }
-        public string? Model { get; set; }
-        public int Mileage { get; set; }
-        public string? Transmission { get; set; }
-        public byte Seat { get; set; }
-        public byte Luggage { get; set; }
-        public string? Fuel { get; set; }
-        public string? CoverImageUrl { get; set; }
-        public string? BigImageUrl { get; set; }
-        public int BrandId { get; set; }
-        public List<UpdateCarFeatureDto>? CarFeatures { get; set; }
+            public int id { get; set; }
+            public string? model { get; set; }
+            public int mileage { get; set; }
+            public string? transmission { get; set; }
+            public byte seat { get; set; }
+            public byte luggage { get; set; }
+            public string? fuel { get; set; }
+            public string? coverImageUrl { get; set; }
+            public string? bigImageUrl { get; set; }
+            public int brandId { get; set; }
+            public Brand? brand { get; set; }
+            public Carfeature[]? carFeatures { get; set; }
+            public Cardescription[]? carDescriptions { get; set; }
+            public Carpricing[]? carPricings { get; set; }
+
+
+        public class Brand
+        {
+            public int id { get; set; }
+            public string? name { get; set; }
+        }
+
+        public class Carfeature
+        {
+            public int id { get; set; }
+            public int carId { get; set; }
+            public int featureId { get; set; }
+            public Feature? feature { get; set; }
+            public bool isAvailable { get; set; }
+        }
+
+        public class Feature
+        {
+            public int id { get; set; }
+            public string? name { get; set; }
+        }
+
+        public class Cardescription
+        {
+            public int id { get; set; }
+            public string? detail { get; set; }
+            public int carId { get; set; }
+        }
+
+        public class Carpricing
+        {
+            public int id { get; set; }
+            public int carId { get; set; }
+            public int pricingId { get; set; }
+            public Pricing? pricing { get; set; }
+            public int amount { get; set; }
+        }
+
+        public class Pricing
+        {
+            public int id { get; set; }
+            public string? name { get; set; }
+            public bool isDeleted { get; set; }
+        }
+
         public IFormFile? ImageFile { get; set; }
     }
 }

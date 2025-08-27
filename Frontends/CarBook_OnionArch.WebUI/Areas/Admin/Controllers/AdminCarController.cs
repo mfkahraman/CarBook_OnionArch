@@ -99,10 +99,10 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             return View("Error");
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-by-id/{id}");
+            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-car-with-relations-by-id/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 return View("Error");
@@ -124,19 +124,19 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UpdateCarDto dto)
+        public async Task<IActionResult> Update(UpdateCarDto dto)
         {
             if (dto.ImageFile != null)
             {
-                if (!string.IsNullOrEmpty(dto.CoverImageUrl))
-                    await imageService.DeleteImageAsync(dto.CoverImageUrl);
+                if (!string.IsNullOrEmpty(dto.coverImageUrl))
+                    await imageService.DeleteImageAsync(dto.coverImageUrl);
 
-                else if (!string.IsNullOrEmpty(dto.BigImageUrl))
-                    await imageService.DeleteImageAsync(dto.BigImageUrl);
+                else if (!string.IsNullOrEmpty(dto.bigImageUrl))
+                    await imageService.DeleteImageAsync(dto.bigImageUrl);
 
                 var imagePath = await imageService.SaveImageAsync(dto.ImageFile, "cars");
-                dto.CoverImageUrl = imagePath;
-                dto.BigImageUrl = imagePath;
+                dto.coverImageUrl = imagePath;
+                dto.bigImageUrl = imagePath;
                 ModelState.Remove("ImageUrl");
             }
 
@@ -156,7 +156,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                int carId = dto!.Id;
+                int carId = dto!.id;
 
                 var allFeatures = await FetchFeaturesAsync();
 
