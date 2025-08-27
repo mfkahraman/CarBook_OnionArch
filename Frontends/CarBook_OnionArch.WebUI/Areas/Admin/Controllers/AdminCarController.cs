@@ -99,10 +99,10 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             return View("Error");
         }
 
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7020/api/Cars/update/{id}");
+            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-by-id/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 return View("Error");
@@ -124,7 +124,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCarDto dto)
+        public async Task<IActionResult> Edit(UpdateCarDto dto)
         {
             if (dto.ImageFile != null)
             {
@@ -156,8 +156,35 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                int carId = dto!.Id;
+
+                var allFeatures = await FetchFeaturesAsync();
+
+                var selectedFeatureIds = Request.Form["SelectedFeatureIds"].ToList();
+
+                foreach (var feature in allFeatures)
+                {
+                    var carFeatureDto = new CreateCarFeatureDto
+                    {
+                        CarId = carId,
+                        FeatureId = int.Parse(feature.Value),
+                        IsAvailable = selectedFeatureIds.Contains(feature.Value)
+                    };
+
+                    var json = JsonSerializer.Serialize(carFeatureDto);
+                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    var responseFeature = await client.PostAsync("https://localhost:7020/api/CarFeatures", content);
+
+                    if (!responseFeature.IsSuccessStatusCode)
+                    {
+                        ModelState.AddModelError("", "Failed to add car feature.");
+                        return View(dto);
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
+
 
             return View("Error");
         }

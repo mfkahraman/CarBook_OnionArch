@@ -13,7 +13,8 @@ namespace CarBook_OnionArch.WebAPI.Controllers
                                   GetCarByIdQueryHandler getByIdHandler,
                                   GetCarQueryHandler getAllQueryHandler,
                                   GetCarWithBrandQueryHandler withBrandQueryHandler,
-                                  GetCarWithAllQueryHandler carWithAllHandler)
+                                  GetCarWithAllQueryHandler carWithAllHandler,
+                                  GetCarWithRelationsByIdQueryHandler withRelationsByIdHandler)
         : ControllerBase
     {
         [HttpGet("get-all")]
@@ -59,6 +60,19 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var value = await getByIdHandler.Handle(new GetCarByIdQuery(id));
+
+            if (value == null)
+            {
+                return NotFound("Kayıt bulunamadı");
+            }
+
+            return Ok(value);
+        }
+
+        [HttpGet("get-car-with-relations-by-id/{id}")]
+        public async Task<IActionResult> GetCarWithRelationsById(int id)
+        {
+            var value = await withRelationsByIdHandler.Handle(new GetCarByIdQuery(id));
 
             if (value == null)
             {

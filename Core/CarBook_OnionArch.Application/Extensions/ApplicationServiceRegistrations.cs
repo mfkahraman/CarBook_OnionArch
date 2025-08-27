@@ -47,6 +47,7 @@ namespace CarBook_OnionArch.Application.Extensions
             services.AddScoped<UpdateCarCommandHandler>();
             services.AddScoped<RemoveCarCommandHandler>();
             services.AddScoped<GetCarByIdQueryHandler>();
+            services.AddScoped<GetCarWithRelationsByIdQueryHandler>();
             services.AddScoped<GetCarQueryHandler>();
             services.AddScoped<GetCarWithBrandQueryHandler>();
             services.AddScoped<GetCarWithAllQueryHandler>();

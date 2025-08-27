@@ -29,5 +29,19 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return values;
         }
 
+        public Task<Car> GetCarWithRelationsById(int id)
+        {
+            return context.Cars
+                .Where(x => x.Id == id && !x.IsDeleted && !x.Brand.IsDeleted)
+                .Include(x => x.Brand)
+                .Include(x => x.CarFeatures!
+                    .Where(cf => !cf.IsDeleted && !cf.Feature.IsDeleted))
+                        .ThenInclude(cf => cf.Feature)
+                .Include(x => x.CarDescriptions!.Where(cd => !cd.IsDeleted))
+                .Include(x => x.CarPricings!
+                    .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted))
+                        .ThenInclude(cp => cp.Pricing)
+                .FirstOrDefaultAsync()!;
+        }
     }
 }

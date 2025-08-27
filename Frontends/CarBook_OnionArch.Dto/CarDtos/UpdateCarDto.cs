@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CarBook_OnionArch.Dto.CarFeatureDtos;
+using Microsoft.AspNetCore.Http;
 
 namespace CarBook_OnionArch.Dto.CarDtos
 {
@@ -14,6 +15,7 @@ namespace CarBook_OnionArch.Dto.CarDtos
         public string? CoverImageUrl { get; set; }
         public string? BigImageUrl { get; set; }
         public int BrandId { get; set; }
+        public List<UpdateCarFeatureDto>? CarFeatures { get; set; }
         public IFormFile? ImageFile { get; set; }
     }
 }
