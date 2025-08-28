@@ -93,11 +93,11 @@
                                 <div class="col-md-4 col-sm-6 mb-2">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox"
-                                               name="CarFeatures[@featureIndex].IsAvailable"
+                                               name="carFeatures[@featureIndex].isAvailable"
                                                value="true"
                                                id="feature_@feature.featureId"
                                                @(feature.isAvailable ? "checked" : "") />
-                                        <input type="hidden" name="CarFeatures[@featureIndex].FeatureId" value="@feature.featureId" />
+                                        <input type="hidden" name="carFeatures[@featureIndex].featureId" value="@feature.featureId" />
                                         <label class="form-check-label" for="feature_@feature.featureId">@feature.feature!.name</label>
                                     </div>
                                 </div>
