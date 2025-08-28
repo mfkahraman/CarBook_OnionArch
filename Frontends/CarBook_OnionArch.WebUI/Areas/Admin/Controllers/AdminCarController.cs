@@ -118,7 +118,6 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             ViewBag.Transmissions = EnumHelper.ToSelectList<TransmissionType>();
             ViewBag.Fuels = EnumHelper.ToSelectList<FuelType>();
             ViewBag.Brands = await FetchBrandsAsync();
-            ViewBag.Features = await FetchFeaturesAsync();
 
             return View(dto);
         }
@@ -145,39 +144,25 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 ViewBag.Transmissions = EnumHelper.ToSelectList<TransmissionType>();
                 ViewBag.Fuels = EnumHelper.ToSelectList<FuelType>();
                 ViewBag.Brands = await FetchBrandsAsync();
-                ViewBag.Features = await FetchFeaturesAsync();
                 return View(dto);
             }
 
             var jsonData = JsonSerializer.Serialize(dto);
             var formData = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
             var client = httpClientFactory.CreateClient();
-            var response = await client.PutAsync("https://localhost:7020/api/Cars/update", formData);
+            var response = await client.PutAsync($"https://localhost:7020/api/Cars/update/{dto.id}", formData);
 
             if (response.IsSuccessStatusCode)
             {
-                int carId = dto!.id;
-
-                var allFeatures = await FetchFeaturesAsync();
-
-                var selectedFeatureIds = Request.Form["SelectedFeatureIds"].ToList();
-
-                foreach (var feature in allFeatures)
+                foreach (var feature in dto.carFeatures!)
                 {
-                    var carFeatureDto = new CreateCarFeatureDto
-                    {
-                        CarId = carId,
-                        FeatureId = int.Parse(feature.Value),
-                        IsAvailable = selectedFeatureIds.Contains(feature.Value)
-                    };
-
-                    var json = JsonSerializer.Serialize(carFeatureDto);
+                    var json = JsonSerializer.Serialize(feature);
                     var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                    var responseFeature = await client.PostAsync("https://localhost:7020/api/CarFeatures", content);
+                    var responseFeature = await client.PutAsync($"https://localhost:7020/api/CarFeatures/{feature.id}", content);
 
                     if (!responseFeature.IsSuccessStatusCode)
                     {
-                        ModelState.AddModelError("", "Failed to add car feature.");
+                        ModelState.AddModelError("", "Failed to update car feature.");
                         return View(dto);
                     }
                 }
