@@ -88,17 +88,19 @@
                         @if (Model.carFeatures != null)
                         {
                             int featureIndex = 0;
-                            foreach (var feature in Model.carFeatures)
+                            foreach (var carFeature in Model.carFeatures)
                             {
+                                <input type="hidden" name="carFeatures[@featureIndex].id" value="@carFeature.id" />
+                                <input type="hidden" name="carFeatures[@featureIndex].featureId" value="@carFeature.featureId" />
+                                <input type="hidden" name="carFeatures[@featureIndex].carId" value="@carFeature.carId" />
                                 <div class="col-md-4 col-sm-6 mb-2">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox"
                                                name="carFeatures[@featureIndex].isAvailable"
                                                value="true"
-                                               id="feature_@feature.featureId"
-                                               @(feature.isAvailable ? "checked" : "") />
-                                        <input type="hidden" name="carFeatures[@featureIndex].featureId" value="@feature.featureId" />
-                                        <label class="form-check-label" for="feature_@feature.featureId">@feature.feature!.name</label>
+                                               id="feature_@carFeature.featureId"
+                                               @(carFeature.isAvailable ? "checked" : "") />
+                                        <label class="form-check-label" for="feature_@carFeature.featureId">@carFeature.feature!.name</label>
                                     </div>
                                 </div>
                                 featureIndex++;
