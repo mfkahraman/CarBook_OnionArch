@@ -98,6 +98,20 @@
             </div>
         </div>
 
+        <!-- Açıklama -->
+        <div class="col-lg-10 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Açıklama</h5>
+                    <div class="form-group">
+                        <label asp-for="carDescriptions[0].detail" class="control-label">Araba Açıklaması</label>
+                        <textarea asp-for="carDescriptions[0].detail" class="form-control"></textarea>
+                        <span asp-validation-for="carDescriptions[0].detail" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Kaydet Butonu -->
         <div class="col-lg-10 text-center mb-4">
             <button type="submit" class="btn btn-dark btn-lg px-5">Kaydet</button>
