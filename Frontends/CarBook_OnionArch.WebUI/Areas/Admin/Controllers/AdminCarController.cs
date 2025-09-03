@@ -44,8 +44,8 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             if (createCarDto.ImageFile != null)
             {
                 var imagePath = await imageService.SaveImageAsync(createCarDto.ImageFile, "cars");
-                createCarDto.CoverImageUrl = imagePath;
-                createCarDto.BigImageUrl = imagePath;
+                createCarDto.coverImageUrl = imagePath;
+                createCarDto.bigImageUrl = imagePath;
                 ModelState.Remove("ImageUrl");
             }
 

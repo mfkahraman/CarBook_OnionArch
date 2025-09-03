@@ -18,29 +18,29 @@
                     <h5 class="card-title mb-3">Araba Bilgileri</h5>
                     <div class="mb-3">
                         <label class="form-label">Marka</label>
-                        <select asp-for="BrandId" asp-items="@ViewBag.Brands" class="form-select">
+                        <select asp-for="brandId" asp-items="@ViewBag.Brands" class="form-select">
                             <option selected disabled>Marka Seçiniz</option>
                         </select>
-                        <span asp-validation-for="BrandId" class="text-danger"></span>
+                        <span asp-validation-for="brandId" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Araba Modeli</label>
-                        <input asp-for="Model" class="form-control" />
-                        <span asp-validation-for="Model" class="text-danger"></span>
+                        <input asp-for="model" class="form-control" />
+                        <span asp-validation-for="model" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Vites Türü</label>
-                        <select asp-for="Transmission" asp-items="@ViewBag.Transmissions" class="form-select">
+                        <select asp-for="transmission" asp-items="@ViewBag.Transmissions" class="form-select">
                             <option selected disabled>Vites Türü Seçiniz</option>
                         </select>
-                        <span asp-validation-for="Transmission" class="text-danger"></span>
+                        <span asp-validation-for="transmission" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Yakıt Türü</label>
-                        <select asp-for="Fuel" asp-items="@ViewBag.Fuels" class="form-select">
+                        <select asp-for="fuel" asp-items="@ViewBag.Fuels" class="form-select">
                             <option selected disabled>Yakıt Türü Seçiniz</option>
                         </select>
-                        <span asp-validation-for="Fuel" class="text-danger"></span>
+                        <span asp-validation-for="fuel" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -53,18 +53,18 @@
                     <h5 class="card-title mb-3">Teknik Bilgiler</h5>
                     <div class="mb-3">
                         <label class="form-label">Kilometre</label>
-                        <input asp-for="Mileage" type="number" class="form-control" />
-                        <span asp-validation-for="Mileage" class="text-danger"></span>
+                        <input asp-for="mileage" type="number" class="form-control" />
+                        <span asp-validation-for="mileage" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Koltuk Sayısı</label>
-                        <input asp-for="Seat" type="number" class="form-control" />
-                        <span asp-validation-for="Seat" class="text-danger"></span>
+                        <input asp-for="seat" type="number" class="form-control" />
+                        <span asp-validation-for="seat" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Bagaj Kapasitesi</label>
-                        <input asp-for="Luggage" type="number" class="form-control" />
-                        <span asp-validation-for="Luggage" class="text-danger"></span>
+                        <input asp-for="luggage" type="number" class="form-control" />
+                        <span asp-validation-for="luggage" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Görsel</label>
