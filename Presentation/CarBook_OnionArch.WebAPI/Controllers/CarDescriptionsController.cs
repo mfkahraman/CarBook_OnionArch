@@ -6,7 +6,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarDesciptionsController(IMediator mediator) : ControllerBase
+    public class CarDescriptionsController(IMediator mediator) : ControllerBase
     {
 
         [HttpPost]

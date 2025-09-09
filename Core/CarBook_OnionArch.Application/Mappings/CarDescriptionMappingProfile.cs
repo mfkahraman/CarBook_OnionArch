@@ -12,6 +12,7 @@ namespace CarBook_OnionArch.Application.Mappings
             CreateMap<CarDescription, GetCarDescriptionQueryResult>().ReverseMap();
             CreateMap<CarDescription, CreateCarDescriptionCommand>().ReverseMap();
             CreateMap<CarDescription, UpdateCarDescriptionCommand>().ReverseMap();
+            CreateMap<CarDescription, GetCarDescriptionByIdQueryResult>().ReverseMap();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace CarBook_OnionArch.Application.Mappings
             CreateMap<CarPricing, GetCarPricingQueryResult>().ReverseMap();
             CreateMap<CarPricing, CreateCarPricingCommand>().ReverseMap();
             CreateMap<CarPricing, UpdateCarPricingCommand>().ReverseMap();
+            CreateMap<CarPricing, GetCarPricingByIdQueryResult>().ReverseMap();
         }
     }
 }
