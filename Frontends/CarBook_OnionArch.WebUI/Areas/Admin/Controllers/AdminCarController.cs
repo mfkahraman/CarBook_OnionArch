@@ -3,6 +3,7 @@ using CarBook_OnionArch.Dto.CarDescriptionDtos;
 using CarBook_OnionArch.Dto.CarDtos;
 using CarBook_OnionArch.Dto.CarFeatureDtos;
 using CarBook_OnionArch.Dto.FeaturesDtos;
+using CarBook_OnionArch.Dto.PricingDtos;
 using CarBook_OnionArch.WebUI.Extensions;
 using CarBook_OnionArch.WebUI.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             ViewBag.Fuels = EnumHelper.ToSelectList<FuelType>();
             ViewBag.Brands = await FetchBrandsAsync();
             ViewBag.Features = await FetchFeaturesAsync();
+            ViewBag.Pricings = await FetchPricingsAsync();
             return View();
         }
 
@@ -56,6 +58,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 ViewBag.Fuels = EnumHelper.ToSelectList<FuelType>();
                 ViewBag.Brands = await FetchBrandsAsync();
                 ViewBag.Features = await FetchFeaturesAsync();
+                ViewBag.Pricings = await FetchPricingsAsync();
                 return View(createCarDto);
             }
 
@@ -241,6 +244,20 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                     Value = x.id.ToString()
                 }).ToList();
             return brandList;
+        }
+        public async Task<List<SelectListItem>> FetchPricingsAsync()
+        {
+            var client = httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Pricings");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var values = JsonSerializer.Deserialize<List<ResultPricingDto>>(jsonData);
+            List<SelectListItem> pricingList = values!
+                .Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+            return pricingList;
         }
 
     }
