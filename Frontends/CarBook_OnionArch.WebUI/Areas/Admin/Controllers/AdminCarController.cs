@@ -1,4 +1,5 @@
 ﻿using CarBook_OnionArch.Dto.BrandDtos;
+using CarBook_OnionArch.Dto.CarDescriptionDtos;
 using CarBook_OnionArch.Dto.CarDtos;
 using CarBook_OnionArch.Dto.CarFeatureDtos;
 using CarBook_OnionArch.Dto.FeaturesDtos;
@@ -58,45 +59,71 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 return View(createCarDto);
             }
 
+            //Create Car
             var jsonData = JsonSerializer.Serialize(createCarDto);
             var formData = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
             var client = httpClientFactory.CreateClient();
-            var response = await client.PostAsync("https://localhost:7020/api/Cars/create", formData);
+            var responseCar = await client.PostAsync("https://localhost:7020/api/Cars/create", formData);
 
-            if (response.IsSuccessStatusCode)
+            if(!responseCar.IsSuccessStatusCode)
             {
-                var carJson = await response.Content.ReadAsStringAsync();
-                var createdCar = JsonSerializer.Deserialize<ResultGetCarByIdDto>(carJson);
-                int carId = createdCar!.id;
-
-                var allFeatures = await FetchFeaturesAsync();
-
-                var selectedFeatureIds = Request.Form["SelectedFeatureIds"].ToList();
-
-                foreach (var feature in allFeatures)
-                {
-                    var dto = new CreateCarFeatureDto
-                    {
-                        CarId = carId,
-                        FeatureId = int.Parse(feature.Value),
-                        IsAvailable = selectedFeatureIds.Contains(feature.Value)
-                    };
-
-                    var json = JsonSerializer.Serialize(dto);
-                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                    var responseFeature = await client.PostAsync("https://localhost:7020/api/CarFeatures", content);
-
-                    if (!responseFeature.IsSuccessStatusCode)
-                    {
-                        ModelState.AddModelError("", "Failed to add car feature.");
-                        return View(createCarDto);
-                    }
-                }
-
-                return RedirectToAction("Index");
+                ModelState.AddModelError("", "Failed to create car.");
+                return View(createCarDto);
             }
 
-            return View("Error");
+            var carJson = await responseCar.Content.ReadAsStringAsync();
+            //End of Create Car
+
+            //Get Created Car Id
+            var createdCar = JsonSerializer.Deserialize<ResultGetCarByIdDto>(carJson);
+            int carId = createdCar!.id;
+            //End of Get Created Car Id
+
+            //Create Car Description
+            var descriptionDto = new CreateCarDescriptionDto
+            {
+                Detail = createCarDto.carDescriptions!.First().detail!,
+                CarId = carId
+            };
+
+            var descriptionJson = JsonSerializer.Serialize(descriptionDto);
+            var descriptionContent = new StringContent(descriptionJson, System.Text.Encoding.UTF8, "application/json");
+            var responseDescription = await client.PostAsync("https://localhost:7020/api/CarDescriptions", descriptionContent);
+            if (!responseDescription.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Failed to add car description.");
+                return View(createCarDto);
+            }
+            //End of Create Car Description
+
+
+            //Create Car Features
+            var allFeatures = await FetchFeaturesAsync();
+
+            var selectedFeatureIds = Request.Form["SelectedFeatureIds"].ToList();
+
+            foreach (var feature in allFeatures)
+            {
+                var dto = new CreateCarFeatureDto
+                {
+                    CarId = carId,
+                    FeatureId = int.Parse(feature.Value),
+                    IsAvailable = selectedFeatureIds.Contains(feature.Value)
+                };
+
+                var json = JsonSerializer.Serialize(dto);
+                var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                var responseFeature = await client.PostAsync("https://localhost:7020/api/CarFeatures", content);
+
+                if (!responseFeature.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("", "Failed to add car feature.");
+                    return View(createCarDto);
+                }
+            }
+            //End of Create Car Features
+
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Update(int id)
