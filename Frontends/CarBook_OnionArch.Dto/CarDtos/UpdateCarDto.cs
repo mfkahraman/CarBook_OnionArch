@@ -54,7 +54,7 @@ namespace CarBook_OnionArch.Dto.CarDtos
             public int carId { get; set; }
             public int pricingId { get; set; }
             public Pricing? pricing { get; set; }
-            public int amount { get; set; }
+            public decimal amount { get; set; }
         }
 
         public class Pricing

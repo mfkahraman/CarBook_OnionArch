@@ -1,4 +1,5 @@
 ﻿@using CarBook_OnionArch.Dto.CarDtos
+@using CarBook_OnionArch.Dto.PricingDtos
 @model UpdateCarDto
 
 @{
@@ -79,6 +80,48 @@
             </div>
         </div>
 
+        <!-- Açıklama -->
+        <div class="col-lg-10 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Açıklama</h5>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="carDescriptions[0].id" />
+                        <input type="hidden" asp-for="carDescriptions[0].carId" />
+                        <label asp-for="carDescriptions[0].detail" class="control-label">Araba Açıklaması</label>
+                        <textarea asp-for="carDescriptions[0].detail" class="form-control"></textarea>
+                        <span asp-validation-for="carDescriptions[0].detail" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fiyatlandırma -->
+        <div class="col-lg-10 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Fiyatlandırma</h5>
+                    <div class="row">
+                        @if (Model.carPricings != null)
+                        {
+                            for (int i = 0; i < Model.carPricings.Count(); i++)
+                            {
+                                var pricing = Model.carPricings[i];
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">@pricing.pricing?.name</label>
+                                    <input type="hidden" name="carPricings[@i].carId" value="@pricing.carId" />
+                                    <input type="hidden" name="carPricings[@i].id" value="@pricing.id" />
+                                    <input type="hidden" name="carPricings[@i].pricingId" value="@pricing.pricingId" />
+                                    <input type="number" class="form-control" name="carPricings[@i].amount" value="@pricing.amount" min="0" step="0.01" />
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Özellikler -->
         <div class="col-lg-10 mb-4">
             <div class="card shadow-sm">
@@ -100,7 +143,14 @@
                                                value="true"
                                                id="feature_@carFeature.featureId"
                                                @(carFeature.isAvailable ? "checked" : "") />
-                                        <label class="form-check-label" for="feature_@carFeature.featureId">@carFeature.feature!.name</label>
+                                        @if (carFeature.feature != null)
+                                        {
+                                            <label class="form-check-label" for="feature_@carFeature.featureId">@carFeature.feature.name</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="form-check-label" for="feature_@carFeature.featureId">Özellik adı yok</label>
+                                        }
                                     </div>
                                 </div>
                                 featureIndex++;

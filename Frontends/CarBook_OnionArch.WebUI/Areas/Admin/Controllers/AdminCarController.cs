@@ -68,7 +68,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var client = httpClientFactory.CreateClient();
             var responseCar = await client.PostAsync("https://localhost:7020/api/Cars/create", formData);
 
-            if(!responseCar.IsSuccessStatusCode)
+            if (!responseCar.IsSuccessStatusCode)
             {
                 ModelState.AddModelError("", "Failed to create car.");
                 return View(createCarDto);
@@ -167,19 +167,19 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCarDto dto)
+        public async Task<IActionResult> Update(UpdateCarDto updateCarDto)
         {
-            if (dto.ImageFile != null)
+            if (updateCarDto.ImageFile != null)
             {
-                if (!string.IsNullOrEmpty(dto.coverImageUrl))
-                    await imageService.DeleteImageAsync(dto.coverImageUrl);
+                if (!string.IsNullOrEmpty(updateCarDto.coverImageUrl))
+                    await imageService.DeleteImageAsync(updateCarDto.coverImageUrl);
 
-                else if (!string.IsNullOrEmpty(dto.bigImageUrl))
-                    await imageService.DeleteImageAsync(dto.bigImageUrl);
+                else if (!string.IsNullOrEmpty(updateCarDto.bigImageUrl))
+                    await imageService.DeleteImageAsync(updateCarDto.bigImageUrl);
 
-                var imagePath = await imageService.SaveImageAsync(dto.ImageFile, "cars");
-                dto.coverImageUrl = imagePath;
-                dto.bigImageUrl = imagePath;
+                var imagePath = await imageService.SaveImageAsync(updateCarDto.ImageFile, "cars");
+                updateCarDto.coverImageUrl = imagePath;
+                updateCarDto.bigImageUrl = imagePath;
                 ModelState.Remove("ImageUrl");
             }
 
@@ -188,17 +188,58 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 ViewBag.Transmissions = EnumHelper.ToSelectList<TransmissionType>();
                 ViewBag.Fuels = EnumHelper.ToSelectList<FuelType>();
                 ViewBag.Brands = await FetchBrandsAsync();
-                return View(dto);
+                return View(updateCarDto);
             }
 
-            var jsonData = JsonSerializer.Serialize(dto);
+            // Update Car
+            var jsonData = JsonSerializer.Serialize(updateCarDto);
             var formData = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
             var client = httpClientFactory.CreateClient();
-            var response = await client.PutAsync($"https://localhost:7020/api/Cars/update/{dto.id}", formData);
+            var responseCar = await client.PutAsync($"https://localhost:7020/api/Cars/update/{updateCarDto.id}", formData);
 
-            if (response.IsSuccessStatusCode)
+            if (!responseCar.IsSuccessStatusCode)
             {
-                foreach (var feature in dto.carFeatures!)
+                ModelState.AddModelError("", "Failed to update car.");
+                return View(updateCarDto);
+            }
+
+            // Update Car Description
+            if (updateCarDto.carDescriptions != null && updateCarDto.carDescriptions.Length > 0)
+            {
+                var description = updateCarDto.carDescriptions[0];
+                var descriptionJson = JsonSerializer.Serialize(description);
+                var descriptionContent = new StringContent(descriptionJson, System.Text.Encoding.UTF8, "application/json");
+                var responseDescription = await client.PutAsync($"https://localhost:7020/api/CarDescriptions/{description.id}", descriptionContent);
+
+                if (!responseDescription.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("", "Failed to update car description.");
+                    return View(updateCarDto);
+                }
+            }
+
+            // Update Car Pricings
+            if (updateCarDto.carPricings != null)
+            {
+                foreach (var pricing in updateCarDto.carPricings)
+                {
+                    var pricingJson = JsonSerializer.Serialize(pricing);
+                    var pricingContent = new StringContent(pricingJson, System.Text.Encoding.UTF8, "application/json");
+                    var responsePricing = await client.PutAsync($"https://localhost:7020/api/CarPricings/{pricing.id}", pricingContent);
+
+                    if (!responsePricing.IsSuccessStatusCode)
+                    {
+                        ModelState.AddModelError("", "Failed to update car pricing.");
+                        return View(updateCarDto);
+                    }
+                }
+            }
+
+
+            // Update Car Features
+            if (updateCarDto.carFeatures != null)
+            {
+                foreach (var feature in updateCarDto.carFeatures)
                 {
                     var json = JsonSerializer.Serialize(feature);
                     var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -207,15 +248,12 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                     if (!responseFeature.IsSuccessStatusCode)
                     {
                         ModelState.AddModelError("", "Failed to update car feature.");
-                        return View(dto);
+                        return View(updateCarDto);
                     }
                 }
-
-                return RedirectToAction("Index");
             }
 
-
-            return View("Error");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Delete(int id)
