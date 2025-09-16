@@ -245,19 +245,13 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 }).ToList();
             return brandList;
         }
-        public async Task<List<SelectListItem>> FetchPricingsAsync()
+        public async Task<List<ResultPricingDto>> FetchPricingsAsync()
         {
             var client = httpClientFactory.CreateClient();
             var response = await client.GetAsync("https://localhost:7020/api/Pricings");
             var jsonData = await response.Content.ReadAsStringAsync();
-            var values = JsonSerializer.Deserialize<List<ResultPricingDto>>(jsonData);
-            List<SelectListItem> pricingList = values!
-                .Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            return pricingList;
+            var pricingList = JsonSerializer.Deserialize<List<ResultPricingDto>>(jsonData);
+            return pricingList ?? new List<ResultPricingDto>();
         }
 
     }
