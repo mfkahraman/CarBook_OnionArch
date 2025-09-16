@@ -99,6 +99,20 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             }
             //End of Create Car Description
 
+            //Create Car Pricings
+            foreach (var pricing in createCarDto.carPricings!)
+            {
+                pricing.carId = carId;
+                var pricingJson = JsonSerializer.Serialize(pricing);
+                var pricingContent = new StringContent(pricingJson, System.Text.Encoding.UTF8, "application/json");
+                var responsePricing = await client.PostAsync("https://localhost:7020/api/CarPricings", pricingContent);
+                if (!responsePricing.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("", "Failed to add car pricing.");
+                    return View(createCarDto);
+                }
+            }
+            //End of Create Car Pricings
 
             //Create Car Features
             var allFeatures = await FetchFeaturesAsync();
