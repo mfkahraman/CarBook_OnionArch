@@ -1,0 +1,16 @@
+﻿@using CarBook_OnionArch.Dto.FeaturesDtos
+@model UpdateFeatureDto
+
+@{
+    ViewData["Title"] = "Araç Özelliği Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+}
+
+<form asp-action="Update" method="post">
+    <div class="form-group">
+        <label asp-for="name" class="control-label">Özellik Adı</label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>
