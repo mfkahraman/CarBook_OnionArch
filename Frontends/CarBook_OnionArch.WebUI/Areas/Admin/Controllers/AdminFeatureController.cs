@@ -7,7 +7,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class AdminFeatureController(IHttpClientFactory httpClient) : Controller
     {
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             var client = httpClient.CreateClient();
             var response = await client.GetAsync("https://localhost:7020/api/Features");
