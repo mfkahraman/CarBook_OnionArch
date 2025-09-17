@@ -22,5 +22,30 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 
             return View(features);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateFeatureDto createFeatureDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(createFeatureDto);
+            }
+            var client = httpClient.CreateClient();
+            var jsonData = JsonSerializer.Serialize(createFeatureDto);
+            var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("https://localhost:7020/api/Features", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the feature.");
+                return View(createFeatureDto);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
