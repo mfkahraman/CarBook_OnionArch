@@ -1,13 +1,14 @@
 ﻿using CarBook_OnionArch.Dto.FeaturesDtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using X.PagedList.Extensions;
 
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AdminFeatureController(IHttpClientFactory httpClient) : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var client = httpClient.CreateClient();
             var response = await client.GetAsync("https://localhost:7020/api/Features");
@@ -20,7 +21,11 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var jsonData = await response.Content.ReadAsStringAsync();
             var features = JsonSerializer.Deserialize<List<ResultFeatureDto>>(jsonData);
 
-            return View(features);
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            var pagedList = features?.ToPagedList(pageNumber, pageSize);
+
+            return View(pagedList);
         }
 
         [HttpGet]

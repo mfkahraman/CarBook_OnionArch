@@ -1,14 +1,15 @@
 ﻿using CarBook_OnionArch.Dto.BrandDtos;
-using CarBook_OnionArch.Dto.FeaturesDtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
+using X.PagedList.Extensions;
 
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AdminBrandController(IHttpClientFactory httpClient) : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var client = httpClient.CreateClient();
             var response = await client.GetAsync("https://localhost:7020/api/Brands");
@@ -21,7 +22,11 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var jsonData = await response.Content.ReadAsStringAsync();
             var brands = JsonSerializer.Deserialize<List<ResultBrandDto>>(jsonData);
 
-            return View(brands);
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            var pagedList = brands?.ToPagedList(pageNumber, pageSize);
+
+            return View(pagedList);
         }
 
         [HttpGet]
