@@ -1,5 +1,7 @@
 ﻿@using CarBook_OnionArch.Dto.CarDtos
-@model List<ResultCarWithRelationsDto>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ResultCarWithRelationsDto>
 
 @{
     ViewData["Title"] = "Araba Listesi";
@@ -57,7 +59,7 @@
                                            asp-controller="AdminCar"
                                            asp-action="Delete"
                                            asp-route-id="@item?.id"
-                                           onclick="return confirm('Silmek istediğinizden emin misiniz?');">Sil</a>
+                                           onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Sil</a>
                                     </td>
                                 </tr>
                             }
@@ -75,4 +77,22 @@
     </div>
     <!-- end col -->
 
+</div>
+
+@* Paged List Pagination *@
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(
+    Model,
+    page => Url.Action("Index", new { page }), // Controller'daki action ismine göre güncelle
+        new X.PagedList.Mvc.Core.PagedListRenderOptions
+        {
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+            UlElementClasses = new[] { "pagination" },
+            DisplayLinkToFirstPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always
+        }
+        )
 </div>

@@ -9,6 +9,7 @@ using CarBook_OnionArch.WebUI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
+using X.PagedList.Extensions;
 
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
@@ -16,7 +17,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
     public class AdminCarController(IHttpClientFactory httpClientFactory,
                                     IImageService imageService) : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var client = httpClientFactory.CreateClient();
             var response = await client.GetAsync("https://localhost:7020/api/Cars/get-cars-with-all");
@@ -28,7 +29,12 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 
             var jsonData = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
-            return View(values);
+
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            var pagedList = values?.ToPagedList(pageNumber, pageSize);
+
+            return View(pagedList);
         }
 
         public async Task<IActionResult> Create()
