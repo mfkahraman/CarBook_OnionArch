@@ -13,7 +13,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
                                   GetContactByIdQueryHandler getByIdHandler,
                                   GetContactQueryHandler getAllQueryHandler) : ControllerBase
     {
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var values = await getAllQueryHandler.Handle();
@@ -26,7 +26,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             return Ok(values);
         }
 
-        [HttpGet("get-by-id/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var value = await getByIdHandler.Handle(new GetContactByIdQuery(id));
@@ -39,7 +39,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             return Ok(value);
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateContactCommand command)
         {
             try
@@ -61,9 +61,12 @@ namespace CarBook_OnionArch.WebAPI.Controllers
 
         }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update(UpdateContactCommand command)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, UpdateContactCommand command)
         {
+            if (id != command.Id)
+                return BadRequest("URL'deki id ile gövdedeki id uyuşmuyor.");
+
             try
             {
                 var result = await updateHandler.Handle(command);
@@ -79,7 +82,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
