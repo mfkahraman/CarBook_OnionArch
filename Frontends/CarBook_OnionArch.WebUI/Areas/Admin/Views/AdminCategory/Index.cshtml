@@ -1,0 +1,58 @@
+﻿@using CarBook_OnionArch.Dto.CategoriesDtos
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ResultCategoryDto>
+
+@{
+    ViewData["Title"] = "Blog Kategorileri";
+    ViewData["SubTitle"] = "Admin Kategori Yönetimi Sayfası";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+
+    int count = (Model.PageNumber - 1) * Model.PageSize;
+}
+
+
+<a class="btn btn-success mb-3" href="@Url.Action("Create", "AdminCategory", new { area = "Admin" })">Yeni Kategori Oluştur</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Kategori Adı</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var feature in Model)
+        {
+            count++;
+            <tr>
+                <td>@count</td>
+                <td>@feature.name</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminCategory", new { id = feature.id, area = "Admin" })">Update</a>
+                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "AdminCategory", new { id = feature.id, area = "Admin" })"
+                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Paged List Pagination *@
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(
+    Model,
+    page => Url.Action("Index", new { page }), // Controller'daki action ismine göre güncelle
+        new X.PagedList.Mvc.Core.PagedListRenderOptions
+        {
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+            UlElementClasses = new[] { "pagination" },
+            DisplayLinkToFirstPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always
+        }
+        )
+</div>

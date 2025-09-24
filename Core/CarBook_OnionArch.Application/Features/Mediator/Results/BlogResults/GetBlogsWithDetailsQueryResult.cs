@@ -16,6 +16,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Results.BlogResults
         public int CategoryId { get; set; }
         public GetCategoryByIdQueryResult? Category { get; set; }
         public List<GetCommentsQueryResult>? Comments { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

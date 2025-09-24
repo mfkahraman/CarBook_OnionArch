@@ -1,0 +1,18 @@
+﻿@model CarBook_OnionArch.Dto.CategoriesDtos.CreateCategoryDto
+
+@{
+    ViewData["Title"] = "Yeni Kategori Oluştur";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+}
+
+<h1>Yeni Kategori Oluştur</h1>
+
+<form asp-action="Create" asp-controller="AdminCategory" asp-area="Admin" method="post">
+    <div class="form-group">
+        <label asp-for="name" class="control-label">Kategori Adı</label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Oluştur</button>
+    <a asp-action="Index" asp-controller="AdminCategory" asp-area="Admin" class="btn btn-secondary">İptal</a>
+</form>

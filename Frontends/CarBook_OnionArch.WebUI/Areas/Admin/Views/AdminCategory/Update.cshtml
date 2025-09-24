@@ -1,0 +1,17 @@
+﻿@using CarBook_OnionArch.Dto.CategoriesDtos
+@model UpdateCategoryDto
+
+@{
+    ViewData["Title"] = "Kategori Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+}
+
+<form asp-action="Update" method="post">
+    <input type="hidden" asp-for="id" />
+    <div class="form-group">
+        <label asp-for="name" class="control-label">Kategori Adı</label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>

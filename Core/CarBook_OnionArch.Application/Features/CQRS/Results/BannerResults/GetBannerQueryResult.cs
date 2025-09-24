@@ -7,7 +7,5 @@
         public string? Description { get; set; }
         public string? VideoDescription { get; set; }
         public string? VideoUrl { get; set; }
-        public bool IsDeleted { get; set; }
-
     }
 }

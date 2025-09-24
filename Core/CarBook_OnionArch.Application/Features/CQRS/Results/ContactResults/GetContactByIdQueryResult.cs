@@ -8,7 +8,5 @@
         public required string Subject { get; set; }
         public required string Message { get; set; }
         public DateTime SendDate { get; set; }
-        public bool IsDeleted { get; set; }
-
     }
 }
