@@ -1,0 +1,61 @@
+﻿@using CarBook_OnionArch.Dto.AboutDtos
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ResultAboutDto>
+
+@{
+    ViewData["Title"] = "Hakkımızda Listesi";
+    ViewData["SubTitle"] = "Hakkımızda Yönetimi Sayfası";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+
+    int count = (Model.PageNumber - 1) * Model.PageSize;
+}
+
+
+<a class="btn btn-success mb-3" href="@Url.Action("Create", "AdminAbout", new { area = "Admin" })">Yeni Hakkımızda Oluştur</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Başlık</th>
+            <th>Açıklama</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var about in Model)
+        {
+            count++;
+            <tr>
+                <td>@count</td>
+                <td>@about.title</td>
+                <td>@about.description</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminAbout", new { id = about.id, area = "Admin" })">Update</a>
+                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "AdminAbout", new { id = about.id, area = "Admin" })"
+                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Paged List Pagination *@
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(
+    Model,
+    page => Url.Action("Index", new { page }),
+        new X.PagedList.Mvc.Core.PagedListRenderOptions
+        {
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+            UlElementClasses = new[] { "pagination" },
+            DisplayLinkToFirstPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = X.PagedList.Mvc.Core.PagedListDisplayMode.Always
+        }
+        )
+</div>
+
