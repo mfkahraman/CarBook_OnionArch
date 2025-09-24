@@ -3,7 +3,5 @@
     public record CreateCategoryCommand
     {
         public required string Name { get; init; }
-        public bool IsDeleted { get; init; } = false;
-
     }
 }

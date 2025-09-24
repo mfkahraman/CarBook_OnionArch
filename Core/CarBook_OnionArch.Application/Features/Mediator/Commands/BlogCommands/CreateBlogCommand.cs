@@ -11,6 +11,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.BlogCommands
         public DateTime CreatedDate { get; set; }
         public int AuthorId { get; set; }
         public int CategoryId { get; set; }
-        public bool IsDeleted { get; set; } = false;
     }
 }

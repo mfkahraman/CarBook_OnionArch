@@ -6,8 +6,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.LocationComma
     public record CreateLocationCommand : IRequest<GetLocationByIdQueryResult>
     {
         public required string Name { get; init; }
-        public bool IsDeleted { get; init; } = false;
-
-
     }
 }

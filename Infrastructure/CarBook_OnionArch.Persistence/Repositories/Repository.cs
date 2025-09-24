@@ -61,7 +61,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
         {
             try
             {
-                entity.IsDeleted = false;
+                //entity.IsDeleted = false;
                 context.Set<T>().Update(entity);
             }
 

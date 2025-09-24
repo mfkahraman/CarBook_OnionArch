@@ -9,6 +9,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.CommentComman
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow;
         public int BlogId { get; init; }
         public int AuthorId { get; init; }
-        public bool IsDeleted { get; init; } = false;
     }
 }

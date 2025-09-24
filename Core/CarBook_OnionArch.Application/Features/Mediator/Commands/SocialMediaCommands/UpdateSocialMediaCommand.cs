@@ -8,7 +8,5 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.SocialMediaCo
         public required string Name { get; init; }
         public string? Url { get; init; }
         public string? Icon { get; init; }
-        public bool IsDeleted { get; init; } = false;
-
     }
 }
