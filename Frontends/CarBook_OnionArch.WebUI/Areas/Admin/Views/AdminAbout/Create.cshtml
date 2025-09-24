@@ -7,7 +7,7 @@
 
 <h1>Yeni Hakkımızda Oluştur</h1>
 
-<form asp-action="Create" asp-controller="AdminAbout" asp-area="Admin" method="post">
+<form asp-area="Admin" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="title" class="control-label">Başlık</label>
         <input asp-for="title" class="form-control" />
