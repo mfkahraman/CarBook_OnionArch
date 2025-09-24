@@ -11,7 +11,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index(int? page)
         {
             var client = httpClient.CreateClient();
-            var response = await client.GetAsync("https://localhost:7020/api/Categorys");
+            var response = await client.GetAsync("https://localhost:7020/api/Categories");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -19,11 +19,11 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             }
 
             var jsonData = await response.Content.ReadAsStringAsync();
-            var Categorys = JsonSerializer.Deserialize<List<ResultCategoryDto>>(jsonData);
+            var Categories = JsonSerializer.Deserialize<List<ResultCategoryDto>>(jsonData);
 
             int pageSize = 10;
             int pageNumber = page ?? 1;
-            var pagedList = Categorys?.ToPagedList(pageNumber, pageSize);
+            var pagedList = Categories?.ToPagedList(pageNumber, pageSize);
 
             return View(pagedList);
         }
@@ -44,7 +44,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var client = httpClient.CreateClient();
             var jsonData = JsonSerializer.Serialize(createCategoryDto);
             var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7020/api/Categorys", content);
+            var response = await client.PostAsync("https://localhost:7020/api/Categories", content);
             if (!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the Category.");
@@ -57,7 +57,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public IActionResult Update(int id)
         {
             var client = httpClient.CreateClient();
-            var response = client.GetAsync($"https://localhost:7020/api/Categorys/{id}").Result;
+            var response = client.GetAsync($"https://localhost:7020/api/Categories/{id}").Result;
             if (!response.IsSuccessStatusCode)
             {
                 return View("Error");
@@ -77,7 +77,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var client = httpClient.CreateClient();
             var jsonData = JsonSerializer.Serialize(updateCategoryDto);
             var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7020/api/Categorys/{updateCategoryDto.id}", content);
+            var response = await client.PutAsync($"https://localhost:7020/api/Categories/{updateCategoryDto.id}", content);
             if (!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while updating the Category.");
@@ -89,7 +89,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var client = httpClient.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7020/api/Categorys/{id}");
+            var response = await client.DeleteAsync($"https://localhost:7020/api/Categories/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 return View("Error");
