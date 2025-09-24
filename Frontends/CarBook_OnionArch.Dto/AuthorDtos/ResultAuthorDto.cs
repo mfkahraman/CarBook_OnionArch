@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarBook_OnionArch.Dto.AuthorDtos
+﻿namespace CarBook_OnionArch.Dto.AuthorDtos
 {
-    internal class ResultAuthorDto
+    public class ResultAuthorDto
     {
+            public int id { get; set; }
+            public string? fullName { get; set; }
+            public string? description { get; set; }
+            public string? imageUrl { get; set; }
     }
 }

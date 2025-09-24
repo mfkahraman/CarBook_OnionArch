@@ -1,4 +1,5 @@
 ﻿using CarBook_OnionArch.Dto.AboutDtos;
+using CarBook_OnionArch.Dto.AuthorDtos;
 using CarBook_OnionArch.WebUI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -7,13 +8,13 @@ using X.PagedList.Extensions;
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminAboutController(IHttpClientFactory httpClient,
-                                      IImageService imageService) : Controller
+    public class AdminAuthorController(IHttpClientFactory httpClient,
+                                       IImageService imageService) : Controller
     {
         public async Task<IActionResult> Index(int? page)
         {
             var client = httpClient.CreateClient();
-            var response = await client.GetAsync("https://localhost:7020/api/Abouts");
+            var response = await client.GetAsync("https://localhost:7020/api/Authors");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -21,11 +22,11 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             }
 
             var jsonData = await response.Content.ReadAsStringAsync();
-            var abouts = JsonSerializer.Deserialize<List<ResultAboutDto>>(jsonData);
+            var Authors = JsonSerializer.Deserialize<List<ResultAuthorDto>>(jsonData);
 
-            int pageSize = 10;
+            int pageSize = 5;
             int pageNumber = page ?? 1;
-            var pagedList = abouts?.ToPagedList(pageNumber, pageSize);
+            var pagedList = Authors?.ToPagedList(pageNumber, pageSize);
 
             return View(pagedList);
         }
@@ -37,27 +38,27 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAboutDto createAboutDto)
+        public async Task<IActionResult> Create(CreateAuthorDto dto)
         {
-            if (createAboutDto.ImageFile != null)
+            if (dto.ImageFile != null)
             {
-                var imagePath = await imageService.SaveImageAsync(createAboutDto.ImageFile, "abouts");
-                createAboutDto.imageUrl = imagePath;
+                var imagePath = await imageService.SaveImageAsync(dto.ImageFile, "authors");
+                dto.imageUrl = imagePath;
                 ModelState.Remove("ImageUrl");
             }
 
             if (!ModelState.IsValid)
             {
-                return View(createAboutDto);
+                return View(dto);
             }
             var client = httpClient.CreateClient();
-            var jsonData = JsonSerializer.Serialize(createAboutDto);
+            var jsonData = JsonSerializer.Serialize(dto);
             var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7020/api/Abouts", content);
+            var response = await client.PostAsync("https://localhost:7020/api/Authors", content);
             if (!response.IsSuccessStatusCode)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the about.");
-                return View(createAboutDto);
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the Author.");
+                return View(dto);
             }
             return RedirectToAction("Index");
         }
@@ -66,41 +67,41 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public IActionResult Update(int id)
         {
             var client = httpClient.CreateClient();
-            var response = client.GetAsync($"https://localhost:7020/api/Abouts/{id}").Result;
+            var response = client.GetAsync($"https://localhost:7020/api/Authors/{id}").Result;
             if (!response.IsSuccessStatusCode)
             {
                 return View("Error");
             }
             var jsonData = response.Content.ReadAsStringAsync().Result;
-            var about = JsonSerializer.Deserialize<UpdateAboutDto>(jsonData);
-            return View(about);
+            var Author = JsonSerializer.Deserialize<UpdateAuthorDto>(jsonData);
+            return View(Author);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateAboutDto updateAboutDto)
+        public async Task<IActionResult> Update(UpdateAuthorDto dto)
         {
-            if (updateAboutDto.ImageFile != null)
+            if (dto.ImageFile != null)
             {
-                if (!string.IsNullOrEmpty(updateAboutDto.imageUrl))
-                    await imageService.DeleteImageAsync(updateAboutDto.imageUrl);
+                if (!string.IsNullOrEmpty(dto.imageUrl))
+                    await imageService.DeleteImageAsync(dto.imageUrl);
 
-                var imagePath = await imageService.SaveImageAsync(updateAboutDto.ImageFile, "abouts");
-                updateAboutDto.imageUrl = imagePath;
+                var imagePath = await imageService.SaveImageAsync(dto.ImageFile, "authors");
+                dto.imageUrl = imagePath;
                 ModelState.Remove("ImageUrl");
             }
 
             if (!ModelState.IsValid)
             {
-                return View(updateAboutDto);
+                return View(dto);
             }
             var client = httpClient.CreateClient();
-            var jsonData = JsonSerializer.Serialize(updateAboutDto);
+            var jsonData = JsonSerializer.Serialize(dto);
             var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7020/api/Abouts/{updateAboutDto.id}", content);
+            var response = await client.PutAsync($"https://localhost:7020/api/Authors/{dto.id}", content);
             if (!response.IsSuccessStatusCode)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while updating the about.");
-                return View(updateAboutDto);
+                ModelState.AddModelError(string.Empty, "An error occurred while updating the Author.");
+                return View(dto);
             }
             return RedirectToAction("Index");
         }
@@ -108,7 +109,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var client = httpClient.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7020/api/Abouts/{id}");
+            var response = await client.DeleteAsync($"https://localhost:7020/api/Authors/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 return View("Error");
