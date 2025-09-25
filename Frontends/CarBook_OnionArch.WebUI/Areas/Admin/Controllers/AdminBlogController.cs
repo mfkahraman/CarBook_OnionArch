@@ -34,8 +34,10 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Authors = await FetchAuthorsAsync();
+            ViewBag.Categories = await FetchCategoriesAsync();
             return View();
         }
 
@@ -49,8 +51,12 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
                 ModelState.Remove("ImageUrl");
             }
 
+            dto.createdDate = DateTime.Now;
+
             if (!ModelState.IsValid)
             {
+                ViewBag.Authors = await FetchAuthorsAsync();
+                ViewBag.Categories = await FetchCategoriesAsync();
                 return View(dto);
             }
             var client = httpClient.CreateClient();
@@ -66,7 +72,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var client = httpClient.CreateClient();
             var response = client.GetAsync($"https://localhost:7020/api/Blogs/{id}").Result;
@@ -76,6 +82,10 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             }
             var jsonData = response.Content.ReadAsStringAsync().Result;
             var Blog = JsonSerializer.Deserialize<UpdateBlogDto>(jsonData);
+
+            ViewBag.Authors = await FetchAuthorsAsync();
+            ViewBag.Categories = await FetchCategoriesAsync();
+
             return View(Blog);
         }
 
@@ -94,6 +104,8 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
+                ViewBag.Authors = await FetchAuthorsAsync();
+                ViewBag.Categories = await FetchCategoriesAsync();
                 return View(dto);
             }
             var client = httpClient.CreateClient();
