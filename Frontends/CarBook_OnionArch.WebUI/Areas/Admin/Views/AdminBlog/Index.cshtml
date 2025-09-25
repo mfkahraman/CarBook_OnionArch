@@ -1,43 +1,49 @@
-﻿@using CarBook_OnionArch.Dto.AuthorDtos
+﻿@using CarBook_OnionArch.Dto.BlogDtos
 @using X.PagedList
 @using X.PagedList.Mvc.Core
-@model IPagedList<ResultAuthorDto>
+@model IPagedList<ResultBlogByIdWithDetailsDto>
 
 @{
-    ViewData["Title"] = "Yazar Listesi";
-    ViewData["SubTitle"] = "Yazar Yönetimi Sayfası";
+    ViewData["Title"] = "Blog Listesi";
+    ViewData["SubTitle"] = "Blog Yönetimi Sayfası";
     Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
 
     int count = (Model.PageNumber - 1) * Model.PageSize;
 }
 
 
-<a class="btn btn-success mb-3" href="@Url.Action("Create", "AdminAuthor", new { area = "Admin" })">Yeni Yazar Oluştur</a>
+<a class="btn btn-success mb-3" href="@Url.Action("Create", "AdminBlog", new { area = "Admin" })">Yeni Blog Oluştur</a>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>#</th>
             <th>Başlık</th>
-            <th>Açıklama</th>
+            <th>Yazar</th>
+            <th>Kategori</th>
+            <th>İçerik</th>
+            <th>Oluşturulma Tarihi</th>
             <th>Görsel</th>
             <th>İşlemler</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var Author in Model)
+        @foreach (var Blog in Model)
         {
             count++;
             <tr>
                 <td>@count</td>
-                <td>@Author.fullName</td>
-                <td>@Author.description</td>
+                <td>@Blog.title</td>
+                <td>@Blog.author!.fullName</td>
+                <td>@Blog.category!.name</td>
+                <td>@(Blog.content != null && Blog.content.Length > 50 ? Blog.content.Substring(0, 50) + "..." : Blog.content)</td>
+                <td>@Blog.createdDate.ToString("dd MMM yyyy")</td>
                 <td>
-                    <img src="@Author?.imageUrl" alt="@Author?.fullName" style="width: 100px; height: auto;" />
+                    <img src="@Blog?.coverImageUrl" alt="@Blog?.title" style="width: 100px; height: auto;" />
                 </td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminAuthor", new { id = Author?.id, area = "Admin" })">Update</a>
-                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "AdminAuthor", new { id = Author?.id, area = "Admin" })"
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminBlog", new { id = Blog?.id, area = "Admin" })">Update</a>
+                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "AdminBlog", new { id = Blog?.id, area = "Admin" })"
                        onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Delete</a>
                 </td>
             </tr>

@@ -1,4 +1,6 @@
-﻿namespace CarBook_OnionArch.Dto.BlogDtos
+﻿using Microsoft.AspNetCore.Http;
+
+namespace CarBook_OnionArch.Dto.BlogDtos
 {
     public class UpdateBlogDto
     {
@@ -9,5 +11,6 @@
         public DateTime createdDate { get; set; }
         public int authorId { get; set; }
         public int categoryId { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
 }
