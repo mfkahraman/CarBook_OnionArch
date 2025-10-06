@@ -11,9 +11,6 @@
     int count = (Model.PageNumber - 1) * Model.PageSize;
 }
 
-
-<a class="btn btn-success mb-3" href="@Url.Action("Create", "AdminBlog", new { area = "Admin" })">Yeni Blog Oluştur</a>
-
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -42,9 +39,9 @@
                     <img src="@Blog?.coverImageUrl" alt="@Blog?.title" style="width: 100px; height: auto;" />
                 </td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminBlog", new { id = Blog?.id, area = "Admin" })">Update</a>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("BlogDetails", "Blog", new { id = Blog?.id, area = "" })">Bloga Git</a>
                     <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "AdminBlog", new { id = Blog?.id, area = "Admin" })"
-                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Delete</a>
+                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Kaldır</a>
                 </td>
             </tr>
         }
