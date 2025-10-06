@@ -1,0 +1,19 @@
+﻿@model CarBook_OnionArch.Dto.PricingDtos.UpdatePricingDto
+
+@{
+    ViewData["Title"] = "Ücretlendirmeyi Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+}
+
+<h1>Ücretlendirmeyi Güncelle</h1>
+
+<form asp-action="Update" asp-controller="AdminPricing" asp-area="Admin" method="post">
+    <input type="hidden" asp-for="id" />
+    <div class="form-group">
+        <label asp-for="name" class="control-label">Ücretlendirme Adı</label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <a asp-action="Index" asp-controller="AdminPricing" asp-area="Admin" class="btn btn-secondary">İptal</a>
+</form>

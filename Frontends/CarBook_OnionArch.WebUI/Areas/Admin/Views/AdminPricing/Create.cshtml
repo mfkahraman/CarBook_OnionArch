@@ -1,0 +1,18 @@
+﻿@model CarBook_OnionArch.Dto.PricingDtos.CreatePricingDto
+
+@{
+    ViewData["Title"] = "Yeni Ücretlendirme Oluştur";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+}
+
+<h1>Yeni Ücretlendirme Oluştur</h1>
+
+<form asp-action="Create" asp-controller="AdminPricing" asp-area="Admin" method="post">
+    <div class="form-group">
+        <label asp-for="name" class="control-label">Ücretlendirme Adı</label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Oluştur</button>
+    <a asp-action="Index" asp-controller="AdminPricing" asp-area="Admin" class="btn btn-secondary">İptal</a>
+</form>
