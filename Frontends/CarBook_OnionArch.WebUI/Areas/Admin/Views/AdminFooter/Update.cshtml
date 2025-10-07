@@ -1,0 +1,35 @@
+﻿@model CarBook_OnionArch.Dto.FooterAddressDtos.UpdateFooterAddressDto
+
+@{
+    ViewData["Title"] = "Footer Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdmLayout.cshtml";
+}
+
+<h1>Footer Güncelle</h1>
+
+<form asp-action="Update" asp-controller="AdminFooter" asp-area="Admin" method="post">
+    <input type="hidden" asp-for="id" />
+    <div class="form-group">
+        <label asp-for="phone" class="control-label">Telefon</label>
+        <input asp-for="phone" class="form-control" />
+        <span asp-validation-for="phone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="email" class="control-label">Email</label>
+        <input asp-for="email" class="form-control" />
+        <span asp-validation-for="email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="address" class="control-label">Adres</label>
+        <input asp-for="address" class="form-control" />
+        <span asp-validation-for="address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="description" class="control-label">Açıklama</label>
+        <textarea asp-for="description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <a asp-action="Index" asp-controller="AdminFooter" asp-area="Admin" class="btn btn-secondary">İptal</a>
+</form>

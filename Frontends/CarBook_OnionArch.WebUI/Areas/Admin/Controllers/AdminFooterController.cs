@@ -5,6 +5,7 @@ using X.PagedList.Extensions;
 
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminFooterController(IHttpClientFactory httpClient) : Controller
     {
         public async Task<IActionResult> Index(int? page)
@@ -76,7 +77,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var client = httpClient.CreateClient();
             var jsonData = JsonSerializer.Serialize(updateFooterAddressDto);
             var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7020/api/FooterAddresses/{updateFooterAddressDto.Id}", content);
+            var response = await client.PutAsync($"https://localhost:7020/api/FooterAddresses/{updateFooterAddressDto.id}", content);
             if (!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while updating the footer address.");

@@ -2,10 +2,10 @@
 {
     public class UpdateFooterAddressDto
     {
-        public int Id { get; set; }
-        public required string Description { get; set; }
-        public required string Address { get; set; }
-        public string? Phone { get; set; }
-        public string? Email { get; set; }
+        public int id { get; set; }
+        public required string description { get; set; }
+        public required string address { get; set; }
+        public string? phone { get; set; }
+        public string? email { get; set; }
     }
 }
