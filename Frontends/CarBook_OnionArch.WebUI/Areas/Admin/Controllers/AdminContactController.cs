@@ -28,31 +28,6 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             return View(pagedList);
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateContactDto createContactDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(createContactDto);
-            }
-            var client = httpClient.CreateClient();
-            var jsonData = JsonSerializer.Serialize(createContactDto);
-            var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7020/api/Contacts", content);
-            if (!response.IsSuccessStatusCode)
-            {
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the contact.");
-                return View(createContactDto);
-            }
-            return RedirectToAction("Index");
-        }
-
         public async Task<IActionResult> Delete(int id)
         {
             var client = httpClient.CreateClient();
