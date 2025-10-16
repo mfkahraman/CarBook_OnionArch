@@ -8,8 +8,6 @@ namespace CarBook_OnionArch.Persistence.Context
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
-
-
         public DbSet<About> Abouts { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Brand> Brands { get; set; }

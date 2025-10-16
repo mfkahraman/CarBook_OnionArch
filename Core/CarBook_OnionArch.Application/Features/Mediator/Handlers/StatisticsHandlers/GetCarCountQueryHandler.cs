@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.StatisticsHandlers
 {
-    public class GetCarCountQueryHandler(ICarRepository repository) 
+    public class GetCarCountQueryHandler(IStatisticsRepository repository) 
         : IRequestHandler<GetCarCountQuery, GetCarCountQueryResult>
     {
         public async Task<GetCarCountQueryResult> Handle(GetCarCountQuery request, CancellationToken cancellationToken)
