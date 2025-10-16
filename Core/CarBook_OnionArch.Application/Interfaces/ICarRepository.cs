@@ -7,5 +7,6 @@ namespace CarBook_OnionArch.Application.Interfaces
         Task<List<Car>> GetCarsWithBrandsAsync();
         Task<List<Car>> GetCarsWithAllAsync();
         Task<Car> GetCarWithRelationsById(int id);
+        Task<int> GetCarCountAsync();
     }
 }

@@ -43,5 +43,13 @@ namespace CarBook_OnionArch.Persistence.Repositories
                         .ThenInclude(cp => cp.Pricing)
                 .FirstOrDefaultAsync()!;
         }
+
+        public async Task<int> GetCarCountAsync()
+        {
+            var carCount = await context.Cars
+                .Where(x => !x.IsDeleted)
+                .CountAsync();
+            return carCount;
+        }
     }
 }
