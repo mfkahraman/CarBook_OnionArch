@@ -15,9 +15,12 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return authorCount;
         }
 
-        public Task<int> GetAutomaticTransmissionCarCountAsync()
+        public async Task<int> GetAutomaticTransmissionCarCountAsync()
         {
-            throw new NotImplementedException();
+            var count = await context.Cars
+                .Where(c=> !c.IsDeleted && c.Transmission == "Automatic")
+                .CountAsync(); 
+            return count;
         }
 
         public async Task<decimal> GetAverageDailyRentPriceAsync()
@@ -44,9 +47,16 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return monthlyPrices;
         }
 
-        public Task<decimal> GetAverageWeeklyRentPriceAsync()
+        public async Task<decimal> GetAverageWeeklyRentPriceAsync()
         {
-            throw new NotImplementedException();
+            var weeklyPrices = await context.CarPricings
+                .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Haftalık" && !cp.Car.IsDeleted)
+                .Select(cp => cp.Amount).AverageAsync();
+
+            if (weeklyPrices == 0)
+                return 0;
+
+            return weeklyPrices;
         }
 
         public async Task<int> GetBlogCountAsync()
@@ -57,9 +67,15 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return blogCount;
         }
 
-        public Task<string> GetBlogWithMostCommentsTitleAsync()
+        public async Task<string> GetBlogWithMostCommentsTitleAsync()
         {
-            throw new NotImplementedException();
+            var blogTitle = await context.Comments
+                .Where(c=> !c.IsDeleted && !c.Blog!.IsDeleted)
+                .GroupBy(c=> c.Blog!.Title)
+                .OrderByDescending(g=> g.Count())
+                .Select(g=> g.Key)
+                .FirstOrDefaultAsync() ?? "Bilinmiyor";
+            return blogTitle;
         }
 
         public async Task<int> GetBrandCountAsync()
@@ -70,9 +86,15 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return brandCount;
         }
 
-        public Task<string> GetBrandWithMostCarsNameAsync()
+        public async Task<string> GetBrandWithMostCarsNameAsync()
         {
-            throw new NotImplementedException();
+            var brand = await context.Cars
+                .Where(c => !c.IsDeleted && !c.Brand.IsDeleted)
+                .GroupBy(c => c.Brand.Name)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.Key)
+                .FirstOrDefaultAsync();
+            return brand ?? "Bilinmiyor";
         }
 
         public async Task<int> GetCarCountAsync()
@@ -85,27 +107,48 @@ namespace CarBook_OnionArch.Persistence.Repositories
 
         public Task<int> GetCarCountUnder1000KmAsync()
         {
-            throw new NotImplementedException();
+            var count = context.Cars
+                .Where(c=> !c.IsDeleted && c.Mileage < 1000)
+                .CountAsync();
+            return count;
         }
 
-        public Task<string> GetCarWithHighestDailyRentPriceNameAsync()
+        public async Task<string> GetCarWithHighestDailyRentPriceNameAsync()
         {
-            throw new NotImplementedException();
+            var carWithMaxPrice = await context.CarPricings
+                .Where(cp => !cp.IsDeleted && !cp.Car.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Günlük")
+                .OrderByDescending(cp => cp.Amount)
+                .Select(cp => cp.Car.Model)
+                .FirstOrDefaultAsync();
+
+            return carWithMaxPrice ?? "Bilinmiyor";
         }
 
-        public Task<string> GetCarWithLowestDailyRentPriceNameAsync()
+        public async Task<string> GetCarWithLowestYearlyRentPriceNameAsync()
         {
-            throw new NotImplementedException();
+            var carWithMinPrice = await context.CarPricings
+                .Where(cp => !cp.IsDeleted && !cp.Car.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Yıllık")
+                .OrderBy(cp => cp.Amount)
+                .Select(cp => cp.Car.Model)
+                .FirstOrDefaultAsync();
+
+            return carWithMinPrice ?? "Bilinmiyor";
         }
 
-        public Task<int> GetElectricCarCountAsync()
+        public async Task<int> GetDieselCarCountAsync()
         {
-            throw new NotImplementedException();
+            var count = await context.Cars
+                .Where(c=> !c.IsDeleted && c.Fuel == "Diesel")
+                .CountAsync();
+            return count;
         }
 
-        public Task<int> GetGasolineCarCountAsync()
+        public async Task<int> GetGasolineCarCountAsync()
         {
-            throw new NotImplementedException();
+            var count = await context.Cars
+                .Where(c => !c.IsDeleted && c.Fuel == "Gasoline")
+                .CountAsync();
+            return count;
         }
 
         public async Task<int> GetLocationCountAsync()

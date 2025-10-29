@@ -15,8 +15,8 @@
         Task<string> GetBlogWithMostCommentsTitleAsync();
         Task<int> GetCarCountUnder1000KmAsync();
         Task<int> GetGasolineCarCountAsync();
-        Task<int> GetElectricCarCountAsync();
+        Task<int> GetDieselCarCountAsync();
         Task<string> GetCarWithHighestDailyRentPriceNameAsync();
-        Task<string> GetCarWithLowestDailyRentPriceNameAsync();
+        Task<string> GetCarWithLowestYearlyRentPriceNameAsync();
     }
 }
