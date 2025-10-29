@@ -1,4 +1,4 @@
 ﻿namespace CarBook_OnionArch.Application.Features.Mediator.Results.StatisticsResults
 {
-    public record GetCarCountQueryResult(int CarCount);
+    public record GetAverageDailyRentPriceQueryResult(decimal AverageDailyRentPrice);
 }

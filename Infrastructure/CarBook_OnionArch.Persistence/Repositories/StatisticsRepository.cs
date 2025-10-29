@@ -23,19 +23,25 @@ namespace CarBook_OnionArch.Persistence.Repositories
         public async Task<decimal> GetAverageDailyRentPriceAsync()
         {
             var dailyPrices = await context.CarPricings
-                .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Daily" && !cp.Car.IsDeleted)
-                .Select(cp => cp.Pricing) // Assuming CarPricing has a Price property
-                .ToListAsync();
+                .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Günlük" && !cp.Car.IsDeleted)
+                .Select(cp=> cp.Amount).AverageAsync();
 
-            if (dailyPrices.Count == 0)
+            if (dailyPrices == 0)
                 return 0;
 
-            return dailyPrices.Average(cp => cp.CarPricing);
+            return dailyPrices;
         }
 
         public async Task<decimal> GetAverageMonthlyRentPriceAsync()
         {
-            throw new NotImplementedException();
+            var monthlyPrices = await context.CarPricings
+                .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Aylık" && !cp.Car.IsDeleted)
+                .Select(cp => cp.Amount).AverageAsync();
+
+            if (monthlyPrices == 0)
+                return 0;
+
+            return monthlyPrices;
         }
 
         public Task<decimal> GetAverageWeeklyRentPriceAsync()

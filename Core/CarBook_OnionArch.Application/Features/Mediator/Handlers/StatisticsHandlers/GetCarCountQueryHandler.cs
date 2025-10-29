@@ -11,7 +11,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.StatisticsHan
         public async Task<GetCarCountQueryResult> Handle(GetCarCountQuery request, CancellationToken cancellationToken)
         {
             var count = await repository.GetCarCountAsync();
-            return new GetCarCountQueryResult { CarCount = count };
+            return new GetCarCountQueryResult(count);
         }
     }
 }

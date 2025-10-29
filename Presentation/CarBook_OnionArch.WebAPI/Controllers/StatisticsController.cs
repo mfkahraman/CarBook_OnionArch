@@ -21,5 +21,16 @@ namespace CarBook_OnionArch.WebAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("get-average-daily-rent-price")]
+        public async Task<IActionResult> GetAverageDailyRentPrice()
+        {
+            var result = await mediator.Send(new GetAverageDailyRentPriceQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
     }
 }
