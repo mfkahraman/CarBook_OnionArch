@@ -10,7 +10,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.StatisticsHan
     {
         public async Task<GetAutomaticTransmissionCarCountQueryResult> Handle(GetAutomaticTransmissionCarCountQuery request, CancellationToken cancellationToken)
         {
-            var count = await repository.GetAutomaticTransmissionCarCountAsync();
+            var count = await repository.GetAutomaticTransmissionCarCountAsync(cancellationToken);
             return new GetAutomaticTransmissionCarCountQueryResult(count);
         }
     }

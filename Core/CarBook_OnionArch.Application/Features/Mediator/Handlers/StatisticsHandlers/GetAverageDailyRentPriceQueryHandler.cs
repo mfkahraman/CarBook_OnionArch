@@ -11,7 +11,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.StatisticsHan
     {
         public async Task<GetAverageDailyRentPriceQueryResult> Handle(GetAverageDailyRentPriceQuery request, CancellationToken cancellationToken)
         {
-            var averagePrice = await repository.GetAverageDailyRentPriceAsync();
+            var averagePrice = await repository.GetAverageDailyRentPriceAsync(cancellationToken);
             return new GetAverageDailyRentPriceQueryResult(averagePrice);
         }
     }

@@ -9,30 +9,6 @@ namespace CarBook_OnionArch.WebAPI.Controllers
     public class StatisticsController(IMediator mediator)
         : ControllerBase
     {
-        [HttpGet("get-car-count")]
-        public async Task<IActionResult> GetCarCount()
-        {
-            var result = await mediator.Send(new GetCarCountQuery());
-
-            if (result == null)
-            {
-                return NotFound("Veri bulunamadı");
-            }
-
-            return Ok(result);
-        }
-
-        [HttpGet("get-average-daily-rent-price")]
-        public async Task<IActionResult> GetAverageDailyRentPrice()
-        {
-            var result = await mediator.Send(new GetAverageDailyRentPriceQuery());
-            if (result == null)
-            {
-                return NotFound("Veri bulunamadı");
-            }
-            return Ok(result);
-        }
-
         [HttpGet("get-author-count")]
         public async Task<IActionResult> GetAuthorCount()
         {
@@ -52,6 +28,41 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             {
                 return NotFound("Veri bulunamadı");
             }
+            return Ok(result);
+        }
+
+        [HttpGet("get-average-daily-rent-price")]
+        public async Task<IActionResult> GetAverageDailyRentPrice()
+        {
+            var result = await mediator.Send(new GetAverageDailyRentPriceQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("get-average-monthly-rent-price")]
+        public async Task<IActionResult> GetAverageMonthlyRentPrice()
+        {
+            var result = await mediator.Send(new GetAverageMonthlyRentPriceQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("get-car-count")]
+        public async Task<IActionResult> GetCarCount()
+        {
+            var result = await mediator.Send(new GetCarCountQuery());
+
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+
             return Ok(result);
         }
     }
