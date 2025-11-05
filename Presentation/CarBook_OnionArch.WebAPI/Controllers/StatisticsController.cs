@@ -43,5 +43,16 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("get-automatic-transmission-car-count")]
+        public async Task<IActionResult> GetAutomaticTransmissionCarCount()
+        {
+            var result = await mediator.Send(new GetAutomaticTransmissionCarCountQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
     }
 }
