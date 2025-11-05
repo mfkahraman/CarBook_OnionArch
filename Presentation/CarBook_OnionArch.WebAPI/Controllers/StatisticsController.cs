@@ -32,5 +32,16 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("get-author-count")]
+        public async Task<IActionResult> GetAuthorCount()
+        {
+            var result = await mediator.Send(new GetAuthorCountQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
     }
 }
