@@ -142,5 +142,16 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("get-car-with-lowest-yearly-rent-price-name")]
+        public async Task<IActionResult> GetCarWithLowestYearlyRentPriceName()
+        {
+            var result = await mediator.Send(new GetCarWithLowestYearlyRentPriceNameQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
     }
 }
