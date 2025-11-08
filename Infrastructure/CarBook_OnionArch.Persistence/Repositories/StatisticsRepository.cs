@@ -105,9 +105,9 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return carCount;
         }
 
-        public Task<int> GetCarCountUnder1000KmAsync(CancellationToken cancellationToken)
+        public async Task<int> GetCarCountUnder1000KmAsync(CancellationToken cancellationToken)
         {
-            var count = context.Cars
+            var count = await context.Cars
                 .Where(c => !c.IsDeleted && c.Mileage < 1000)
                 .CountAsync(cancellationToken);
             return count;

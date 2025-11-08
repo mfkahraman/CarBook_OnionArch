@@ -120,5 +120,16 @@ namespace CarBook_OnionArch.WebAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("get-car-count-under-1000-km")]
+        public async Task<IActionResult> GetCarCountUnder1000Km()
+        {
+            var result = await mediator.Send(new GetCarCountUnder1000KmQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
     }
 }
