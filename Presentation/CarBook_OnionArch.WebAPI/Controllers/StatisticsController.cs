@@ -75,6 +75,17 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("get-blog-with-most-comments-title")]
+        public async Task<IActionResult> GetBlogWithMostCommentsTitle()
+        {
+            var result = await mediator.Send(new GetBlogWithMostCommentsTitleQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
+
         [HttpGet("get-car-count")]
         public async Task<IActionResult> GetCarCount()
         {
