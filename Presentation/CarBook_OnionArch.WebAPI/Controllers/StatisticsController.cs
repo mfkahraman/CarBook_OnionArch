@@ -131,5 +131,16 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("get-car-with-highest-daily-rent-price-name")]
+        public async Task<IActionResult> GetCarWithHighestDailyRentPrice()
+        {
+            var result = await mediator.Send(new GetCarWithHighestDailyRentPriceNameQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
     }
 }
