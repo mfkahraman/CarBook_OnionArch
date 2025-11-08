@@ -97,6 +97,17 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("get-brand-with-most-cars-name")]
+        public async Task<IActionResult> GetBrandWithMostCarsName()
+        {
+            var result = await mediator.Send(new GetBrandWithMostCarsNameQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
+
         [HttpGet("get-car-count")]
         public async Task<IActionResult> GetCarCount()
         {
