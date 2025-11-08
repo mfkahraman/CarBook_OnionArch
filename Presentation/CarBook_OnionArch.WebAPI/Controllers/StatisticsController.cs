@@ -153,5 +153,38 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("get-diesel-car-count")]
+        public async Task<IActionResult> GetDieselCarCount()
+        {
+            var result = await mediator.Send(new GetDieselCarCountQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("get-gasoline-car-count")]
+        public async Task<IActionResult> GetGasolineCarCount()
+        {
+            var result = await mediator.Send(new GetGasolineCarCountQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("get-location-count")]
+        public async Task<IActionResult> GetLocationCount()
+        {
+            var result = await mediator.Send(new GetLocationCountQuery());
+            if (result == null)
+            {
+                return NotFound("Veri bulunamadı");
+            }
+            return Ok(result);
+        }
     }
 }

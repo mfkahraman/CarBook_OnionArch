@@ -117,8 +117,9 @@ namespace CarBook_OnionArch.Persistence.Repositories
         {
             var carWithMaxPrice = await context.CarPricings
                 .Where(cp => !cp.IsDeleted && !cp.Car.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Günlük")
+                .Include(cp=> cp.Car.Brand)
                 .OrderByDescending(cp => cp.Amount)
-                .Select(cp => cp.Car.Model)
+                .Select(cp => $"{cp.Car.Brand.Name} {cp.Car.Model}")
                 .FirstOrDefaultAsync(cancellationToken);
 
             return carWithMaxPrice ?? "Bilinmiyor";
@@ -128,8 +129,9 @@ namespace CarBook_OnionArch.Persistence.Repositories
         {
             var carWithMinPrice = await context.CarPricings
                 .Where(cp => !cp.IsDeleted && !cp.Car.IsDeleted && !cp.Pricing.IsDeleted && cp.Pricing.Name == "Yıllık")
+                .Include(cp=> cp.Car.Brand)
                 .OrderBy(cp => cp.Amount)
-                .Select(cp => cp.Car.Model)
+                .Select(cp => $"{cp.Car.Brand.Name} {cp.Car.Model}")
                 .FirstOrDefaultAsync(cancellationToken);
 
             return carWithMinPrice ?? "Bilinmiyor";
