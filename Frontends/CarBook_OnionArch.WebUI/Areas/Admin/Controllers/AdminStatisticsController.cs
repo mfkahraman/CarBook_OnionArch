@@ -12,6 +12,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             StatisticsDto statisticsDto = new StatisticsDto();
             statisticsDto.AuthorCount = await GetAuthorCountAsync(cancellationToken);
             statisticsDto.AutomaticTransmissionCarCount = await GetAutomaticTransmissionCarCountAsync(cancellationToken);
+            statisticsDto.AverageDailyRentPrice = await GetAverageDailyRentPriceAsync(cancellationToken);
 
 
             statisticsDto.CarCount = await CarCountAsync(cancellationToken);
@@ -56,6 +57,19 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
             var value = JsonSerializer.Deserialize<ResultCarCountDto>(jsonData);
             return value?.carCount ?? 0;
+        }
+        public async Task<decimal> GetAverageDailyRentPriceAsync(CancellationToken cancellationToken)
+        {
+            var client = httpClient.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Statistics/get-average-daily-rent-price", cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                return 0;
+            }
+
+            var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
+            var value = JsonSerializer.Deserialize<ResultGetAverageDailyRentPriceDto>(jsonData);
+            return value?.averageDailyRentPrice ?? 0;
         }
     }
 }
