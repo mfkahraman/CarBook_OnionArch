@@ -1,7 +1,6 @@
 ﻿using CarBook_OnionArch.Dto.StatisticsDtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
@@ -11,7 +10,11 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             StatisticsDto statisticsDto = new StatisticsDto();
-            statisticsDto.authorCount = await GetAuthorCountAsync(cancellationToken);
+            statisticsDto.AuthorCount = await GetAuthorCountAsync(cancellationToken);
+            statisticsDto.AutomaticTransmissionCarCount = await GetAutomaticTransmissionCarCountAsync(cancellationToken);
+
+
+            statisticsDto.CarCount = await CarCountAsync(cancellationToken);
             return View(statisticsDto);
         }
 
@@ -25,8 +28,34 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             }
 
             var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
-            var value = JsonSerializer.Deserialize<StatisticsDto>(jsonData);
+            var value = JsonSerializer.Deserialize<ResultGetAuthorCountResultDto>(jsonData);
             return value?.authorCount ?? 0;
+        }
+        public async Task<int> GetAutomaticTransmissionCarCountAsync(CancellationToken cancellationToken)
+        {
+            var client = httpClient.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Statistics/get-automatic-transmission-car-count", cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                return 0;
+            }
+
+            var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
+            var value = JsonSerializer.Deserialize<ResultGetAutomaticTransmissionCarCountDto>(jsonData);
+            return value?.count ?? 0;
+        }
+        public async Task<int> CarCountAsync(CancellationToken cancellationToken)
+        {
+            var client = httpClient.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Statistics/get-car-count", cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                return 0;
+            }
+
+            var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
+            var value = JsonSerializer.Deserialize<ResultCarCountDto>(jsonData);
+            return value?.carCount ?? 0;
         }
     }
 }
