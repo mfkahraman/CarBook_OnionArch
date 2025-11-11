@@ -13,6 +13,8 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             statisticsDto.AuthorCount = await GetAuthorCountAsync(cancellationToken);
             statisticsDto.AutomaticTransmissionCarCount = await GetAutomaticTransmissionCarCountAsync(cancellationToken);
             statisticsDto.AverageDailyRentPrice = await GetAverageDailyRentPriceAsync(cancellationToken);
+            statisticsDto.AverageWeeklyRentPrice =  await GetAverageWeeklyRentPriceAsync(cancellationToken);
+            statisticsDto.AverageMonthlyRentPrice = await GetAverageMonthlyRentPriceAsync(cancellationToken);
 
 
             statisticsDto.CarCount = await CarCountAsync(cancellationToken);
@@ -70,6 +72,32 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
             var value = JsonSerializer.Deserialize<ResultGetAverageDailyRentPriceDto>(jsonData);
             return value?.averageDailyRentPrice ?? 0;
+        }
+        public async Task<decimal> GetAverageWeeklyRentPriceAsync(CancellationToken cancellationToken)
+        {
+            var client = httpClient.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Statistics/get-average-weekly-rent-price", cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                return 0;
+            }
+
+            var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
+            var value = JsonSerializer.Deserialize<ResultGetAverageWeeklyRentPriceDto>(jsonData);
+            return value?.averageWeeklyRentPrice ?? 0;
+        }
+        public async Task<decimal> GetAverageMonthlyRentPriceAsync(CancellationToken cancellationToken)
+        {
+            var client = httpClient.CreateClient();
+            var response = await client.GetAsync("https://localhost:7020/api/Statistics/get-average-monthly-rent-price", cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                return 0;
+            }
+
+            var jsonData = await response.Content.ReadAsStringAsync(cancellationToken);
+            var value = JsonSerializer.Deserialize<ResultGetAverageMonthlyRentPriceDto>(jsonData);
+            return value?.averageMonthlyRentPrice ?? 0;
         }
     }
 }
