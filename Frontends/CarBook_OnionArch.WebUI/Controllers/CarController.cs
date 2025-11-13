@@ -22,8 +22,10 @@ namespace CarBook_OnionArch.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(DateTime startDate, DateTime endDate)
         {
+            var formattedStart = Uri.EscapeDataString(startDate.ToString("yyyy-MM-ddTHH:mm:ss"));
+            var formattedEnd = Uri.EscapeDataString(endDate.ToString("yyyy-MM-ddTHH:mm:ss"));
             var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-available-cars/{startDate}/{endDate}");
+            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-available-cars/{formattedStart}/{formattedEnd}");
             if (!response.IsSuccessStatusCode)
             {
                 return View("Error");

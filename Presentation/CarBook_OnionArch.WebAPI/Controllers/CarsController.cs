@@ -89,7 +89,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         public async Task<IActionResult> GetAvailableCars(DateTime startDate, DateTime endDate)
         {
             var availableCars = await mediator.Send(new GetAvailableCarsQuery(startDate, endDate));
-            if (availableCars == null || !availableCars.Any())
+            if (availableCars == null || availableCars.Count == 0)
             {
                 return NotFound("Kullanılabilir araç bulunamadı.");
             }
