@@ -27,5 +27,18 @@ namespace CarBook_OnionArch.Persistence.Context
         public DbSet<Author> Authors { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Location>()
+                .HasMany(l => l.DropOffRentals)
+                .WithOne(r => r.DropOffLocation)
+                .HasForeignKey(r => r.DropOffLocationId)
+                .OnDelete(DeleteBehavior.Restrict); // Or your preferred delete behavior
+        }
     }
 }

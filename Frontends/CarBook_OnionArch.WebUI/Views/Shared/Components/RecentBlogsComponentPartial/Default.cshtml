@@ -15,8 +15,8 @@
                 <h3 class="heading"><a href="/Blog/BlogDetails/@item.id">@item.title</a></h3>
                 <div class="meta">
                     <div><a href="#"><span class="icon-calendar"></span> @item.createdDate.ToShortDateString()</a></div>
-                    <div><a href="#"><span class="icon-person"></span>@item.author.fullName</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> @item.comments.Count()</a></div>
+                    <div><a href="#"><span class="icon-person"></span>@item.author!.fullName</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> @item.comments!.Count()</a></div>
                 </div>
             </div>
         </div>

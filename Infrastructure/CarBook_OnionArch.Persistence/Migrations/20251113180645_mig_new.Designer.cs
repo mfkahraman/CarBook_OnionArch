@@ -4,6 +4,7 @@ using CarBook_OnionArch.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarBook_OnionArch.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251113180645_mig_new")]
+    partial class mig_new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -752,13 +755,13 @@ namespace CarBook_OnionArch.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("CarBook_OnionArch.Domain.Entities.Location", "DropOffLocation")
-                        .WithMany("DropOffRentals")
+                        .WithMany()
                         .HasForeignKey("DropOffLocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CarBook_OnionArch.Domain.Entities.Location", "PickUpLocation")
-                        .WithMany("PickUpRentals")
+                        .WithMany()
                         .HasForeignKey("PickUpLocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -814,13 +817,6 @@ namespace CarBook_OnionArch.Persistence.Migrations
             modelBuilder.Entity("CarBook_OnionArch.Domain.Entities.Feature", b =>
                 {
                     b.Navigation("CarFeatures");
-                });
-
-            modelBuilder.Entity("CarBook_OnionArch.Domain.Entities.Location", b =>
-                {
-                    b.Navigation("DropOffRentals");
-
-                    b.Navigation("PickUpRentals");
                 });
 
             modelBuilder.Entity("CarBook_OnionArch.Domain.Entities.Pricing", b =>

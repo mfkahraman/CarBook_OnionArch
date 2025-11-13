@@ -2,6 +2,7 @@
 using CarBook_OnionArch.Domain.Entities;
 using CarBook_OnionArch.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CarBook_OnionArch.Persistence.Repositories
 {
@@ -42,6 +43,30 @@ namespace CarBook_OnionArch.Persistence.Repositories
                     .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted))
                         .ThenInclude(cp => cp.Pricing)
                 .FirstOrDefaultAsync()!;
+        }
+
+        public async Task<List<Car>> GetCarsByFilterAsync(Expression<Func<Rental, bool>> filter)
+        {
+            var unavailableCarIds = context.Rentals
+                .Where(filter)
+                .Select(r => r.CarId)
+                .Distinct()
+                .ToList();
+
+            var availableCars = await context.Cars
+                .Where(c => !unavailableCarIds.Contains(c.Id) && !c.IsDeleted && !c.Brand.IsDeleted)
+                .Include(c => c.Brand)
+                .Include(c => c.CarFeatures!
+                    .Where(cf => !cf.IsDeleted && !cf.Feature.IsDeleted))
+                        .ThenInclude(cf => cf.Feature)
+                .Include(c => c.CarDescriptions!.Where(cd => !cd.IsDeleted))
+                .Include(c => c.CarPricings!
+                    .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted))
+                        .ThenInclude(cp => cp.Pricing)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return availableCars;
         }
     }
 }

@@ -14,11 +14,11 @@ namespace CarBook_OnionArch.Domain.Entities
         [ForeignKey("CarId")]
         public Car? Car { get; set; }
 
-        //Customer Realation
+        //User Realation
         [Required]
-        public int CustomerId { get; set; } = 1;
-        [ForeignKey("CustomerId")]
-        public User? Customer { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
 
         //Rental Dates
         [Required]
@@ -29,11 +29,9 @@ namespace CarBook_OnionArch.Domain.Entities
         //Locations
         [Required]
         public int PickUpLocationId { get; set; }
-        [ForeignKey("PickUpLocationId")]
         public Location? PickUpLocation { get; set; }
         [Required]
         public int DropOffLocationId { get; set; }
-        [ForeignKey("DropOffLocationId")]
         public Location? DropOffLocation { get; set; }
 
         //Prices

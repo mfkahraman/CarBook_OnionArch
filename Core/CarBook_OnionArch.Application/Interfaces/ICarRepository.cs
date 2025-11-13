@@ -1,4 +1,5 @@
 ﻿using CarBook_OnionArch.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace CarBook_OnionArch.Application.Interfaces
 {
@@ -7,5 +8,6 @@ namespace CarBook_OnionArch.Application.Interfaces
         Task<List<Car>> GetCarsWithBrandsAsync();
         Task<List<Car>> GetCarsWithAllAsync();
         Task<Car> GetCarWithRelationsById(int id);
+        Task<List<Car>> GetCarsByFilterAsync(Expression<Func<Rental, bool>> filter);
     }
 }

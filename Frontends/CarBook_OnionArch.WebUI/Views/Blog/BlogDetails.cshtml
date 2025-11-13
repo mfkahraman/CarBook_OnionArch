@@ -24,19 +24,19 @@
 
                 <div class="about-author d-flex p-4 bg-light">
                     <div class="bio mr-5">
-                        <img src="@Model.author.imageUrl" alt="Image placeholder" class="img-fluid mb-4">
+                        <img src="@Model.author!.imageUrl" alt="Image placeholder" class="img-fluid mb-4">
                     </div>
                     <div class="desc">
-                        <h3>@Model.author.fullName</h3>
-                        <p>@Model.author.description</p>
+                        <h3>@Model.author!.fullName</h3>
+                        <p>@Model.author!.description</p>
                     </div>
                 </div>
 
 
                 <div class="pt-5 mt-5">
-                    <h3 class="mb-5">@Model.comments.Count() Adet Yorum</h3>
+                    <h3 class="mb-5">@Model.comments!.Count() Adet Yorum</h3>
                     <ul class="comment-list">
-                        @foreach (var comment in Model.comments)
+                        @foreach (var comment in Model.comments!)
                         {
                             <li class="comment">
                                 <div class="vcard bio">
