@@ -18,5 +18,19 @@ namespace CarBook_OnionArch.WebUI.Controllers
             var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
             return View(values);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(DateTime startDate, DateTime endDate)
+        {
+            var client = httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-available-cars/{startDate}/{endDate}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return View("Error");
+            }
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
+            return View(values);
+        }
     }
 }

@@ -85,7 +85,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             return Ok(value);
         }
 
-        [HttpGet("get-available-cars")]
+        [HttpGet("get-available-cars/{startDate}/{endDate}")]
         public async Task<IActionResult> GetAvailableCars(DateTime startDate, DateTime endDate)
         {
             var availableCars = await mediator.Send(new GetAvailableCarsQuery(startDate, endDate));
