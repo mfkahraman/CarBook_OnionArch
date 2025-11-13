@@ -45,16 +45,17 @@ namespace CarBook_OnionArch.Persistence.Repositories
                 .FirstOrDefaultAsync()!;
         }
 
-        public async Task<List<Car>> GetCarsByFilterAsync(Expression<Func<Rental, bool>> filter)
+        public async Task<List<Car>> GetAvailableCarsAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
         {
-            var unavailableCarIds = context.Rentals
-                .Where(filter)
+            var rentedCarIds = await context.Rentals
+                .Where(r => !r.IsDeleted &&
+                            ((r.StartDate <= endDate && r.EndDate >= startDate)))
                 .Select(r => r.CarId)
                 .Distinct()
-                .ToList();
-
+                .ToListAsync(cancellationToken);
+            
             var availableCars = await context.Cars
-                .Where(c => !unavailableCarIds.Contains(c.Id) && !c.IsDeleted && !c.Brand.IsDeleted)
+                .Where(c => !c.IsDeleted && !rentedCarIds.Contains(c.Id))
                 .Include(c => c.Brand)
                 .Include(c => c.CarFeatures!
                     .Where(cf => !cf.IsDeleted && !cf.Feature.IsDeleted))
@@ -64,7 +65,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
                     .Where(cp => !cp.IsDeleted && !cp.Pricing.IsDeleted))
                         .ThenInclude(cp => cp.Pricing)
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             return availableCars;
         }

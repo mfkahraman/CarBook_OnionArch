@@ -8,6 +8,6 @@ namespace CarBook_OnionArch.Application.Interfaces
         Task<List<Car>> GetCarsWithBrandsAsync();
         Task<List<Car>> GetCarsWithAllAsync();
         Task<Car> GetCarWithRelationsById(int id);
-        Task<List<Car>> GetCarsByFilterAsync(Expression<Func<Rental, bool>> filter);
+        Task<List<Car>> GetAvailableCarsAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
     }
 }

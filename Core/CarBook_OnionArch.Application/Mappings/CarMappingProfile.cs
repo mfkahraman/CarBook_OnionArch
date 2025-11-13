@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CarBook_OnionArch.Application.Features.CQRS.Commands.CarCommands;
 using CarBook_OnionArch.Application.Features.CQRS.Results.CarResults;
+using CarBook_OnionArch.Application.Features.Mediator.Results.RentalResults;
 using CarBook_OnionArch.Domain.Entities;
 
 namespace CarBook_OnionArch.Application.Mappings
@@ -14,6 +15,7 @@ namespace CarBook_OnionArch.Application.Mappings
             CreateMap<Car, GetCarQueryResult>();
             CreateMap<Car, GetCarByIdQueryResult>();
             CreateMap<Car, GetCarWithAllQueryResult>();
+            CreateMap<Car, GetAvailableCarsQueryResult>();
             CreateMap<Car, GetCarWithBrandQueryResult>()
                 .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name));
         }

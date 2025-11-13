@@ -1,6 +1,8 @@
 ﻿using CarBook_OnionArch.Application.Features.CQRS.Commands.CarCommands;
 using CarBook_OnionArch.Application.Features.CQRS.Handlers.CarHandlers;
 using CarBook_OnionArch.Application.Features.CQRS.Queries.CarQueries;
+using CarBook_OnionArch.Application.Features.Mediator.Queries.RentalQueries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook_OnionArch.WebAPI.Controllers
@@ -14,7 +16,8 @@ namespace CarBook_OnionArch.WebAPI.Controllers
                                   GetCarQueryHandler getAllQueryHandler,
                                   GetCarWithBrandQueryHandler withBrandQueryHandler,
                                   GetCarWithAllQueryHandler carWithAllHandler,
-                                  GetCarWithRelationsByIdQueryHandler withRelationsByIdHandler)
+                                  GetCarWithRelationsByIdQueryHandler withRelationsByIdHandler,
+                                  IMediator mediator)
         : ControllerBase
     {
         [HttpGet]
@@ -80,6 +83,17 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
 
             return Ok(value);
+        }
+
+        [HttpGet("get-available-cars")]
+        public async Task<IActionResult> GetAvailableCars(DateTime startDate, DateTime endDate)
+        {
+            var availableCars = await mediator.Send(new GetAvailableCarsQuery(startDate, endDate));
+            if (availableCars == null || !availableCars.Any())
+            {
+                return NotFound("Kullanılabilir araç bulunamadı.");
+            }
+            return Ok(availableCars);
         }
 
         [HttpPost]
