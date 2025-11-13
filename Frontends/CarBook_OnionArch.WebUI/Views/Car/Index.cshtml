@@ -1,11 +1,20 @@
 ﻿@using CarBook_OnionArch.Dto.CarDtos
-@model List<ResultCarWithRelationsDto>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ResultCarWithRelationsDto>
 
 @{
     ViewData["Title"] = "Araçlar";
     ViewData["SuvTitle"] = "Araç Listesi";
     Layout = "~/Views/UILayout/Index.cshtml";
 }
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+    }
+</style>
 
 <section class="ftco-section bg-light">
     <div class="container">
@@ -37,17 +46,10 @@
             }
         </div>
 
-        <!-- Sayfalama (Opsiyonel Statik Yer Tutucu) -->
         <div class="row mt-5">
             <div class="col text-center">
                 <div class="block-27">
-                    <ul>
-                        <li><a href="#">&lt;</a></li>
-                        <li class="active"><span>1</span></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">&gt;</a></li>
-                    </ul>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
                 </div>
             </div>
         </div>

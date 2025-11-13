@@ -1,12 +1,13 @@
 ﻿using CarBook_OnionArch.Dto.CarDtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using X.PagedList.Extensions;
 
 namespace CarBook_OnionArch.WebUI.Controllers
 {
     public class CarController(IHttpClientFactory httpClientFactory) : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var client = httpClientFactory.CreateClient();
             var response = await client.GetAsync("https://localhost:7020/api/Cars/get-cars-with-all");
@@ -16,11 +17,15 @@ namespace CarBook_OnionArch.WebUI.Controllers
             }
             var jsonData = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
-            return View(values);
+            
+            int pagesize = 6;
+            int pageNumber = page ?? 1;
+            var pagedList = values?.ToPagedList(pageNumber, pagesize);
+            return View(pagedList);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> Index(DateTime startDate, DateTime endDate,int? page)
         {
             var client = httpClientFactory.CreateClient();
 
@@ -38,7 +43,10 @@ namespace CarBook_OnionArch.WebUI.Controllers
 
             var jsonData = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<List<ResultCarWithRelationsDto>>(jsonData);
-            return View(values);
+            int pagesize = 6;
+            int pageNumber = page ?? 1;
+            var pagedList = values?.ToPagedList(pageNumber, pagesize);
+            return View(pagedList);
         }
     }
 }
