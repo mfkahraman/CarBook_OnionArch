@@ -9,7 +9,7 @@ namespace CarBook_OnionArch.WebUI.ViewComponents.AboutViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = httpClient.CreateClient("AboutClient");
-            var responseMessage = await client.GetAsync("https://localhost:7020/api/Abouts/get-all");
+            var responseMessage = await client.GetAsync("https://localhost:7020/api/Abouts");
             
             if(!responseMessage.IsSuccessStatusCode)
             {

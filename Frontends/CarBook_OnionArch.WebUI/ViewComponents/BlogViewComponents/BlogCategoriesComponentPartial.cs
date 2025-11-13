@@ -9,7 +9,7 @@ namespace CarBook_OnionArch.WebUI.ViewComponents.BlogViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = httpClient.CreateClient();
-            var response = await client.GetAsync("https://localhost:7020/api/Categories/get-all");
+            var response = await client.GetAsync("https://localhost:7020/api/Categories");
             if (!response.IsSuccessStatusCode)
             {
                 return Content("Error fetching blogs");

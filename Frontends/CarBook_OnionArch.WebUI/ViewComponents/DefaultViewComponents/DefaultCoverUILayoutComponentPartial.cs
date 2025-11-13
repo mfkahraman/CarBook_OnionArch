@@ -9,7 +9,7 @@ namespace CarBook_OnionArch.WebUI.ViewComponents.DefaultViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7020/api/Banners/get-all");
+            var response = await client.GetAsync("https://localhost:7020/api/Banners");
             if(!response.IsSuccessStatusCode)
             {
                 return Content("Error fetching banners");
