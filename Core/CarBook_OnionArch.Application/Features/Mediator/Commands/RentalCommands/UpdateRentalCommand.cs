@@ -1,10 +1,10 @@
-﻿using CarBook_OnionArch.Application.Features.Mediator.Results.RentalResults;
-using MediatR;
+﻿using MediatR;
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Commands.RentalCommands
 {
-    public class CreateRentalCommand : IRequest<GetRentalByIdQueryResult>
+    public class UpdateRentalCommand : IRequest<bool>
     {
+        public int Id { get; set; }
         public int CarId { get; set; }
         public int UserId { get; set; }
         public DateTime StartDate { get; set; }
