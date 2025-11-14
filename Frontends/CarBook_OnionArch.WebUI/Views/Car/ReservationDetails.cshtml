@@ -1,0 +1,46 @@
+﻿@using CarBook_OnionArch.Dto.RentalDtos
+@model ReservationDetailsDto
+
+@{
+    ViewData["Title"] = "Kiralama Özeti";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<h2>Kiralama Özeti</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Araç</dt>
+                <dd class="col-sm-8">@Model.CarName</dd>
+
+                <dt class="col-sm-4">Teslim Alınacak Yer</dt>
+                <dd class="col-sm-8">@Model.PickUpLocationName</dd>
+
+                <dt class="col-sm-4">Bırakılacak Yer</dt>
+                <dd class="col-sm-8">@Model.DropOffLocationName</dd>
+
+                <dt class="col-sm-4">Teslim Alma Tarihi</dt>
+                <dd class="col-sm-8">@Model.StartDate.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-sm-4">Bırakılacak Tarih</dt>
+                <dd class="col-sm-8">@Model.EndDate.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-sm-4">Toplam Fiyat</dt>
+                <dd class="col-sm-8">@String.Format("{0:0.00}", Model.TotalPrice)</dd>
+            </dl>
+        </div>
+    </div>
+
+<form asp-action="CreateReservation" method="post">
+    <input type="hidden" asp-for="CarId" />
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="PickUpLocationId" />
+    <input type="hidden" asp-for="DropOffLocationId" />
+    <input type="hidden" asp-for="StartDate" />
+    <input type="hidden" asp-for="EndDate" />
+    <input type="hidden" asp-for="DailyPrice" />
+    <input type="hidden" asp-for="TotalPrice" />
+    <input type="hidden" asp-for="Status" />
+    <button type="submit" class="btn btn-success">Kiralamayı Tamamla</button>
+</form>
+

@@ -16,7 +16,7 @@ namespace CarBook_OnionArch.WebUI.ViewComponents.RentalFilterComponents
                 return Content("Error fetching locations");
             }
             var jsonData = await response.Content.ReadAsStringAsync();
-            var locations = JsonSerializer.Deserialize<List<ResultGetLocationsDto>>(jsonData);
+            var locations = JsonSerializer.Deserialize<List<ResultGetLocationDto>>(jsonData);
             return View(locations);
         }
     }

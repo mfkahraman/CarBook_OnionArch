@@ -37,7 +37,7 @@
                                 </p>
                             </div>
                             <p class="d-flex mb-0 d-block">
-                                <form asp-action="CreateReservation" method="post" style="display:inline;">
+                                <form asp-action="ReservationDetails" method="get" style="display:inline;">
                                     <input type="hidden" name="carId" value="@car.id" />
                                     <input type="hidden" name="dailyPrice" value="@car.carPricings?.FirstOrDefault()?.amount" />
                                     <button type="submit" class="btn btn-primary py-2 mr-1">Şimdi Kirala</button>
