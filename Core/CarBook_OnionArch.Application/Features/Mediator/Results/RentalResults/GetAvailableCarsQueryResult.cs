@@ -21,6 +21,6 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Results.RentalResults
         public List<GetCarFeatureQueryResult>? CarFeatures { get; set; }
         public List<GetCarDescriptionQueryResult>? CarDescriptions { get; set; }
         public List<GetCarPricingQueryResult>? CarPricings { get; set; }
-        public List<GetRentalsQueryResult>? Rentals { get; set; }
+        public List<GetRentalQueryResult>? Rentals { get; set; }
     }
 }

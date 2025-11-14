@@ -43,20 +43,11 @@ namespace CarBook_OnionArch.Domain.Entities
         public decimal TotalPrice { get; set; }
 
         // Status
-        public RentalStatus Status { get; set; } = RentalStatus.Pending;
-
+        public string? Status { get; set; }
         // Logging
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public DateTime? UpdatedDate { get; set; }
         public bool IsDeleted { get; set; } = false;
-    }
-
-    public enum RentalStatus
-    {
-        Pending = 0,
-        Active = 1,
-        Completed = 2,
-        Cancelled = 3
     }
 }

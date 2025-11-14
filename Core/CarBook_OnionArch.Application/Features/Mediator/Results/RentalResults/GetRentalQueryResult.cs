@@ -2,7 +2,7 @@
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Results.RentalResults
 {
-    public class GetRentalsQueryResult
+    public class GetRentalQueryResult
     {
         public int Id { get; set; }
         public int CarId { get; set; }
@@ -17,15 +17,6 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Results.RentalResults
         public Location? DropOffLocation { get; set; }
         public decimal DailyPrice { get; set; }
         public decimal TotalPrice { get; set; }
-
-        public RentalStatus Status { get; set; }
-
-        public enum RentalStatus
-        {
-            Pending = 0,
-            Active = 1,
-            Completed = 2,
-            Cancelled = 3
-        }
+        public string? Status { get; set; }
     }
 }
