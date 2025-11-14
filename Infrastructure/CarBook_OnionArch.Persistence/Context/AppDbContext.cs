@@ -34,11 +34,17 @@ namespace CarBook_OnionArch.Persistence.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Location>()
-                .HasMany(l => l.DropOffRentals)
-                .WithOne(r => r.DropOffLocation)
+            modelBuilder.Entity<Rental>()
+                .HasOne(r => r.PickUpLocation)
+                .WithMany(r => r.PickUpRentals)
+                .HasForeignKey(r => r.PickUpLocationId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Rental>()
+                .HasOne(r => r.DropOffLocation)
+                .WithMany(r => r.DropOffRentals)
                 .HasForeignKey(r => r.DropOffLocationId)
-                .OnDelete(DeleteBehavior.Restrict); // Or your preferred delete behavior
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }
