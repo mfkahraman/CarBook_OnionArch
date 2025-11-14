@@ -28,7 +28,7 @@
 
                             <div class="form-group">
                                 <label class="label">Alış Lokasyonu</label>
-                                <select class="form-control" name="pickupLocation">
+                                <select class="form-control" name="pickupLocationId">
                                     @foreach (var location in Model)
                                     {
                                         <option value="@location.id">@location.name</option>
@@ -38,7 +38,7 @@
 
                             <div class="form-group">
                                 <label class="label">Teslim Lokasyonu</label>
-                                <select class="form-control" name="dropoffLocation">
+                                <select class="form-control" name="dropoffLocationId">
                                     @foreach (var location in Model)
                                     {
                                         <option value="@location.id">@location.name</option>

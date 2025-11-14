@@ -32,12 +32,16 @@
                             </h2>
                             <div class="d-flex mb-3">
                                 <span class="cat">@car.brand?.name</span>
-                                <p class="price ml-auto">
-                                    ₺@car.carPricings?.FirstOrDefault()?.amount <span>/gün</span>
+                                <p class="price ml-auto" name=>
+                                    @car.carPricings?.FirstOrDefault()?.amount₺ <span>/gün</span>
                                 </p>
                             </div>
                             <p class="d-flex mb-0 d-block">
-                                <a href="#" class="btn btn-primary py-2 mr-1">Şimdi Kirala</a>
+                                <form asp-action="CreateReservation" method="post" style="display:inline;">
+                                    <input type="hidden" name="carId" value="@car.id" />
+                                    <input type="hidden" name="dailyPrice" value="@car.carPricings?.FirstOrDefault()?.amount" />
+                                    <button type="submit" class="btn btn-primary py-2 mr-1">Şimdi Kirala</button>
+                                </form>
                                 <a href="/Car/Details/@car.id" class="btn btn-secondary py-2 ml-1">Detaylar</a>
                             </p>
                         </div>

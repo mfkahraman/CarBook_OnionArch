@@ -15,6 +15,6 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Commands.RentalCommand
         public decimal TotalPrice { get; set; }
         public string? Status { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime? UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; } = null;
     }
 }
