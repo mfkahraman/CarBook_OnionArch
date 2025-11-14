@@ -10,9 +10,9 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.RentalHandler
     public class CreateRentalCommandHandler(IRepository<Rental> repository,
                                             IMapper mapper,
                                             IUnitOfWork unitOfWork)
-        : IRequestHandler<CreateRentalCommand, GetRentalQueryResult>
+        : IRequestHandler<CreateRentalCommand, GetRentalByIdQueryResult>
     {
-        public async Task<GetRentalQueryResult> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
+        public async Task<GetRentalByIdQueryResult> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
         {
             var entity = mapper.Map<Rental>(request);
             var addResult = repository.Create(entity);
@@ -25,7 +25,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.RentalHandler
             {
                 throw new Exception("Commit işlemi sırasında bir sorun oluştu.");
             }
-            return mapper.Map<GetRentalQueryResult>(entity);
+            return mapper.Map<GetRentalByIdQueryResult>(entity);
         }
     }
 }

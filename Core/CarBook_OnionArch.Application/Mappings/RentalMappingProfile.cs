@@ -10,7 +10,10 @@ namespace CarBook_OnionArch.Application.Mappings
         public RentalMappingProfile()
         {
             CreateMap<Rental, CreateRentalCommand>().ReverseMap();
+            CreateMap<Rental, UpdateRentalCommand>().ReverseMap();
+            CreateMap<Rental, RemoveRentalCommand>().ReverseMap();
             CreateMap<Rental, GetRentalQueryResult>();
+            CreateMap<Rental, GetRentalByIdQueryResult>();
         }
     }
 }
