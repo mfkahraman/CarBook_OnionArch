@@ -72,7 +72,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var jsonData = JsonSerializer.Serialize(createCarDto);
             var formData = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
             var client = httpClientFactory.CreateClient();
-            var responseCar = await client.PostAsync("https://localhost:7020/api/Cars/create", formData);
+            var responseCar = await client.PostAsync("https://localhost:7020/api/Cars", formData);
 
             if (!responseCar.IsSuccessStatusCode)
             {
@@ -201,7 +201,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
             var jsonData = JsonSerializer.Serialize(updateCarDto);
             var formData = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
             var client = httpClientFactory.CreateClient();
-            var responseCar = await client.PutAsync($"https://localhost:7020/api/Cars/update/{updateCarDto.id}", formData);
+            var responseCar = await client.PutAsync($"https://localhost:7020/api/Cars/{updateCarDto.id}", formData);
 
             if (!responseCar.IsSuccessStatusCode)
             {
@@ -265,7 +265,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var client = httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7020/api/Cars/delete/{id}");
+            var response = await client.DeleteAsync($"https://localhost:7020/api/Cars/{id}");
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -277,7 +277,7 @@ namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
         public async Task<List<SelectListItem>> FetchBrandsAsync()
         {
             var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7020/api/Brands/get-all");
+            var response = await client.GetAsync("https://localhost:7020/api/Brands");
             var jsonData = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<List<ResultBrandDto>>(jsonData);
             List<SelectListItem> brandList = values!

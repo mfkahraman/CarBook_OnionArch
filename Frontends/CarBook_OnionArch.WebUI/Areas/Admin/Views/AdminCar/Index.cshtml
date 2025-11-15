@@ -10,12 +10,6 @@
     int count = 0;
 }
 
-<style>
-    a, button {
-        color: #fff !important;
-    }
-</style>
-
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
@@ -83,7 +77,7 @@
 <div class="d-flex justify-content-center">
     @Html.PagedListPager(
     Model,
-    page => Url.Action("Index", new { page }), // Controller'daki action ismine göre güncelle
+    page => Url.Action("Index", new { page }),
         new X.PagedList.Mvc.Core.PagedListRenderOptions
         {
             LiElementClasses = new[] { "page-item" },
