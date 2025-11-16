@@ -27,7 +27,7 @@
                                 <tr class="">
                                     <td class="car-image"><div class="img" style="background-image:url(@item.coverImageUrl);"></div></td>
                                     <td class="product-name">
-                                        <h3>@item.model</h3>
+                                        <h3>@item.brand!.name @item.model</h3>
                                         <p class="mb-0 rated">
                                             <span>puan:</span>
                                             <span class="ion-ios-star"></span>
@@ -42,10 +42,10 @@
                                         <p class="btn-custom"><a href="#">Araç Kirala</a></p>
                                         <div class="price-rate">
                                             <h3>
-                                                <span class="num"><small class="currency">₺</small>@item.carPricings?.Where(x => x.pricing?.name == "Günlük").FirstOrDefault()?.amount</span>
+                                                <span class="num">@item.carPricings?.Where(x => x.pricing?.name == "Günlük").FirstOrDefault()?.amount<small class="currency">₺</small></span>
                                                 <span class="per">/gün</span>
                                             </h3>
-                                            <span class="subheading">+ ₺100/saat yakıt ücreti</span>
+                                            <span class="subheading">+100₺/saat yakıt ücreti</span>
                                         </div>
                                     </td>
 
@@ -53,10 +53,10 @@
                                         <p class="btn-custom"><a href="#">Araç Kirala</a></p>
                                         <div class="price-rate">
                                             <h3>
-                                                <span class="num"><small class="currency">₺</small>@item.carPricings?.Where(x => x.pricing?.name == "Aylık").FirstOrDefault()?.amount</span>
+                                                <span class="num">@item.carPricings?.Where(x => x.pricing?.name == "Aylık").FirstOrDefault()?.amount<small class="currency">₺</small></span>
                                                 <span class="per">/ay</span>
                                             </h3>
-                                            <span class="subheading">+ ₺100/saat yakıt ücreti</span>
+                                            <span class="subheading">+100₺/saat yakıt ücreti</span>
                                         </div>
                                     </td>
 
@@ -64,10 +64,10 @@
                                         <p class="btn-custom"><a href="#">Araç Kirala</a></p>
                                         <div class="price-rate">
                                             <h3>
-                                                <span class="num"><small class="currency">₺</small>@item.carPricings?.Where(x => x.pricing?.name == "Yıllık").FirstOrDefault()?.amount</span>
+                                                <span class="num">@item.carPricings?.Where(x => x.pricing?.name == "Yıllık").FirstOrDefault()?.amount<small class="currency">₺</small></span>
                                                 <span class="per">/yıl</span>
                                             </h3>
-                                            <span class="subheading">+ ₺100/saat yakıt ücreti</span>
+                                            <span class="subheading">+100₺/saat yakıt ücreti</span>
                                         </div>
                                     </td>
                                 </tr>
