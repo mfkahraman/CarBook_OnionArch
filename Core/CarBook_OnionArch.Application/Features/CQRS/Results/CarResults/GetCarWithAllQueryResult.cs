@@ -2,6 +2,7 @@
 using CarBook_OnionArch.Application.Features.Mediator.Results.CarDescriptionResults;
 using CarBook_OnionArch.Application.Features.Mediator.Results.CarFeatureResults;
 using CarBook_OnionArch.Application.Features.Mediator.Results.CarPricingResults;
+using CarBook_OnionArch.Application.Features.Mediator.Results.ReviewResults;
 
 namespace CarBook_OnionArch.Application.Features.CQRS.Results.CarResults
 {
@@ -21,5 +22,6 @@ namespace CarBook_OnionArch.Application.Features.CQRS.Results.CarResults
         public List<GetCarFeatureQueryResult>? CarFeatures { get; set; }
         public List<GetCarDescriptionQueryResult>? CarDescriptions { get; set; }
         public List<GetCarPricingQueryResult>? CarPricings { get; set; }
+        public List<GetReviewsListQueryResult>? Reviews { get; set; }
     }
 }
