@@ -35,7 +35,9 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return context.Cars
                 .Where(x => x.Id == id && !x.IsDeleted && !x.Brand.IsDeleted)
                 .Include(x => x.Brand)
-                .Include(r=> r.Reviews!.Where(r=> !r.IsDeleted))
+                .Include(r=> r.Reviews!
+                    .Where(r=> !r.IsDeleted && !r.User!.IsDeleted))
+                        .ThenInclude(u=> u.User)
                 .Include(x => x.CarFeatures!
                     .Where(cf => !cf.IsDeleted && !cf.Feature.IsDeleted))
                         .ThenInclude(cf => cf.Feature)

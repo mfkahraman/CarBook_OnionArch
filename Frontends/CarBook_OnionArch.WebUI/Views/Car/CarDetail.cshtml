@@ -4,6 +4,18 @@
 @{
     ViewData["Title"] = "Araç Detayı";
     Layout = "~/Views/UILayout/Index.cshtml";
+
+    int oneStarCommentsCount = Random.Shared.Next(0, 5);
+    int twoStarCommentsCount = Random.Shared.Next(6, 10);
+    int threeStarCommentsCount = Random.Shared.Next(11, 15);
+    int fourStarCommentsCount = Random.Shared.Next(16, 30);
+    int fiveStarCommentsCount = Random.Shared.Next(31, 50);
+    int totalCommentsCount = oneStarCommentsCount + twoStarCommentsCount + threeStarCommentsCount + fourStarCommentsCount + fiveStarCommentsCount;
+    int onestarPercentage = totalCommentsCount == 0 ? 0 : (oneStarCommentsCount * 100) / totalCommentsCount;
+    int twostarPercentage = totalCommentsCount == 0 ? 0 : (twoStarCommentsCount * 100) / totalCommentsCount;
+    int threestarPercentage = totalCommentsCount == 0 ? 0 : (threeStarCommentsCount * 100) / totalCommentsCount;
+    int fourstarPercentage = totalCommentsCount == 0 ? 0 : (fourStarCommentsCount * 100) / totalCommentsCount;
+    int fivestarPercentage = totalCommentsCount == 0 ? 0 : (fiveStarCommentsCount * 100) / totalCommentsCount;
 }
 
 <section class="ftco-section ftco-car-details">
@@ -184,85 +196,36 @@
                              aria-labelledby="pills-review-tab">
                             <div class="row">
                                 <div class="col-md-7">
-                                    <h3 class="head">23 Yorum</h3>
+                                    <h3 class="head">Yorum Sayısı: @Model.reviews!.Count()</h3>
 
-                                    <div class="review d-flex">
-                                        <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-                                        <div class="desc">
-                                            <h4>
-                                                <span class="text-left">Emre Yılmaz</span>
-                                                <span class="text-right">14 Mart 2018</span>
-                                            </h4>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                </span>
-                                                <span class="text-right">
-                                                    <a href="#" class="reply"><i class="icon-reply"></i></a>
-                                                </span>
-                                            </p>
-                                            <p>
-                                                Araç temiz ve bakımlıydı. Teslim alma ve bırakma süreci çok hızlı
-                                                ve sorunsuz ilerledi, tekrar tercih ederim.
-                                            </p>
+                                    @foreach (var review in Model.reviews!)
+                                    {
+                                        int i = 1;
+                                        <div class="review d-flex">
+                                            <div class="user-img" style="background-image: url('@review.user!.imagePath')"></div>
+                                            <div class="desc">
+                                                <h4>
+                                                    <span class="text-left">@(@review.user!.firstName + " " + @review.user.lastName)</span>
+                                                    <span class="text-right">@review.createDate.ToString("dd.MM.yyyy HH:mm")</span>
+                                                </h4>
+                                                <p class="star">
+                                                    <span>
+                                                        @for (int star = 0; star < review.rating; star++)
+                                                        {
+                                                            <i class="ion-ios-star"></i>
+                                                        }
+                                                    </span>
+                                                    <span class="text-right">
+                                                        <a href="#" class="reply"><i class="icon-reply"></i></a>
+                                                    </span>
+                                                </p>
+                                                <p>
+                                                    @review.comment
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
 
-                                    <div class="review d-flex">
-                                        <div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-                                        <div class="desc">
-                                            <h4>
-                                                <span class="text-left">Ayşe Demir</span>
-                                                <span class="text-right">20 Şubat 2018</span>
-                                            </h4>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                </span>
-                                                <span class="text-right">
-                                                    <a href="#" class="reply"><i class="icon-reply"></i></a>
-                                                </span>
-                                            </p>
-                                            <p>
-                                                Yakıt tüketimi beklediğimden daha iyiydi. Özellikle uzun yolda
-                                                konforu oldukça tatmin ediciydi.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="review d-flex">
-                                        <div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
-                                        <div class="desc">
-                                            <h4>
-                                                <span class="text-left">Mehmet Kaya</span>
-                                                <span class="text-right">05 Ocak 2018</span>
-                                            </h4>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                </span>
-                                                <span class="text-right">
-                                                    <a href="#" class="reply"><i class="icon-reply"></i></a>
-                                                </span>
-                                            </p>
-                                            <p>
-                                                Rezervasyon süreci oldukça kolaydı, araç zamanında hazırdı.
-                                                Hizmet kalitesinden memnun kaldım.
-                                            </p>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <!-- Yorum Özeti -->
@@ -277,9 +240,9 @@
                                                     <i class="ion-ios-star"></i>
                                                     <i class="ion-ios-star"></i>
                                                     <i class="ion-ios-star"></i>
-                                                    (98%)
+                                                    (@fivestarPercentage%)
                                                 </span>
-                                                <span>20 Yorum</span>
+                                                <span>@fiveStarCommentsCount Yorum</span>
                                             </p>
                                             <p class="star">
                                                 <span>
@@ -287,43 +250,33 @@
                                                     <i class="ion-ios-star"></i>
                                                     <i class="ion-ios-star"></i>
                                                     <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    (85%)
+                                                    (@fourstarPercentage%)
                                                 </span>
-                                                <span>10 Yorum</span>
+                                                <span>@fourStarCommentsCount Yorum</span>
                                             </p>
                                             <p class="star">
                                                 <span>
                                                     <i class="ion-ios-star"></i>
                                                     <i class="ion-ios-star"></i>
                                                     <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    (70%)
+                                                    (@threestarPercentage%)
                                                 </span>
-                                                <span>5 Yorum</span>
+                                                <span>@threeStarCommentsCount Yorum</span>
                                             </p>
                                             <p class="star">
                                                 <span>
                                                     <i class="ion-ios-star"></i>
                                                     <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    (10%)
+                                                    (@twostarPercentage%)
                                                 </span>
-                                                <span>0 Yorum</span>
+                                                <span>@twoStarCommentsCount Yorum</span>
                                             </p>
                                             <p class="star">
                                                 <span>
                                                     <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    <i class="ion-ios-star"></i>
-                                                    (0%)
+                                                    (@onestarPercentage%)
                                                 </span>
-                                                <span>0 Yorum</span>
+                                                <span>@oneStarCommentsCount Yorum</span>
                                             </p>
                                         </div>
                                     </div>

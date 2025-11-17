@@ -2,6 +2,7 @@
 using CarBook_OnionArch.Application.Features.CQRS.Commands.CarCommands;
 using CarBook_OnionArch.Application.Features.CQRS.Results.CarResults;
 using CarBook_OnionArch.Application.Features.Mediator.Results.RentalResults;
+using CarBook_OnionArch.Application.Features.Mediator.Results.ReviewResults;
 using CarBook_OnionArch.Domain.Entities;
 
 namespace CarBook_OnionArch.Application.Mappings

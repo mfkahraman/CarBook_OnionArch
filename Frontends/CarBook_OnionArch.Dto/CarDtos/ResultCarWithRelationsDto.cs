@@ -16,6 +16,7 @@
         public Carfeature[]? carFeatures { get; set; }
         public Cardescription[]? carDescriptions { get; set; }
         public Carpricing[]? carPricings { get; set; }
+        public Review[]? reviews { get; set; }
 
         public class Brand
         {
@@ -57,6 +58,29 @@
         {
             public int id { get; set; }
             public string? name { get; set; }
+        }
+
+        public class Review
+        {
+            public int id { get; set; }
+            public int userId { get; set; }
+            public int carId { get; set; }
+            public string? comment { get; set; }
+            public int rating { get; set; }
+            public DateTime createDate { get; set; }
+            public User? user { get; set; }
+        }
+
+        public class User
+        {
+            public int id { get; set; }
+            public required string firstName { get; set; }
+            public required string lastName { get; set; }
+            public required string email { get; set; }
+            public string? passwordHash { get; set; }
+            public string? imagePath { get; set; }
+            public DateTime createdDate { get; set; }
+            public DateTime? updatedDate { get; set; }
         }
 
     }

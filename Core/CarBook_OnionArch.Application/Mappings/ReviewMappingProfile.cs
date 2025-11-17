@@ -13,6 +13,7 @@ namespace CarBook_OnionArch.Application.Mappings
             CreateMap<Review, UpdateReviewCommand>().ReverseMap();
             CreateMap<Review, GetReviewByIdQueryResult>();
             CreateMap<Review, GetReviewsListQueryResult>();
+            CreateMap<Review, GetReviewsListQueryResult>();
         }
     }
 }
