@@ -1,0 +1,338 @@
+﻿@using CarBook_OnionArch.Dto.CarDtos
+@model ResultCarWithRelationsDto
+
+@{
+    ViewData["Title"] = "Araç Detayı";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<section class="ftco-section ftco-car-details">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="car-details">
+                    <div class="img rounded" style="background-image: url(@Model.bigImageUrl);"></div>
+                    <div class="text text-center">
+                        <span class="subheading">@Model.brand?.name</span>
+                        <h2>@Model.model</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Kilometre -->
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-dashboard"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Kilometre
+                                    <span>@Model.mileage km</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Vites -->
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-pistons"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Vites Tipi
+                                    <span>@Model.transmission</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Koltuk -->
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-car-seat"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Koltuk Sayısı
+                                    <span>@Model.seat Yetişkin</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bagaj -->
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-backpack"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Bagaj
+                                    <span>@Model.luggage Orta Bavul</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Yakıt -->
+            <div class="col-md d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services">
+                    <div class="media-body py-md-4">
+                        <div class="d-flex mb-3 align-items-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-diesel"></span>
+                            </div>
+                            <div class="text">
+                                <h3 class="heading mb-0 pl-3">
+                                    Yakıt Tipi
+                                    <span>@Model.fuel</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekmeler -->
+        <div class="row">
+            <div class="col-md-12 pills">
+                <div class="bd-example bd-example-tabs">
+                    <div class="d-flex justify-content-center">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-description-tab" data-toggle="pill"
+                                   href="#pills-description" role="tab" aria-controls="pills-description"
+                                   aria-expanded="true">
+                                    Özellikler
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-manufacturer-tab" data-toggle="pill"
+                                   href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer"
+                                   aria-expanded="true">
+                                    Açıklama
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-review-tab" data-toggle="pill"
+                                   href="#pills-review" role="tab" aria-controls="pills-review"
+                                   aria-expanded="true">
+                                    Yorumlar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <!-- Özellikler -->
+                        <div class="tab-pane fade show active" id="pills-description" role="tabpanel"
+                             aria-labelledby="pills-description-tab">
+                            <div class="row">
+                                @{
+                                    int totalFeatures = Model.carFeatures?.Count() ?? 0;
+                                    int columns = 3;
+                                    var features = Model.carFeatures;
+                                    int itemsPerColumn = (int)Math.Ceiling((double)totalFeatures / columns);
+
+                                    for (int i = 0; i < columns; i++)
+                                    {
+                                        <div class="col-md-4">
+                                            <ul class="features">
+                                                @for (int j = i * itemsPerColumn; j < Math.Min((i + 1) * itemsPerColumn, totalFeatures); j++)
+                                                {
+                                                    <li class="@(features![j].isAvailable ? "check" : "remove")">
+                                                        <span class="ion-ios-checkmark"></span>@features[j].feature!.name
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Açıklama -->
+                        <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel"
+                             aria-labelledby="pills-manufacturer-tab">
+                            <p>
+                                @Model.carDescriptions!.FirstOrDefault()!.detail
+                            </p>
+                        </div>
+
+                        <!-- Yorumlar -->
+                        <div class="tab-pane fade" id="pills-review" role="tabpanel"
+                             aria-labelledby="pills-review-tab">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h3 class="head">23 Yorum</h3>
+
+                                    <div class="review d-flex">
+                                        <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                                        <div class="desc">
+                                            <h4>
+                                                <span class="text-left">Emre Yılmaz</span>
+                                                <span class="text-right">14 Mart 2018</span>
+                                            </h4>
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                </span>
+                                                <span class="text-right">
+                                                    <a href="#" class="reply"><i class="icon-reply"></i></a>
+                                                </span>
+                                            </p>
+                                            <p>
+                                                Araç temiz ve bakımlıydı. Teslim alma ve bırakma süreci çok hızlı
+                                                ve sorunsuz ilerledi, tekrar tercih ederim.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="review d-flex">
+                                        <div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                                        <div class="desc">
+                                            <h4>
+                                                <span class="text-left">Ayşe Demir</span>
+                                                <span class="text-right">20 Şubat 2018</span>
+                                            </h4>
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                </span>
+                                                <span class="text-right">
+                                                    <a href="#" class="reply"><i class="icon-reply"></i></a>
+                                                </span>
+                                            </p>
+                                            <p>
+                                                Yakıt tüketimi beklediğimden daha iyiydi. Özellikle uzun yolda
+                                                konforu oldukça tatmin ediciydi.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="review d-flex">
+                                        <div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
+                                        <div class="desc">
+                                            <h4>
+                                                <span class="text-left">Mehmet Kaya</span>
+                                                <span class="text-right">05 Ocak 2018</span>
+                                            </h4>
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                </span>
+                                                <span class="text-right">
+                                                    <a href="#" class="reply"><i class="icon-reply"></i></a>
+                                                </span>
+                                            </p>
+                                            <p>
+                                                Rezervasyon süreci oldukça kolaydı, araç zamanında hazırdı.
+                                                Hizmet kalitesinden memnun kaldım.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Yorum Özeti -->
+                                <div class="col-md-5">
+                                    <div class="rating-wrap">
+                                        <h3 class="head">Yorum Yapın</h3>
+                                        <div class="wrap">
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    (98%)
+                                                </span>
+                                                <span>20 Yorum</span>
+                                            </p>
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    (85%)
+                                                </span>
+                                                <span>10 Yorum</span>
+                                            </p>
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    (70%)
+                                                </span>
+                                                <span>5 Yorum</span>
+                                            </p>
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    (10%)
+                                                </span>
+                                                <span>0 Yorum</span>
+                                            </p>
+                                            <p class="star">
+                                                <span>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    <i class="ion-ios-star"></i>
+                                                    (0%)
+                                                </span>
+                                                <span>0 Yorum</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- row -->
+                        </div> <!-- /Yorumlar -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

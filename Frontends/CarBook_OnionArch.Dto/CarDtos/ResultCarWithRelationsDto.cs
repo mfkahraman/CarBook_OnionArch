@@ -28,8 +28,13 @@
             public int id { get; set; }
             public int carId { get; set; }
             public int featureId { get; set; }
-            public object? feature { get; set; }
+            public Feature? feature { get; set; }
             public bool isAvailable { get; set; }
+        }
+        public class Feature
+        {
+            public int id { get; set; }
+            public string? name { get; set; }
         }
 
         public class Cardescription

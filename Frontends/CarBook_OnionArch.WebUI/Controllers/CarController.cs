@@ -27,7 +27,7 @@ namespace CarBook_OnionArch.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(ReservationDetailsDto reservationDto, int? page)
+        public async Task<IActionResult> AvailableCars(ReservationDetailsDto reservationDto, int? page)
         {
             var client = httpClientFactory.CreateClient();
 
@@ -107,6 +107,19 @@ namespace CarBook_OnionArch.WebUI.Controllers
             {
                 return View("Error");
             }
+        }
+
+        public async Task<IActionResult> CarDetail(int id)
+        {
+            var client = httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-car-with-relations-by-id/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return View("Error");
+            }
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var car = JsonSerializer.Deserialize<ResultCarWithRelationsDto>(jsonData);
+            return View(car);
         }
     }
 }
