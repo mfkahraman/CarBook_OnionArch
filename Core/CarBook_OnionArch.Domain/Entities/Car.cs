@@ -17,6 +17,7 @@
         public List<CarDescription>? CarDescriptions { get; set; }
         public List<CarPricing>? CarPricings { get; set; }
         public List<Rental>? Rentals { get; set; }
+        public List<Review>? Reviews { get; set; }
         public bool IsDeleted { get; set; } = false;
 
     }

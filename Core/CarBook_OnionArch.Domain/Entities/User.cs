@@ -14,5 +14,6 @@ namespace CarBook_OnionArch.Domain.Entities
         public DateTime? UpdatedDate { get; set; }
         public List<Rental>? Rentals { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public List<Review>? Reviews { get; set; }
     }
 }
