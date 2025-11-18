@@ -92,7 +92,77 @@
             <input type="hidden" asp-for="DailyPrice" />
             <input type="hidden" asp-for="TotalPrice" />
             <input type="hidden" asp-for="Status" />
-            <button type="submit" class="reservation-btn">Kiralamayı Tamamla</button>
+            <button type="submit" class="reservation-btn" id="bookingButton">Kiralamayı Tamamla</button>
         </form>
     </div>
 </div>
+
+<script>
+
+     document.getElementById("bookingButton").addEventListener("click", function () {
+        Swal.fire({
+            title: "Kiralama talebini oluşturmak istiyor musunuz?",
+            text: "Talebiniz incelendikten sonra size geri dönüş yapılacaktır.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Evet, oluştur!",
+            cancelButtonText: "Hayır, iptal et"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Form verisini al
+                const formData = new FormData(document.querySelector("form"));
+
+                // AJAX ile backend'e istek gönder
+                $.ajax({
+                    type: "POST",
+                    url: "/Car/CreateReservation",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: "Başarılı!",
+                                text: response.message,
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(() => {
+                                // Kiralama talebi başarılı ise anasayfaya yönlendir
+                                window.location.href = "/Default/Index"; // Veya istediğiniz başka bir sayfa
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Uyarı!",
+                                text: response.message,
+                                icon: "warning",
+                            }).then(() => {
+                                // Kullanıcıyı login sayfasına yönlendir
+                                if (response.message.includes("giriş yapmalısınız")) {
+                                    window.location.href = "/Login/Index"; // Login sayfasının URL'si
+                                }
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "Hata!",
+                            text: "Bir hata oluştu, lütfen tekrar deneyin.",
+                            icon: "error"
+                        });
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "İptal Edildi",
+                    text: "Kiralama talebi oluşturulmadı.",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    });
+
+
+</script>

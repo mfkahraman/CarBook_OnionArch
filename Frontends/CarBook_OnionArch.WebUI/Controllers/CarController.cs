@@ -101,11 +101,11 @@ namespace CarBook_OnionArch.WebUI.Controllers
             var response = await client.PostAsync("https://localhost:7020/api/Rentals", content);
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index","Default");
+                return Json(new { success = false, message = "Kiralama talebi oluşturmak için giriş yapmalısınız. Sizi giriş sayfasına yönlendiriyorum." });
             }
             else
             {
-                return View("Error");
+                return Json(new { success = true, message = "Kiralama talebiniz başarıyla oluşturuldu!" });
             }
         }
 
