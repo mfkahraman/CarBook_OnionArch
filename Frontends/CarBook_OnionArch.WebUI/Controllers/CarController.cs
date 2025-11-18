@@ -53,6 +53,19 @@ namespace CarBook_OnionArch.WebUI.Controllers
             return View(pagedList);
         }
 
+        public async Task<IActionResult> CarDetail(int id)
+        {
+            var client = httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-car-with-relations-by-id/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return View("Error");
+            }
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var car = JsonSerializer.Deserialize<ResultCarWithRelationsDto>(jsonData);
+            return View(car);
+        }
+
         [HttpGet]
         public async Task<IActionResult> ReservationDetails(int carId, decimal dailyPrice)
         {
@@ -92,6 +105,7 @@ namespace CarBook_OnionArch.WebUI.Controllers
             return View(reservationDetailsDto);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> CreateReservation(CreateRentalDto dto)
         {
@@ -101,25 +115,12 @@ namespace CarBook_OnionArch.WebUI.Controllers
             var response = await client.PostAsync("https://localhost:7020/api/Rentals", content);
             if (response.IsSuccessStatusCode)
             {
-                return Json(new { success = false, message = "Kiralama talebi oluşturmak için giriş yapmalısınız. Sizi giriş sayfasına yönlendiriyorum." });
+                return Json(new { success = true, message = "Kiralama talebiniz başarıyla oluşturuldu!" });
             }
             else
             {
-                return Json(new { success = true, message = "Kiralama talebiniz başarıyla oluşturuldu!" });
+                return Json(new { success = false, message = "Kiralama talebi oluşturmak için giriş yapmalısınız. Sizi giriş sayfasına yönlendiriyorum." });
             }
-        }
-
-        public async Task<IActionResult> CarDetail(int id)
-        {
-            var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7020/api/Cars/get-car-with-relations-by-id/{id}");
-            if (!response.IsSuccessStatusCode)
-            {
-                return View("Error");
-            }
-            var jsonData = await response.Content.ReadAsStringAsync();
-            var car = JsonSerializer.Deserialize<ResultCarWithRelationsDto>(jsonData);
-            return View(car);
         }
     }
 }

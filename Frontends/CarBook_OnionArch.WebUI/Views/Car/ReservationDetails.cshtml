@@ -6,6 +6,12 @@
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
+@* Added to enable sweetalert *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@* Ajax *@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <style>
     .reservation-summary-container {
         max-width: 600px;
@@ -98,8 +104,9 @@
 </div>
 
 <script>
+    document.getElementById("bookingButton").addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default form submission
 
-     document.getElementById("bookingButton").addEventListener("click", function () {
         Swal.fire({
             title: "Kiralama talebini oluşturmak istiyor musunuz?",
             text: "Talebiniz incelendikten sonra size geri dönüş yapılacaktır.",
@@ -109,10 +116,7 @@
             cancelButtonText: "Hayır, iptal et"
         }).then((result) => {
             if (result.isConfirmed) {
-                // Form verisini al
                 const formData = new FormData(document.querySelector("form"));
-
-                // AJAX ile backend'e istek gönder
                 $.ajax({
                     type: "POST",
                     url: "/Car/CreateReservation",
@@ -128,8 +132,7 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             }).then(() => {
-                                // Kiralama talebi başarılı ise anasayfaya yönlendir
-                                window.location.href = "/Default/Index"; // Veya istediğiniz başka bir sayfa
+                                window.location.href = "/Default/Index";
                             });
                         } else {
                             Swal.fire({
@@ -137,9 +140,8 @@
                                 text: response.message,
                                 icon: "warning",
                             }).then(() => {
-                                // Kullanıcıyı login sayfasına yönlendir
                                 if (response.message.includes("giriş yapmalısınız")) {
-                                    window.location.href = "/Login/Index"; // Login sayfasının URL'si
+                                    window.location.href = "/Login/Index";
                                 }
                             });
                         }
@@ -163,6 +165,4 @@
             }
         });
     });
-
-
 </script>
