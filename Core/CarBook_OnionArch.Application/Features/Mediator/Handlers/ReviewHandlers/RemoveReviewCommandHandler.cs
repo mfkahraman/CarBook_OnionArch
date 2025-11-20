@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.ReviewHandlers
 {
-    public class RemoveReviewComandHandler(IRepository<Review> repository,
+    public class RemoveReviewCommandHandler(IRepository<Review> repository,
                                              IUnitOfWork unitOfWork)
         : IRequestHandler<RemoveReviewCommand, bool>
     {
