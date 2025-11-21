@@ -30,9 +30,9 @@
                 <td>@count</td>
                 <td>@feature.name</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminCategory", new { id = feature.id, area = "Admin" })">Update</a>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminCategory", new { id = feature.id, area = "Admin" })">Güncelle</a>
                     <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "AdminCategory", new { id = feature.id, area = "Admin" })"
-                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Delete</a>
+                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Sild</a>
                 </td>
             </tr>
         }

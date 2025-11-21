@@ -36,9 +36,9 @@
                     <img src="@about?.imageUrl" alt="@about?.title" style="width: 100px; height: auto;" />
                 </td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminAbout", new { id = about?.id, area = "Admin" })">Update</a>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Update", "AdminAbout", new { id = about?.id, area = "Admin" })">Güncelle</a>
                     <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "AdminAbout", new { id = about?.id, area = "Admin" })"
-                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Delete</a>
+                       onclick="return confirm('Bu veriyi silmek istediğinizden emin misiniz?');">Sil</a>
                 </td>
             </tr>
         }
