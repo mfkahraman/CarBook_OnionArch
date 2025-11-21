@@ -2,7 +2,7 @@
 
 namespace CarBook_OnionArch.Domain.Entities
 {
-    public class User
+    public class User : IEntity
     {
         [Key]
         public int Id { get; set; }
@@ -16,5 +16,6 @@ namespace CarBook_OnionArch.Domain.Entities
         public List<Rental>? Rentals { get; set; }
         public bool IsDeleted { get; set; } = false;
         public List<Review>? Reviews { get; set; }
+        public List<AppRole>? Roles { get; set; }
     }
 }

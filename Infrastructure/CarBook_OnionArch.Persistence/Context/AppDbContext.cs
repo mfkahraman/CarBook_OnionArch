@@ -29,6 +29,8 @@ namespace CarBook_OnionArch.Persistence.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<AppRole> AppRoles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
