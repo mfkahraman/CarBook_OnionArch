@@ -1,20 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace CarBook_OnionArch.Domain.Entities
 {
-    public class User : IEntity
+    public class AppUser : IdentityUser<int>
     {
-        [Key]
-        public int Id { get; set; }
+        [PersonalData]
         public required string FirstName { get; set; }
+        [PersonalData]
         public required string LastName { get; set; }
-        public required string Email { get; set; }
-        public string? PasswordHash { get; set; }
         public string? ImagePath { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedDate { get; set; }
-        public List<Rental>? Rentals { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public List<Rental>? Rentals { get; set; }
         public List<Review>? Reviews { get; set; }
         public List<AppRole>? Roles { get; set; }
     }

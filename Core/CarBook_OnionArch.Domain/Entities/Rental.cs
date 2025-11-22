@@ -18,7 +18,7 @@ namespace CarBook_OnionArch.Domain.Entities
         [Required]
         public int UserId { get; set; }
         [ForeignKey("UserId")]
-        public User? User { get; set; }
+        public AppUser? User { get; set; }
 
         //Rental Dates
         [Required]

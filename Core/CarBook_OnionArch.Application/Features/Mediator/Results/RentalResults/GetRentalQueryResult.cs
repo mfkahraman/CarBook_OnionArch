@@ -8,7 +8,7 @@ namespace CarBook_OnionArch.Application.Features.Mediator.Results.RentalResults
         public int CarId { get; set; }
         public Car? Car { get; set; }
         public int UserId { get; set; }
-        public User? User { get; set; }
+        public AppUser? User { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int PickUpLocationId { get; set; }

@@ -1,13 +1,12 @@
 ﻿using CarBook_OnionArch.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarBook_OnionArch.Persistence.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options)
+        : IdentityDbContext<AppUser, AppRole, int>(options)
     {
-        public AppDbContext(DbContextOptions options) : base(options)
-        {
-        }
         public DbSet<About> Abouts { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -28,9 +27,6 @@ namespace CarBook_OnionArch.Persistence.Context
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rental> Rentals { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<AppRole> AppRoles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

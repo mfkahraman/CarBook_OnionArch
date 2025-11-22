@@ -8,7 +8,7 @@ namespace CarBook_OnionArch.Application.Mappings
     {
         public UserMappingProfile()
         {
-            CreateMap<User, GetUserByIdQueryResult>();
+            CreateMap<AppUser, GetUserByIdQueryResult>();
         }
     }
 }

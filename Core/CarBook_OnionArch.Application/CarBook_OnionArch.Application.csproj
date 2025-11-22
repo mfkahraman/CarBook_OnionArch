@@ -18,4 +18,10 @@
     <ProjectReference Include="..\CarBook_OnionArch.Domain\CarBook_OnionArch.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Mediator\Handlers\AppUserHandlers\" />
+    <Folder Include="Features\Mediator\Queries\AppUserQueries\" />
+    <Folder Include="Features\Mediator\Results\AppUserResults\" />
+  </ItemGroup>
+
 </Project>
