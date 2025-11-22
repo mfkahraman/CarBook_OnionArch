@@ -8,30 +8,29 @@ using MediatR;
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.AppUserHandlers
 {
-    public class CreateAppUserCommandHandler(IRepository<AppUser> repository,
+    public class CreateAppUserCommandHandler(IAppUserRepository repository,
                                         IMapper mapper,
-                                        IUnitOfWork unitOfWork,
                                         IValidator<CreateAppUserCommand> validator)
         : IRequestHandler<CreateAppUserCommand, GetAppUserByIdQueryResult>
     {
         public async Task<GetAppUserByIdQueryResult> Handle(CreateAppUserCommand request, CancellationToken cancellationToken)
         {
-            var validation = await validator.ValidateAsync(request, cancellationToken);
-            if (!validation.IsValid)
+            var validationResult = await validator.ValidateAsync(request, cancellationToken);
+            if (!validationResult.IsValid)
             {
-                throw new ValidationException(validation.Errors);
+                throw new ValidationException(validationResult.Errors);
+            }
+            var appUserEntity = mapper.Map<AppUser>(request);
+
+            var result = await repository.CreateUserAsync(appUserEntity, appUserEntity.PasswordHash!);
+
+            if(!result.Succeeded)
+            {
+                throw new Exception("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
 
-            var entity = mapper.Map<AppUser>(request);
-            repository.Create(entity);
-            var result = await unitOfWork.CommitAsync();
-
-            if (!result)
-            {
-                throw new Exception("Db'ye kayıt işlemi sırasında bir sorun oluştu.");
-            }
-
-            return mapper.Map<GetAppUserByIdQueryResult>(entity);
+            var createdUser = await repository.FindUserByUserNameAsync(appUserEntity.UserName!);
+            return mapper.Map<GetAppUserByIdQueryResult>(createdUser);
         }
     }
 }
