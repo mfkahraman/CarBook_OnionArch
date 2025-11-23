@@ -1,5 +1,7 @@
 using CarBook_OnionArch.Application.Extensions;
 using CarBook_OnionArch.Application.Validators.ReviewValidators;
+using CarBook_OnionArch.Domain.Entities;
+using CarBook_OnionArch.Persistence.Context;
 using CarBook_OnionArch.Persistence.Extensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,6 +37,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuerSigningKey = true
     };
 });
+
+//Identity Registration
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

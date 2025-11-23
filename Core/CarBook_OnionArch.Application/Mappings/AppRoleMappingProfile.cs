@@ -9,9 +9,11 @@ namespace CarBook_OnionArch.Application.Mappings
     {
         public AppRoleMappingProfile()
         {
-            CreateMap<AppUser, CreateAppRoleCommand>().ReverseMap();
-            CreateMap<AppUser, GetAppRolesListQueryResult>();
-            CreateMap<AppUser, GetAppRoleByIdQueryResult>();
+            CreateMap<AppRole, CreateAppRoleCommand>()
+                .ForMember(dest => dest.roleName, opt => opt.MapFrom(src => src.Name))
+                .ReverseMap();
+            CreateMap<AppRole, GetAppRolesListQueryResult>();
+            CreateMap<AppRole, GetAppRoleByIdQueryResult>();
         }
     }
 }

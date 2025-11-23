@@ -34,9 +34,12 @@ namespace CarBook_OnionArch.Application.Validators.AppUserValidators
                 .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
                 .WithMessage("Geçerli bir telefon numarası giriniz. (örn: +905321234567)");
 
-            RuleFor(x => x.ImagePath)
-                .Must(p => string.IsNullOrWhiteSpace(p) || Uri.IsWellFormedUriString(p, UriKind.Absolute))
-                .WithMessage("Geçerli bir resim yolu veya URL giriniz.");
+            When(x => !string.IsNullOrWhiteSpace(x.ImagePath), () =>
+            {
+                RuleFor(x => x.ImagePath)
+                    .MaximumLength(260)
+                    .WithMessage("ImagePath 260 karakteri aşmamalıdır.");
+            });
         }
     }
 }
