@@ -18,7 +18,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
         public async Task<int> GetAutomaticTransmissionCarCountAsync(CancellationToken cancellationToken)
         {
             var count = await context.Cars
-                .Where(c => !c.IsDeleted && c.Transmission == "Automatic")
+                .Where(c => !c.IsDeleted && c.Transmission == "Otomatik")
                 .CountAsync(cancellationToken);
             return count;
         }
@@ -140,7 +140,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
         public async Task<int> GetDieselCarCountAsync(CancellationToken cancellationToken)
         {
             var count = await context.Cars
-                .Where(c => !c.IsDeleted && c.Fuel == "Diesel")
+                .Where(c => !c.IsDeleted && c.Fuel == "Dizel")
                 .CountAsync(cancellationToken);
             return count;
         }
@@ -148,7 +148,7 @@ namespace CarBook_OnionArch.Persistence.Repositories
         public async Task<int> GetGasolineCarCountAsync(CancellationToken cancellationToken)
         {
             var count = await context.Cars
-                .Where(c => !c.IsDeleted && c.Fuel == "Gasoline")
+                .Where(c => !c.IsDeleted && c.Fuel == "Benzin")
                 .CountAsync(cancellationToken);
             return count;
         }

@@ -1,5 +1,4 @@
-﻿using CarBook_OnionArch.Dto.CarDtos;
-using CarBook_OnionArch.Dto.UserDtos;
+﻿using CarBook_OnionArch.Dto.UserDtos;
 using CarBook_OnionArch.WebUI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
