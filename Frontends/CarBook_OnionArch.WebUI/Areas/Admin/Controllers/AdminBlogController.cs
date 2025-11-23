@@ -2,6 +2,7 @@
 using CarBook_OnionArch.Dto.BlogDtos;
 using CarBook_OnionArch.Dto.CategoriesDtos;
 using CarBook_OnionArch.WebUI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
@@ -10,6 +11,7 @@ using X.PagedList.Extensions;
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminBlogController(IHttpClientFactory httpClient,
                                        IImageService imageService) : Controller
     {

@@ -27,7 +27,7 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddValidatorsFromAssemblyContaining<CreateReviewValidator>();
 
 // JwtSecurityTokenHandler registration
-//builder.Services.AddSingleton<JwtSecurityTokenHandler>();
+builder.Services.AddSingleton<JwtSecurityTokenHandler>();
 
 //JWT Bearer Authentication Configuration
 builder.Services.AddAuthentication(cfg =>
@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(cfg =>
 });
 
 // TokenOptions configuration binding
-//builder.Services.Configure<TokenOptions>(builder.Configuration.GetSection(nameof(TokenOptions)));
+builder.Services.Configure<TokenOptions>(builder.Configuration.GetSection(nameof(TokenOptions)));
 
 // Authorization policy registration
 builder.Services.AddAuthorizationBuilder()

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using CarBook_OnionArch.Dto.UserDtos
+@model SignInDto
+@{
     Layout = null;
 }
 
@@ -46,14 +48,14 @@
                                         </div>
                                         <h1 class="h5 mb-1">Tekrar Hoşgeldiniz!</h1>
                                         <p class="text-muted mb-4">Yönetim paneline erişmek için e-posta adresinizi ve şifrenizi giriniz.</p>
-                                        <form class="user">
+                                        <form class="user" asp-controller="User" asp-action="SignIn" method="post">
                                             <div class="form-group">
-                                                <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="E-posta Adresi">
+                                                <input type="text" class="form-control form-control-user" placeholder="Kullanıcı adınız" asp-for="userName">
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Şifre">
+                                                <input type="password" class="form-control form-control-user" asp-for="password" placeholder="Şifreniz">
                                             </div>
-                                            <a href="" class="btn btn-success btn-block waves-effect waves-light"> Giriş Yap </a>
+                                            <button type="submit" class="btn btn-success btn-block waves-effect waves-light"> Giriş Yap </button>
 
                                             <div class="text-center mt-4">
                                                 <h5 class="text-muted font-size-16">Sosyal hesap ile giriş yap</h5>

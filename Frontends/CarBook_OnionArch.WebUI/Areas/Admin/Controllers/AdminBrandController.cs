@@ -1,4 +1,5 @@
 ﻿using CarBook_OnionArch.Dto.BrandDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using X.PagedList.Extensions;
@@ -6,6 +7,7 @@ using X.PagedList.Extensions;
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminBrandController(IHttpClientFactory httpClient) : Controller
     {
         public async Task<IActionResult> Index(int? page)

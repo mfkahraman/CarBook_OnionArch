@@ -64,22 +64,30 @@ namespace CarBook_OnionArch.WebUI.Controllers
             var client = httpClient.CreateClient();
             var jsonContent = JsonSerializer.Serialize(dto);
             var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7020/api/Users/SignIn", content);
+            var response = await client.PostAsync("https://localhost:7020/api/Users/sign-in", content);
             if (!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError(string.Empty, "Geçersiz kullanıcı adı veya şifre.");
                 return View(dto);
             }
             var responseContent = await response.Content.ReadAsStringAsync();
-            var token = JsonSerializer.Deserialize<string>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            HttpContext.Response.Cookies.Append("AuthToken", token!, new CookieOptions
+
+            var token = responseContent;
+
+            if (token is null)
+            {
+                ModelState.AddModelError(string.Empty, "Geçersiz kullanıcı adı veya şifre.");
+                return View(dto);
+            }
+
+            HttpContext.Response.Cookies.Append("AuthToken", token, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
                 Expires = DateTimeOffset.UtcNow.AddHours(1)
             });
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Default");
         }
     }
 }

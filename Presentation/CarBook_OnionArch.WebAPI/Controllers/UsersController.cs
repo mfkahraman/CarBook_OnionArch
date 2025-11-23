@@ -71,16 +71,16 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         }
 
         [HttpPost("sign-in")]
-        public async Task<ActionResult<string>> SignIn(string userName, string password)
+        public async Task<ActionResult<string>> SignIn(AppUserSignInQuery query)
         {
             try
             {
-                var user = await mediator.Send(new GetAppUserByUserNameQuery(userName));
+                var user = await mediator.Send(new GetAppUserByUserNameQuery(query.UserName));
                 if (user == null)
                 {
                     return BadRequest("Bu kullanıcı adıyla kayıtlı bir kullanıcı bulunamadı.");
                 }
-                var passwordResult = await mediator.Send(new CheckAppUserPasswordQuery(user.Id, password));
+                var passwordResult = await mediator.Send(new CheckAppUserPasswordQuery(user.Id, query.Password));
                 if (!passwordResult)
                 {
                     return BadRequest("Geçersiz parola.");

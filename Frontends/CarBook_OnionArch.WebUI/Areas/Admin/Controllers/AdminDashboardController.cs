@@ -1,10 +1,12 @@
 ﻿using CarBook_OnionArch.Dto.StatisticsDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminDashboardController(IHttpClientFactory httpClient) : Controller
     {
         public async Task<IActionResult> Index(CancellationToken cancellationToken)

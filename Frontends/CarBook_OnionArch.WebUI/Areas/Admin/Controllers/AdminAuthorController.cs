@@ -1,5 +1,6 @@
 ﻿using CarBook_OnionArch.Dto.AuthorDtos;
 using CarBook_OnionArch.WebUI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using X.PagedList.Extensions;
@@ -7,6 +8,7 @@ using X.PagedList.Extensions;
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminAuthorController(IHttpClientFactory httpClient,
                                        IImageService imageService) : Controller
     {

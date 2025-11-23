@@ -1,11 +1,13 @@
 ﻿using CarBook_OnionArch.Dto.BlogDtos;
 using CarBook_OnionArch.Dto.CommentDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using X.PagedList.Extensions;
 
 namespace CarBook_OnionArch.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class BlogController(IHttpClientFactory httpClient) : Controller
     {
         public async Task<IActionResult> Index(int? page)

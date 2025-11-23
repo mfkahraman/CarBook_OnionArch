@@ -6,6 +6,7 @@ using CarBook_OnionArch.Dto.FeaturesDtos;
 using CarBook_OnionArch.Dto.PricingDtos;
 using CarBook_OnionArch.WebUI.Extensions;
 using CarBook_OnionArch.WebUI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
@@ -14,6 +15,7 @@ using X.PagedList.Extensions;
 namespace CarBook_OnionArch.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminCarController(IHttpClientFactory httpClientFactory,
                                     IImageService imageService) : Controller
     {
