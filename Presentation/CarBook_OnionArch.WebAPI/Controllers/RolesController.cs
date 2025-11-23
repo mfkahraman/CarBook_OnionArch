@@ -1,6 +1,6 @@
-﻿using CarBook_OnionArch.Application.Features.Mediator.Commands.TestimonialCommands;
-using CarBook_OnionArch.Application.Features.Mediator.Queries.TestimonialQueries;
-using CarBook_OnionArch.Application.Features.Mediator.Results.TestimonialResults;
+﻿using CarBook_OnionArch.Application.Features.Mediator.Commands.AppRoleCommands;
+using CarBook_OnionArch.Application.Features.Mediator.Queries.AppRoleQueries;
+using CarBook_OnionArch.Application.Features.Mediator.Results.AppRoleResults;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,12 +8,12 @@ namespace CarBook_OnionArch.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestimonialsController(IMediator mediator) : ControllerBase
+    public class RolesController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<List<GetTestimonialQueryResult>>> GetAll()
+        public async Task<ActionResult<List<GetAppRolesListQueryResult>>> GetAll()
         {
-            var values = await mediator.Send(new GetTestimonialQuery());
+            var values = await mediator.Send(new GetAppRolesListQuery());
 
             if (values == null)
             {
@@ -24,9 +24,9 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetTestimonialByIdQueryResult>> GetById(int id)
+        public async Task<ActionResult<GetAppRoleByIdQueryResult>> GetById(int id)
         {
-            var value = await mediator.Send(new GetTestimonialByIdQuery(id));
+            var value = await mediator.Send(new GetAppRoleByIdQuery(id));
 
             if (value == null)
             {
@@ -37,7 +37,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<GetTestimonialByIdQueryResult>> Create(CreateTestimonialCommand command)
+        public async Task<ActionResult<GetAppRoleByIdQueryResult>> Create(CreateAppRoleCommand command)
         {
             try
             {
@@ -58,33 +58,12 @@ namespace CarBook_OnionArch.WebAPI.Controllers
 
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, UpdateTestimonialCommand command)
-        {
-            if (id != command.Id)
-                return BadRequest("URL'deki id ile gövdedeki id uyuşmuyor.");
-
-            try
-            {
-                var result = await mediator.Send(command);
-
-                if (!result)
-                    return BadRequest("Kayıt güncellenirken bir sorun oluştu");
-
-                return Ok("Başarılı şekilde güncellendi");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Güncelleme işlemi sırasında bir sorun oluştu: {ex.Message}");
-            }
-        }
-
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                var result = await mediator.Send(new RemoveTestimonialCommand(id));
+                var result = await mediator.Send(new RemoveAppRoleCommand(id));
 
                 if (!result)
                 {

@@ -6,11 +6,12 @@ namespace CarBook_OnionArch.Persistence.Repositories
 {
     public class AppUserRepository(UserManager<AppUser> userManager) : IAppUserRepository
     {
-        public async Task<IdentityResult> AddUserToRoleAsync(AppUser user, string role)
+        public async Task<IdentityResult> AddUserToRoleAsync(int userId, string role)
         {
+            var user = await FindUserByIdAsync(userId);
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentException("User not found.", nameof(userId));
             }
             if (string.IsNullOrWhiteSpace(role))
             {
@@ -19,11 +20,12 @@ namespace CarBook_OnionArch.Persistence.Repositories
             return await userManager.AddToRoleAsync(user, role);
         }
 
-        public async Task<bool> CheckPasswordAsync(AppUser user, string password)
+        public async Task<bool> CheckPasswordAsync(int userId, string password)
         {
+            var user = await FindUserByIdAsync(userId);
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentException("User not found.", nameof(userId));
             }
             if (string.IsNullOrWhiteSpace(password))
             {

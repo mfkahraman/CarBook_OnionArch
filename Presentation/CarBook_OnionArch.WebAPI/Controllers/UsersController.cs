@@ -1,6 +1,7 @@
-﻿using CarBook_OnionArch.Application.Features.Mediator.Commands.TestimonialCommands;
-using CarBook_OnionArch.Application.Features.Mediator.Queries.TestimonialQueries;
-using CarBook_OnionArch.Application.Features.Mediator.Results.TestimonialResults;
+﻿using CarBook_OnionArch.Application.Features.Mediator.Commands.AppUserCommands;
+using CarBook_OnionArch.Application.Features.Mediator.Queries.AppRoleQueries;
+using CarBook_OnionArch.Application.Features.Mediator.Queries.AppUserQueries;
+using CarBook_OnionArch.Application.Features.Mediator.Results.UserResults;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,12 +9,12 @@ namespace CarBook_OnionArch.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestimonialsController(IMediator mediator) : ControllerBase
+    public class UsersController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<List<GetTestimonialQueryResult>>> GetAll()
+        public async Task<ActionResult<List<GetAppUsersListQueryResult>>> GetAll()
         {
-            var values = await mediator.Send(new GetTestimonialQuery());
+            var values = await mediator.Send(new GetAppUsersListQuery());
 
             if (values == null)
             {
@@ -24,9 +25,9 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetTestimonialByIdQueryResult>> GetById(int id)
+        public async Task<ActionResult<GetAppUserByIdQueryResult>> GetById(int id)
         {
-            var value = await mediator.Send(new GetTestimonialByIdQuery(id));
+            var value = await mediator.Send(new GetAppUserByIdQuery(id));
 
             if (value == null)
             {
@@ -37,29 +38,39 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<GetTestimonialByIdQueryResult>> Create(CreateTestimonialCommand command)
+        public async Task<ActionResult<GetAppUserByIdQueryResult>> Create(CreateAppUserCommand command)
         {
             try
             {
-                var result = await mediator.Send(command);
+                var isRoleExist = await mediator.Send(new IsAppRoleExistsQuery("User"));
+                if (!isRoleExist)
+                {
+                    return BadRequest("Varsayılan kullanıcı rolü bulunamadı. Lütfen önce 'User' rolünü oluşturun.");
+                }
+                var createUserResult = await mediator.Send(command);
 
-                if (result == null)
+                if (createUserResult == null)
                 {
                     return BadRequest("Oluşturma işlemi sırasında bir sorun oluştu");
                 }
 
-                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+                var assignRoleResult = await mediator.Send(new AddAppUserToRoleCommand(createUserResult.Id, "User"));
+                if (!assignRoleResult)
+                {
+                    return BadRequest("Kullanıcı oluşturuldu ancak varsayılan rol atanamadı.");
+                }
+
+                return CreatedAtAction(nameof(GetById), new { id = createUserResult.Id }, createUserResult);
 
             }
             catch (Exception ex)
             {
                 return BadRequest($"Oluşturma işlemi sırasında bir sorun oluştu: {ex.Message}");
             }
-
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, UpdateTestimonialCommand command)
+        public async Task<ActionResult> Update(int id, UpdateAppUserCommand command)
         {
             if (id != command.Id)
                 return BadRequest("URL'deki id ile gövdedeki id uyuşmuyor.");
@@ -84,7 +95,7 @@ namespace CarBook_OnionArch.WebAPI.Controllers
         {
             try
             {
-                var result = await mediator.Send(new RemoveTestimonialCommand(id));
+                var result = await mediator.Send(new RemoveAppUserCommand(id));
 
                 if (!result)
                 {
