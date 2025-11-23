@@ -1,21 +1,18 @@
 ﻿using CarBook_OnionArch.Application.Features.Mediator.Commands.AppUserCommands;
 using CarBook_OnionArch.Application.Interfaces;
-using CarBook_OnionArch.Domain.Entities;
 using MediatR;
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.AppUserHandlers
 {
-    public class RemoveAppUserCommandHandler(IRepository<AppUser> repository,
-                                             IUnitOfWork unitOfWork)
+    public class RemoveAppUserCommandHandler(IAppUserRepository repository)
         : IRequestHandler<RemoveAppUserCommand, bool>
     {
         public async Task<bool> Handle(RemoveAppUserCommand request, CancellationToken cancellationToken)
         {
-            await repository.RemoveAsync(request.Id);
-            var result = await unitOfWork.CommitAsync();
-            if (!result)
+            var result = await repository.DeleteUserAsync(request.Id);
+            if (!result.Succeeded)
             {
-                throw new Exception("Dbde silme işlemi sırasında bir sorun oluştu");
+                throw new Exception("User delete failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
             return true;
         }

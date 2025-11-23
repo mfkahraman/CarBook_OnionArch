@@ -53,5 +53,20 @@ namespace CarBook_OnionArch.Persistence.Repositories
             }
             return await userManager.FindByNameAsync(username);
         }
+
+        public async Task<AppUser?> FindUserByIdAsync(int id)
+        {
+            return await userManager.FindByIdAsync(id.ToString());
+        }
+
+        public async Task<IdentityResult> DeleteUserAsync(int id)
+        {
+            var user = await FindUserByIdAsync(id);
+            if (user == null)
+            {
+                throw new ArgumentException("User not found.", nameof(id));
+            }
+            return await userManager.DeleteAsync(user);
+        }
     }
 }

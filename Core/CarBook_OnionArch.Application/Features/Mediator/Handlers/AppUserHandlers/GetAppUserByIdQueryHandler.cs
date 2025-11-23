@@ -7,18 +7,18 @@ using MediatR;
 
 namespace CarBook_OnionArch.Application.Features.Mediator.Handlers.AppUserHandlers
 {
-    internal class GetAppUserByIdQueryHandler(IRepository<AppUser> repository,
-                                        IMapper mapper)
+    internal class GetAppUserByIdQueryHandler(IAppUserRepository repository,
+                                            IMapper mapper)
         : IRequestHandler<GetAppUserByIdQuery, GetAppUserByIdQueryResult>
     {
         public async Task<GetAppUserByIdQueryResult> Handle(GetAppUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var entity = await repository.GetByIdAsync(request.Id);
-            if (entity == null)
+            AppUser? user =  await repository.FindUserByIdAsync(request.Id);
+            if (user == null)
             {
-                throw new Exception("Dbde kayıt bulunamadı veya dbden çekerken bir sorun oluştu.");
+                throw new Exception("User not found.");
             }
-            return mapper.Map<GetAppUserByIdQueryResult>(entity);
+            return mapper.Map<GetAppUserByIdQueryResult>(user);
         }
     }
 }
