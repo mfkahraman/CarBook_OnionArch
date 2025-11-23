@@ -104,7 +104,6 @@ namespace CarBook_OnionArch.WebAPI.Controllers
             }
         }
 
-
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, UpdateAppUserCommand command)
         {

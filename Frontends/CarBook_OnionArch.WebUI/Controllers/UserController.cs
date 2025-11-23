@@ -89,5 +89,11 @@ namespace CarBook_OnionArch.WebUI.Controllers
             });
             return RedirectToAction("Index", "Default");
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Response.Cookies.Delete("AuthToken");
+            return RedirectToAction("Index", "Default");
+        }
     }
 }
