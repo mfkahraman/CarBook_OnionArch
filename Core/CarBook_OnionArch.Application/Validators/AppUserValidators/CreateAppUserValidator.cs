@@ -29,11 +29,6 @@ namespace CarBook_OnionArch.Application.Validators.AppUserValidators
                 .MinimumLength(6).WithMessage("Parola en az 6 karakter olmalıdır.")
                 .MaximumLength(100).WithMessage("Parola en fazla 100 karakter olabilir.");
 
-            RuleFor(x => x.PhoneNumber)
-                .Matches(@"^\+?[0-9]{7,15}$")
-                .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
-                .WithMessage("Geçerli bir telefon numarası giriniz. (örn: +905321234567)");
-
             When(x => !string.IsNullOrWhiteSpace(x.ImagePath), () =>
             {
                 RuleFor(x => x.ImagePath)

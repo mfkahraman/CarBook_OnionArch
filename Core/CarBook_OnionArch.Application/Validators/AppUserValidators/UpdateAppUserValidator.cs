@@ -18,7 +18,6 @@ namespace CarBook_OnionArch.Application.Validators.AppUserValidators
                     !string.IsNullOrWhiteSpace(x.UserName) ||
                     !string.IsNullOrWhiteSpace(x.Email) ||
                     !string.IsNullOrWhiteSpace(x.PasswordHash) ||
-                    !string.IsNullOrWhiteSpace(x.PhoneNumber) ||
                     !string.IsNullOrWhiteSpace(x.ImagePath)
                 )
                 .WithMessage("En az bir güncellenebilir alan (FirstName, LastName, UserName, Email, PasswordHash, PhoneNumber veya ImagePath) sağlanmalıdır.");
@@ -58,12 +57,6 @@ namespace CarBook_OnionArch.Application.Validators.AppUserValidators
                     .WithMessage("Şifre hash'i 512 karakteri aşmamalıdır.");
             });
 
-            When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber), () =>
-            {
-                RuleFor(x => x.PhoneNumber)
-                    .Matches(@"^\+?[0-9]{7,15}$")
-                    .WithMessage("Telefon numarası yalnızca rakamlardan oluşmalı, isteğe bağlı olarak '+' ile başlayabilir; uzunluğu 7 ile 15 hane arasında olmalıdır.");
-            });
 
             When(x => !string.IsNullOrWhiteSpace(x.ImagePath), () =>
             {
