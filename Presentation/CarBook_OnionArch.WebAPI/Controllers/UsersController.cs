@@ -1,4 +1,5 @@
 ﻿using CarBook_OnionArch.Application.Features.Mediator.Commands.AppUserCommands;
+using CarBook_OnionArch.Application.Features.Mediator.Commands.JWTCommands;
 using CarBook_OnionArch.Application.Features.Mediator.Queries.AppRoleQueries;
 using CarBook_OnionArch.Application.Features.Mediator.Queries.AppUserQueries;
 using CarBook_OnionArch.Application.Features.Mediator.Results.UserResults;
@@ -68,6 +69,41 @@ namespace CarBook_OnionArch.WebAPI.Controllers
                 return BadRequest($"Oluşturma işlemi sırasında bir sorun oluştu: {ex.Message}");
             }
         }
+
+        [HttpPost("sign-in")]
+        public async Task<ActionResult<string>> SignIn(string userName, string password)
+        {
+            try
+            {
+                var user = await mediator.Send(new GetAppUserByUserNameQuery(userName));
+                if (user == null)
+                {
+                    return BadRequest("Bu kullanıcı adıyla kayıtlı bir kullanıcı bulunamadı.");
+                }
+                var passwordResult = await mediator.Send(new CheckAppUserPasswordQuery(user.Id, password));
+                if (!passwordResult)
+                {
+                    return BadRequest("Geçersiz parola.");
+                }
+
+                if (user.UserName == null)
+                {
+                    return BadRequest("Kullanıcı adı boş olamaz.");
+                }
+                var token = await mediator.Send(new CreateTokenCommand(user.UserName));
+                if (token == null)
+                {
+                    return BadRequest("Token oluşturulurken bir sorun oluştu.");
+                }
+
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Oturum açma işlemi sırasında bir sorun oluştu: {ex.Message}");
+            }
+        }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, UpdateAppUserCommand command)

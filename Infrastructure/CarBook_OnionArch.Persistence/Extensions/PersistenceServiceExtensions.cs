@@ -28,6 +28,7 @@ namespace CarBook_OnionArch.Persistence.Extensions
             services.AddScoped<IStatisticsRepository, StatisticsRepository>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IAppRoleRepository, AppRoleRepository>();
+            services.AddScoped<IJWTRepository, JWTRepository>();
 
             return services;
         }
