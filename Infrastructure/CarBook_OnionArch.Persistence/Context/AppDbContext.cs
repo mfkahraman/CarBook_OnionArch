@@ -28,6 +28,7 @@ namespace CarBook_OnionArch.Persistence.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
