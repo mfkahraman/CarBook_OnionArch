@@ -1,7 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Anlık Mesajlaşma";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var currentUser = User?.Identity?.IsAuthenticated == true ? User.Identity.Name : "Guest";
+    var currentUser = User?.Identity?.IsAuthenticated == true ? User.Identity!.Name! : "Guest";
+    if (string.Equals(currentUser, "mfkahraman", StringComparison.OrdinalIgnoreCase)) currentUser = "admin";
     var isAuth = User?.Identity?.IsAuthenticated == true;
 }
 
