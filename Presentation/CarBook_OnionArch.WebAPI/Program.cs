@@ -70,14 +70,14 @@ builder.Services.AddAuthorizationBuilder()
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
 
 //CORS Configuration
-builder.Services.AddCors(options =>
+builder.Services.AddCors(opt =>
 {
-    options.AddPolicy("CorsPolicy", builder =>
+    opt.AddPolicy("CorsPolicy", builder =>
     {
         builder.AllowAnyHeader()
-              .AllowAnyMethod()
-              .SetIsOriginAllowed((host) => true)
-              .AllowCredentials();
+        .AllowAnyMethod()
+        .SetIsOriginAllowed((host) => true)
+        .AllowCredentials();
     });
 });
 
