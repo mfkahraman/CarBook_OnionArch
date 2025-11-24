@@ -4,6 +4,7 @@ using CarBook_OnionArch.Application.Validators.ReviewValidators;
 using CarBook_OnionArch.Domain.Entities;
 using CarBook_OnionArch.Persistence.Context;
 using CarBook_OnionArch.Persistence.Extensions;
+using CarBook_OnionArch.WebAPI.Hubs;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -68,6 +69,21 @@ builder.Services.AddAuthorizationBuilder()
 //Identity Registration
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
 
+//CORS Configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyHeader()
+              .AllowAnyMethod()
+              .SetIsOriginAllowed((host) => true)
+              .AllowCredentials();
+    });
+});
+
+//SignalR Configuration
+builder.Services.AddSignalR();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -81,11 +97,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//CORS Middleware registration
+app.UseCors("CorsPolicy");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//SignalR Hub mapping
+app.MapHub<MessageHub>("/messagehub");
 
 app.Run();
