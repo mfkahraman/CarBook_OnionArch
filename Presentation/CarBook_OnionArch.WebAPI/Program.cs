@@ -1,4 +1,4 @@
-using CarBook_OnionArch.Application.Extensions;
+﻿using CarBook_OnionArch.Application.Extensions;
 using CarBook_OnionArch.Application.Options;
 using CarBook_OnionArch.Application.Validators.ReviewValidators;
 using CarBook_OnionArch.Domain.Entities;
@@ -14,23 +14,35 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// CORS: Tekrarlanan AddSignalR kaldırıldı; doğru policy adıyla tanımla
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsForSignalR", policy =>
+    {
+        policy.WithOrigins(
+            "https://localhost:7290",  // WebUI HTTPS portu
+            "http://localhost:7290")   // Eğer HTTP kullanırsan ekle
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
+// SignalR
+builder.Services.AddSignalR();
+
+// HttpClient
+builder.Services.AddHttpClient();
+
+// MVC Controllers
 builder.Services.AddControllers();
 
-//Application layer services extension
 builder.Services.AddApplicationServices();
-
-//Persistence layer services extension
 builder.Services.AddPersistenceServices(builder.Configuration);
 
-//FluentAPI Registration
 builder.Services.AddValidatorsFromAssemblyContaining<CreateReviewValidator>();
-
-// JwtSecurityTokenHandler registration
 builder.Services.AddSingleton<JwtSecurityTokenHandler>();
 
-//JWT Bearer Authentication Configuration
 builder.Services.AddAuthentication(cfg =>
 {
     cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -38,7 +50,7 @@ builder.Services.AddAuthentication(cfg =>
 }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
 {
     var jwtTokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>()
-    ?? throw new InvalidOperationException("TokenOptions configuration is missing or invalid.");
+        ?? throw new InvalidOperationException("TokenOptions configuration is missing or invalid.");
 
     opt.RequireHttpsMetadata = false;
     opt.TokenValidationParameters = new()
@@ -55,10 +67,8 @@ builder.Services.AddAuthentication(cfg =>
     };
 });
 
-// TokenOptions configuration binding
 builder.Services.Configure<TokenOptions>(builder.Configuration.GetSection(nameof(TokenOptions)));
 
-// Authorization policy registration
 builder.Services.AddAuthorizationBuilder()
     .AddDefaultPolicy("Default", policy =>
     {
@@ -66,48 +76,32 @@ builder.Services.AddAuthorizationBuilder()
         policy.RequireAuthenticatedUser();
     });
 
-//Identity Registration
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
 
-//CORS Configuration
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", builder =>
-    {
-        builder.AllowAnyHeader()
-        .AllowAnyMethod()
-        .SetIsOriginAllowed((host) => true)
-        .AllowCredentials();
-    });
-});
-
-//SignalR Configuration
-builder.Services.AddSignalR();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-//CORS Middleware registration
-app.UseCors("CorsPolicy");
-
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+// ÖNEMLİ: UseRouting sonrası, UseAuthentication / UseAuthorization öncesi CORS
+app.UseCors("CorsForSignalR");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+// Hub endpoint (UI tarafı https://localhost:7290 üzerinden çağıracak)
+app.MapHub<MessageHub>("/messageHub");
 
-//SignalR Hub mapping
-app.MapHub<MessageHub>("/messagehub");
+app.MapControllers();
 
 app.Run();

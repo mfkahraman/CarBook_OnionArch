@@ -1,34 +1,194 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Anlık Mesajlaşma";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentUser = User?.Identity?.IsAuthenticated == true ? User.Identity.Name : "Guest";
+    var isAuth = User?.Identity?.IsAuthenticated == true;
 }
 
-<h1>SignalR Chat</h1>
+<h1 class="mb-3">SignalR Chat</h1>
 
-<input type="text" id="userInput" placeholder="Kullanıcı adı" class="form-control" />
-<textarea type="text" id="messageInput" placeholder="Mesajınız" class="form-control"></textarea>
-<button id="sendButton">Gönder</button>
+<style>
+    /* Mesaj kapsayıcısı */
+    #messagesWrapper {
+        height: 350px;
+        overflow-y: auto;
+        background: #f8f9fa;
+        scroll-behavior: smooth;
+        padding-right: .25rem;
+    }
+    /* Ortak mesaj kabı */
+    .chat-msg {
+        max-width: 65%;
+        padding: .5rem .75rem .6rem;
+        border-radius: .75rem;
+        margin-bottom: .5rem;
+        word-break: break-word;
+        box-shadow: 0 1px 2px rgba(0,0,0,.08);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    /* Kullanıcının kendi mesajı */
+    .chat-self {
+        margin-left: auto;
+        background: linear-gradient(135deg,#0d6efd,#1a76ff);
+        color: #fff;
+    }
 
-<ul id="messagesList"></ul>
+        .chat-self .meta {
+            color: rgba(255,255,255,.85);
+        }
 
-<div class="row">
-    <div class="col-md-8 offset-2">
-        <div class="alert alert-info">Bağlantının durumu: <strong id="constatus"></strong></div>
+        .chat-self .text {
+            font-weight: 500;
+            letter-spacing: .2px;
+        }
+    /* Diğer kullanıcıların mesajı */
+    .chat-other {
+        background: #ffffff;
+        border: 1px solid #dee2e6;
+        color: #212529;
+    }
+
+        .chat-other .meta {
+            color: #6c757d;
+        }
+    /* Meta satırı (kullanıcı + saat) */
+    .chat-msg .meta {
+        font-size: .65rem;
+        line-height: 1;
+        margin-bottom: .25rem;
+        font-weight: 600;
+        text-transform: none;
+    }
+    /* Mesaj metni */
+    .chat-msg .text {
+        font-size: .85rem;
+        line-height: 1.25rem;
+        white-space: pre-wrap;
+    }
+    /* Temizle butonu hover */
+    #clearButton:hover {
+        background: #fff;
+    }
+</style>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="mb-2">
+            <label for="userInput" class="form-label">Kullanıcı Adı</label>
+            <input type="text" id="userInput" value="@currentUser" class="form-control" @(isAuth ? "readonly" : "") />
+        </div>
+        <div class="mb-2">
+            <label for="messageInput" class="form-label">Mesaj</label>
+            <textarea id="messageInput" rows="3" class="form-control" placeholder="Mesajınızı yazın ve Enter'a basın..."></textarea>
+        </div>
+        <button id="sendButton" class="btn btn-primary" disabled>Gönder</button>
+        <small class="text-muted ms-2">Durum: <span id="connStatus">Connecting...</span></small>
+        <div id="connError" class="text-danger small mt-1"></div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Mesajlar</span>
+        <button id="clearButton" type="button" class="btn btn-sm btn-outline-secondary">Temizle</button>
+    </div>
+    <div id="messagesWrapper" class="card-body">
+        <ul id="messagesList" class="list-unstyled mb-0"></ul>
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7020/messagehub").build();
-            $("#constatus").text(connection.state);
-            connection.start().then(function () {
-                $("#constatus").text(connection.state);
-            }).catch(function (err) {
-                console.log(err);
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        (function () {
+            function htmlEncode(str) {
+                return (str || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+                                  .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+            }
+
+            const statusEl    = document.getElementById("connStatus");
+            const errorEl     = document.getElementById("connError");
+            const sendBtn     = document.getElementById("sendButton");
+            const userInput   = document.getElementById("userInput");
+            const messageInput= document.getElementById("messageInput");
+            const messagesList= document.getElementById("messagesList");
+            const clearBtn    = document.getElementById("clearButton");
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7020/messageHub")
+                .withAutomaticReconnect()
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            connection.on("ReceiveMessage", (user, message) => appendMessage(user, message));
+
+            function appendMessage(user, message) {
+                const li = document.createElement("li");
+                const now = new Date();
+                const isSelf = user === userInput.value;
+                li.className = "chat-msg " + (isSelf ? "chat-self" : "chat-other");
+
+                li.innerHTML =
+                    `<div class="meta">${htmlEncode(user)} • ${now.toLocaleTimeString()}</div>
+                     <div class="text">${htmlEncode(message)}</div>`;
+
+                messagesList.appendChild(li);
+                messagesList.parentElement.scrollTop = messagesList.parentElement.scrollHeight;
+            }
+
+            async function start() {
+                try {
+                    errorEl.textContent = "";
+                    await connection.start();
+                    statusEl.textContent = "Connected";
+                    sendBtn.disabled = false;
+                } catch (err) {
+                    statusEl.textContent = "Failed";
+                    errorEl.textContent = (err && err.message) ? err.message : err;
+                    sendBtn.disabled = true;
+                    setTimeout(start, 3000);
+                }
+            }
+
+            connection.onreconnecting(err => {
+                statusEl.textContent = "Reconnecting...";
+                errorEl.textContent = err ? err.message : "";
+                sendBtn.disabled = true;
             });
-        });
+            connection.onreconnected(() => {
+                statusEl.textContent = "Connected";
+                errorEl.textContent = "";
+                sendBtn.disabled = false;
+            });
+            connection.onclose(err => {
+                statusEl.textContent = "Closed";
+                errorEl.textContent = err ? err.message : "";
+                sendBtn.disabled = true;
+            });
+
+            function sendCurrentMessage() {
+                const user = userInput.value.trim() || "Anon";
+                const msg  = messageInput.value.trim();
+                if (!msg) return;
+                connection.invoke("SendMessage", user, msg)
+                          .catch(e => console.error("Send error:", e));
+                messageInput.value = "";
+                messageInput.focus();
+            }
+
+            sendBtn.addEventListener("click", sendCurrentMessage);
+            messageInput.addEventListener("keydown", e => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    sendCurrentMessage();
+                }
+            });
+
+            clearBtn.addEventListener("click", () => { messagesList.innerHTML = ""; });
+
+            start();
+        })();
     </script>
 }
