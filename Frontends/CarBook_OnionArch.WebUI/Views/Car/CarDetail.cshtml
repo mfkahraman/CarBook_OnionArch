@@ -196,7 +196,8 @@
                              aria-labelledby="pills-review-tab">
                             <div class="row">
                                 <div class="col-md-7">
-                                    <h3 class="head">Yorum Sayısı: @Model.reviews!.Count()</h3>
+@*                                     <h3 class="head">Yorum Sayısı: @Model.reviews!.Count()</h3>
+ *@                                    <h3 class="head">Yorum Sayısı: @totalCommentsCount</h3>
 
                                     @foreach (var review in Model.reviews!)
                                     {

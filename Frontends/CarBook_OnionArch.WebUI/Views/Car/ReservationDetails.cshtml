@@ -86,7 +86,7 @@
             <dd class="col-sm-7">@Model.EndDate.ToString("dd/MM/yyyy HH:mm")</dd>
 
             <dt class="col-sm-5">Toplam Fiyat</dt>
-            <dd class="col-sm-7">@String.Format("{0:0.00}", Model.TotalPrice)</dd>
+            <dd class="col-sm-7">@String.Format("{0:0.00}", Model.TotalPrice)₺</dd>
         </dl>
         <form asp-action="CreateReservation" method="post">
             <input type="hidden" asp-for="CarId" />
