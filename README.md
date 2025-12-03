@@ -71,6 +71,22 @@ Overall, CarBook brings together architecture, security, data management, and mo
 - Strongly-typed configuration using Options Pattern  
 
 
+https://github.com/user-attachments/assets/02ce6dd3-284f-4817-aacc-6a8b3b182b08
+
+
+
+https://github.com/user-attachments/assets/7223121a-7f3d-4e1a-aa69-213c0b4a69ba
+
+
+
+https://github.com/user-attachments/assets/50a55a67-643d-4f1f-9b0f-dbeff1ad2dec
+
+
+
+https://github.com/user-attachments/assets/2fe30b58-a416-48d1-ac81-722b39e0b4cf
+
+
+
 <img width="1272" height="876" alt="1" src="https://github.com/user-attachments/assets/18687d64-9625-406e-bc8d-6f74261a48d3" />
 <img width="1458" height="778" alt="2" src="https://github.com/user-attachments/assets/849a7bca-c9c9-49c6-8fb6-10b433fa7025" />
 <img width="1051" height="890" alt="3" src="https://github.com/user-attachments/assets/79d3cde7-87a7-49fc-bcbe-57a1216203f0" />
@@ -90,3 +106,6 @@ Overall, CarBook brings together architecture, security, data management, and mo
 <img width="1878" height="827" alt="17" src="https://github.com/user-attachments/assets/ec9fcb82-ba7f-4f28-949f-5fe721f8db3f" />
 <img width="1899" height="810" alt="18" src="https://github.com/user-attachments/assets/1a65dd88-e755-4add-96f8-e4ffc59c2a4b" />
 <img width="1856" height="777" alt="19" src="https://github.com/user-attachments/assets/cabc7660-826a-44fb-954e-fa6796f8f3e0" />
+<img width="1059" height="912" alt="20" src="https://github.com/user-attachments/assets/109284bd-2401-497c-aa16-e5f5fada8b35" />
+<img width="1062" height="911" alt="21" src="https://github.com/user-attachments/assets/cf524b97-11a9-4cdb-a239-88a01873340e" />
+<img width="965" height="911" alt="22" src="https://github.com/user-attachments/assets/579c9cae-5af9-4085-a7ed-4eb64b28e4a6" />
