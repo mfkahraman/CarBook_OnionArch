@@ -27,8 +27,6 @@ Overall, CarBook brings together architecture, security, data management, and mo
 ## ⚙️ Technologies & Tools
 
 ### **Platform & Architecture**
-- .NET 8  
-- ASP.NET Core MVC (Razor Views)
 - Onion Architecture  
 - Repository + Unit of Work  
 - CQRS with MediatR  
@@ -55,13 +53,8 @@ Overall, CarBook brings together architecture, security, data management, and mo
 
 ### **Frontend UI**
 - Razor Pages + Areas (Admin panel)
-- Bootstrap UI, custom SCSS theme
+- Bootstrap UI, custom SCSS theme, Javascript
 - Paging: X.PagedList  
-- JavaScript ecosystem:
-  - jQuery, Moment.js, Select2, DataTables, Quill
-  - DateRangePicker, Bootstrap Datepicker, Touchspin, Switchery
-  - Chart.js, Morris.js, Google Charts, jVectorMap, GMaps.js
-  - AOS, Owl Carousel, Magnific Popup, Waves.js  
 
 ### **Real-Time Client**
 - SignalR JavaScript Client (8.x)
@@ -70,21 +63,15 @@ Overall, CarBook brings together architecture, security, data management, and mo
 - DTO-based communication between layers  
 - Strongly-typed configuration using Options Pattern  
 
+https://github.com/user-attachments/assets/5be9b7d4-5d91-41cf-b69e-8f24f62bfb1a
 
-https://github.com/user-attachments/assets/02ce6dd3-284f-4817-aacc-6a8b3b182b08
+https://github.com/user-attachments/assets/643fb75d-a2e9-48f0-993e-db0863c2dc9c
 
+https://github.com/user-attachments/assets/d3e4c10b-1c4e-4211-9cca-8223127cd92f
 
+https://github.com/user-attachments/assets/9db03c92-97f4-462d-996b-11f45aebe955
 
-https://github.com/user-attachments/assets/7223121a-7f3d-4e1a-aa69-213c0b4a69ba
-
-
-
-https://github.com/user-attachments/assets/50a55a67-643d-4f1f-9b0f-dbeff1ad2dec
-
-
-
-https://github.com/user-attachments/assets/2fe30b58-a416-48d1-ac81-722b39e0b4cf
-
+https://github.com/user-attachments/assets/39c6fba1-e04f-473a-b7e3-18e63a4474f3
 
 
 <img width="1272" height="876" alt="1" src="https://github.com/user-attachments/assets/18687d64-9625-406e-bc8d-6f74261a48d3" />
