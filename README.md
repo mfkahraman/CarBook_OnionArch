@@ -11,64 +11,64 @@ During development, I expanded the original course project and rebuilt many part
 
 🔹 Key Improvements & Custom Features
 
--- SignalR real-time messaging for user support
--- ImageService added for image handling
--- Unit of Work implementation for better database flow
--- Extension-based service registration for cleaner startup configuration
--- New API endpoints added beyond the original scope
--- Several best practices applied (async/await, status code checks, DTO boundaries, clean validation patterns)
--- UI improvements with Razor Pages + MVC structure
--- Modern notifications using SweetAlert
+-SignalR real-time messaging for user support
+-ImageService added for image handling
+-Unit of Work implementation for better database flow
+-Extension-based service registration for cleaner startup configuration
+-New API endpoints added beyond the original scope
+-Several best practices applied (async/await, status code checks, DTO boundaries, clean validation patterns)
+-UI improvements with Razor Pages + MVC structure
+-Modern notifications using SweetAlert
 
 Overall, the project now works as a complete API + WebUI system designed with real-world patterns, scalable structure, and clean architectural principles.
 
 🧠 What I Learned
 
--- How Onion Architecture separates responsibilities and keeps the project maintainable
--- How CQRS and MediatR simplify business logic and improve extendability
--- Implementing JWT authentication and role-based authorization with Identity
--- Using Repository + Unit of Work to manage data operations safely
--- Building and consuming APIs with Swagger, HttpClientFactory, and DTO-based communication
--- Applying FluentValidation and AutoMapper for cleaner input control and mapping
--- Adding real-time features with SignalR
--- Managing images, TempData flow, and service registration through extension methods
--- Creating a structured UI using Razor Pages, partial views, and reusable components
--- Improving UX with SweetAlert, pagination, and organized data handling
--- Calling all 94 backend endpoints from the WebUI to create a complete end-to-end application
+-How Onion Architecture separates responsibilities and keeps the project maintainable
+-How CQRS and MediatR simplify business logic and improve extendability
+-Implementing JWT authentication and role-based authorization with Identity
+-Using Repository + Unit of Work to manage data operations safely
+-Building and consuming APIs with Swagger, HttpClientFactory, and DTO-based communication
+-Applying FluentValidation and AutoMapper for cleaner input control and mapping
+-Adding real-time features with SignalR
+-Managing images, TempData flow, and service registration through extension methods
+-Creating a structured UI using Razor Pages, partial views, and reusable components
+-Improving UX with SweetAlert, pagination, and organized data handling
+-Calling all 94 backend endpoints from the WebUI to create a complete end-to-end application
 
 ⚙️ Technical Highlights
 🧩 Core Stack
 
--- ASP.NET Core Web API
--- Razor Pages + MVC Controllers
--- IHttpClientFactory (REST)
--- Full async/await usage
+-ASP.NET Core Web API
+-Razor Pages + MVC Controllers
+-IHttpClientFactory (REST)
+-Full async/await usage
 
 🏛️ Architecture
 
--- Onion Architecture
--- Layering: Core / Application / Domain / Infrastructure / WebAPI / WebUI
--- DTO-based communication
--- Service registrations via Extensions
+-Onion Architecture
+-Layering: Core / Application / Domain / Infrastructure / WebAPI / WebUI
+-DTO-based communication
+-Service registrations via Extensions
 
 🧠 Key Features & Design Patterns
 
--- CQRS + MediatR
--- Repository Pattern
--- Unit of Work Pattern
--- AutoMapper
--- FluentValidation
--- JWT + Microsoft Identity
--- SignalR real-time messaging
--- SweetAlert notifications
+-CQRS + MediatR
+-Repository Pattern
+-Unit of Work Pattern
+-AutoMapper
+-FluentValidation
+-JWT + Microsoft Identity
+-SignalR real-time messaging
+-SweetAlert notifications
 
 🖥️ WebUI Workflow
 
--- Car listing with server-side pagination
--- Availability search
--- Reservation creation & pricing logic
--- TempData-based data passing
--- Error fallback pages
+-Car listing with server-side pagination
+-Availability search
+-Reservation creation & pricing logic
+-TempData-based data passing
+-Error fallback pages
 
 https://github.com/user-attachments/assets/5be9b7d4-5d91-41cf-b69e-8f24f62bfb1a
 
