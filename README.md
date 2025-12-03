@@ -1,4 +1,4 @@
-# 🚗 Project Overview
+## 🚗 Project Overview
 
 CarBook is a full-stack car rental system built as a learning and practice project for modern .NET development.
 The application uses Onion Architecture to keep the project clean, organized, and easy to maintain. Each layer has a clear responsibility: domain logic, application rules, infrastructure services, and UI.
@@ -21,20 +21,6 @@ During development, I expanded the original course project and rebuilt many part
 - Modern notifications using SweetAlert
 
 Overall, the project now works as a complete API + WebUI system designed with real-world patterns, scalable structure, and clean architectural principles.
-
-## 🧠 What I Learned
-
-- How Onion Architecture separates responsibilities and keeps the project maintainable
-- How CQRS and MediatR simplify business logic and improve extendability
-- Implementing JWT authentication and role-based authorization with Identity
-- Using Repository + Unit of Work to manage data operations safely
-- Building and consuming APIs with Swagger, HttpClientFactory, and DTO-based communication
-- Applying FluentValidation and AutoMapper for cleaner input control and mapping
-- Adding real-time features with SignalR
-- Managing images, TempData flow, and service registration through extension methods
-- Creating a structured UI using Razor Pages, partial views, and reusable components
-- Improving UX with SweetAlert, pagination, and organized data handling
-- Calling all 94 backend endpoints from the WebUI to create a complete end-to-end application
 
 ## ⚙️ Technical Highlights
 
@@ -70,7 +56,6 @@ Overall, the project now works as a complete API + WebUI system designed with re
 - Reservation creation & pricing logic
 - TempData-based data passing
 - Error fallback pages
-
 
 
 
