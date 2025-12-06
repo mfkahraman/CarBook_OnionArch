@@ -34,7 +34,7 @@ Overall, the project now works as a complete API + WebUI system designed with re
 ### 🏛️ Architecture
 
 - Onion Architecture
-- Layering: Core / Application / Domain / Infrastructure / WebAPI / WebUI
+- Layering: Core (Application / Domain) / Infrastructure (Persistance) / Presentation (WebAPI) / FrontEnds (WebUI / DTO)
 - DTO-based communication
 - Service registrations via Extensions
 
@@ -47,6 +47,7 @@ Overall, the project now works as a complete API + WebUI system designed with re
 - FluentValidation
 - JWT + Microsoft Identity
 - SignalR real-time messaging
+- Ajax
 - SweetAlert notifications
 
 ### 🖥️ WebUI Workflow
